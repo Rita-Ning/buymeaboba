@@ -29,7 +29,7 @@
   </div>
 	<div id="myeditor" class="mb-4"></div>
 	<button type="button"
-			class="btn btn-success mt-4 bg-warning border-0"
+			class="btn btn-success mt-4 bg-warning border-0 mb-4"
 			onclick="showContent()"> Show
 	</button>
 
@@ -41,12 +41,14 @@
 			placeholder: "Write somthing...",
 			height: 300,
       width: 800,
-      lineHeights: 30,
-
-		});
+		}).summernote('lineHeight', 0.5);
 	});
 
 	function showContent() {
+    if ($('#summernote').summernote('<p style="line-height: 0.5;"><br></p>'))
+    {
+      alert('editor content is empty');
+    }
     console.log($("#myeditor").summernote("code"))
 		document.getElementById("myContent").innerHTML =
 		$("#myeditor").summernote("code");
