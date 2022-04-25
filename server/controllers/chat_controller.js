@@ -36,7 +36,7 @@ router.post('/chatroom/users', async (req, res, next) => {
   }
 });
 
-router.get(`/api/1.0/msg`, async (req, res, next) => {
+router.get(`/msg`, async (req, res, next) => {
   try {
     const { roomid } = req.query;
     console.log(roomid);

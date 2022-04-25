@@ -1,18 +1,12 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
+const { stringify } = require('nodemon/lib/utils');
 const validator = require('validator');
 
-mongoose.connect(
-  'mongodb+srv://BobaTang:UBWhEFSfvpzdpHIw@buymeboba.x2ecu.mongodb.net/buymeboba?retryWrites=true&w=majority',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
-
-// MyModel.find({}, function (err, docs) {
-//   console.log(docs);
-// });
-// // 使用mongoose提供的方法去獲得該資料庫這個table的資料\
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // set chat room
 const chatRoom = mongoose.model('chatRoom', {
@@ -26,9 +20,9 @@ const chatRoom = mongoose.model('chatRoom', {
   },
 });
 
-const room = new chatRoom({
-  members: ['d', 'c'],
-});
+// const room = new chatRoom({
+//   members: ['d', 'c'],
+// });
 
 // room
 //   .save()
@@ -39,7 +33,7 @@ const room = new chatRoom({
 //     console.log('error', error);
 //   });
 
-// store chat message
+// chat message
 const chatMsg = mongoose.model('chatMsg', {
   room_id: {
     type: mongoose.SchemaTypes.ObjectId,
@@ -57,21 +51,7 @@ const chatMsg = mongoose.model('chatMsg', {
   },
 });
 
-// const msg = new chatMsg({
-//   room_id: '62611bece2d367d844fd6f7a',
-//   sender: 'a',
-//   msg: 'yoyoyo',
-// });
-
-// msg
-//   .save()
-//   .then(() => {
-//     console.log(msg);
-//   })
-//   .catch(() => {
-//     console.log('error', error);
-//   });
-
+//find功能
 // chatRoom.find({ members: 'a' }, function (err, docs) {
 //   if (err) {
 //     console.log(err);
@@ -81,7 +61,165 @@ const chatMsg = mongoose.model('chatMsg', {
 //   }
 // });
 
+// user profile
+const userProfile = mongoose.model('user', {
+  user_name: {
+    type: String,
+    trim: true,
+  },
+  user_page: {
+    type: String,
+    trim: true,
+    lowercase: true,
+  },
+  provider: {
+    type: String,
+    default: 'native',
+  },
+  email: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    validate(value) {
+      if (!validator.isEmail(value)) {
+        throw new Error('Invalid Email');
+      }
+    },
+  },
+  password: {
+    type: String,
+    trim: true,
+  },
+  profile_pic: {
+    type: String,
+    trim: true,
+  },
+  page_create: {
+    type: String,
+    dafault: '0',
+  },
+  about: {
+    type: String,
+  },
+  category: {
+    type: String,
+  },
+  is_creator: {
+    type: String,
+    default: '0',
+  },
+  is_admin: {
+    type: String,
+    default: '0',
+  },
+  follower_count: {
+    type: Number,
+  },
+  follower: {
+    type: Array,
+  },
+  following: {
+    type: [String],
+  },
+  supporter: {
+    type: Array,
+  },
+  my_member: {
+    type: Array,
+  },
+  post: {
+    type: [mongoose.SchemaTypes.ObjectId],
+  },
+  intro_post: {
+    type: String,
+  },
+  event: {
+    type: [mongoose.SchemaTypes.ObjectId],
+  },
+  event_attend: {
+    type: Array,
+  },
+  billing_info: {
+    type: Array,
+  },
+  withdraw: {
+    type: Array,
+  },
+  wallet: {
+    type: Number,
+  },
+  total: {
+    type: Number,
+  },
+});
+
+// post info
+const post = mongoose.model('post', {
+  user_id: {
+    type: mongoose.SchemaTypes.ObjectId,
+  },
+  title: {
+    type: String,
+  },
+  content: {
+    type: String,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  post_tag: {
+    type: Array,
+  },
+  comment: {
+    type: Array,
+  },
+  like_count: {
+    type: Number,
+  },
+  liked_by: {
+    type: Array,
+  },
+  views: {
+    type: Number,
+  },
+  read_rate: {
+    type: [String],
+  },
+  content_length: {
+    type: Number,
+  },
+  earning_amount: {
+    type: Number,
+  },
+  earning_from: {
+    type: Array,
+  },
+});
+
+async function main() {
+  let result = await userProfile
+    .findOne({ email: 'test100@test.com' })
+    .select('_id user_name is_admin is_creator profile_pic email');
+  if (!result) {
+    console.log('no result');
+  }
+  console.log(result);
+}
+
+// await userProfile.create();
+
+// await userProfile.findOne({_id: 1}, {
+//   _id:1 ,
+//   name: 1,
+//   email:1
+// })
+
+// main();
+
 module.exports = {
   chatMsg,
   chatRoom,
+  userProfile,
+  post,
 };

@@ -1,4 +1,6 @@
-let roomId = window.localStorage.getItem('roomId');
+// let roomId = window.localStorage.getItem('roomId');
+let urlParams = new URLSearchParams(window.location.search);
+let roomId = urlParams.get('roomid');
 let user = window.localStorage.getItem('name');
 
 const messageContainer = document.getElementById('message-container');

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Complete Profile</title>
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/complete.css" />
+</head>
+
+<body>
+    <a class="logo" href="/index.html">
+      <img src="./images/logo.jpeg" height="50" />
+    </a>
+
+  <main>
+    <div id="profile_view">
+      <div id = 'form_container'>
+        <form class='login_form' id = 'form' method="post" enctype="multipart/form-data">
+            <h2> Create My Page </h2>
+            <div class='form_input form'>
+              <label>Profile Pic</label>
+              <input id="profile_image" type="file" name="profile_img">
+            <div>
+            <div class='form_input'>
+              <label>Name</label>
+              <input type='text' id='user_name' name="user_name" placeholder="name" required>
+            </div>
+            <div class='form_input'>
+              <label>Buy Me Boba Link</label>
+              <div class="postion-relative">
+                <p class="url position-absolute">buymeboba.today/creator/</p>
+                <input type='text'  class = 'page-input' id='page_name' name="page_name" placeholder="yournamehere" required>
+              </div>
+            </div>
+            <div class='form_input'>
+              <label>About Me</label>
+              <input type='text'  id='about'  name="about" placeholder="Hey I am a Creative Producer | Boba tea lover🧋 😍">
+            </div>
+            <button class ='btn' id='create_btn' type='button'>Continue</button>
+        </form>
+        <br>
+        <div id="result"></div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      const btn = document.getElementById('create_btn');
+      let token = localStorage.getItem('token');
+      let userInfo = localStorage.getItem('user_info');
+      if(!token || !userInfo){
+        window.location.href='/login.html'
+      }
+      btn.addEventListener('click', (e) => { 
+          e.preventDefault();
+          const form = document.getElementById('form');
+          if(!form.checkValidity()){
+              form.reportValidity()
+              return;
+          } 
+      let data = new FormData(document.getElementById('form'))
+      data.append('user_id', userInfo);
+      document.getElementById("form").reset();
+
+      axios({
+        method: 'post',
+        url: '/api/1.0/user/create',
+        data: data,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then((res) => {
+          console.log(res)
+          page = res.data.user_page
+          console.log(page)
+          window.location.href = `./creator.html/?page=`;
+          window.location.href = `./creator/${page}`;
+        })
+        .catch(function (err) {
+          msg = err.response.data
+          alert(msg)
+        });
+    })
+    </script>
+  </main>
+</body>

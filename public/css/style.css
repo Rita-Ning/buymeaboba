@@ -70,7 +70,7 @@ hr {
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
-  margin-bottom: 0.5rem; }
+  margin-bottom: 0 !important;} 
 
 p {
   margin-top: 0;
@@ -8288,11 +8288,24 @@ h1, h2, h3, h4, h5,
 
 .searchbar{
   border-radius: 30px;
-  padding: 10px;
   background-color: white;
   width:700px;
 }
 
 .mb-6{
-  margin-bottom: 6rem
+  margin-bottom: 9rem;
+  margin-top: 5rem;
+}
+
+input::-webkit-input-placeholder {
+  font-size: 20px;
+  line-height: 3;
+}
+
+.pl-0{
+  padding-left: 0px !important;
+}
+
+.pr-0{
+  padding-right: 0px !important;
 }
