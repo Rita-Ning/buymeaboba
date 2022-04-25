@@ -1,0 +1,31 @@
+{
+  "name": "boba",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@elastic/elasticsearch": "^8.1.0",
+    "axios": "^0.26.1",
+    "bcrypt": "^5.0.1",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.0.0",
+    "ejs": "^3.1.7",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "line-pay-v3": "^1.0.6",
+    "moment-timezone": "^0.5.34",
+    "mongodb": "^4.5.0",
+    "mongoose": "^6.3.0",
+    "multer": "^1.4.4",
+    "nodemon": "^2.0.15",
+    "path": "^0.12.7",
+    "socket.io": "^4.4.1",
+    "uuid4": "^2.0.2",
+    "validator": "^13.7.0"
+  }
+}
