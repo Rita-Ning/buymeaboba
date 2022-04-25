@@ -14,7 +14,7 @@ let accountJson = require('./user_account.json');
 //   const profile = new userProfile({
 //     user_name,
 //     user_page,
-//     profile_pic,
+//     profile_pic: `https://${profile_pic}`,
 //     about,
 //     category,
 //     is_creator: '1',

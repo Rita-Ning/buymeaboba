@@ -12,8 +12,9 @@
 //             </div>
 //         </div>
 //     </div>`;
-console.log('ho');
+console.log('yo');
 let token = localStorage.getItem('token');
+let user_info = localStorage.getItem('user_info');
 
 if (!token) {
   document.getElementById('profile_view').innerHTML = ` 
@@ -33,7 +34,8 @@ if (!token) {
             </form>
         </div>
         `;
-} //else導到creator page
+}
+//else導到creator page
 // else {
 //   axios({
 //     method: 'get',
@@ -67,7 +69,7 @@ function log_in() {
     password: password,
   };
   axios({
-    method: 'post',
+    method: 'get',
     url: '/api/1.0/user/login',
     data: JSON.stringify(userInfo),
     headers: headers,

@@ -161,10 +161,13 @@ const post = mongoose.model('post', {
   title: {
     type: String,
   },
+  description: {
+    type: String,
+  },
   content: {
     type: String,
   },
-  date: {
+  create_time: {
     type: Date,
     default: Date.now,
   },
@@ -214,6 +217,9 @@ async function main() {
 //   name: 1,
 //   email:1
 // })
+// async function main() {
+//   let result = await userProfile.updateMany({}, { about: '' });
+// }
 
 // main();
 
