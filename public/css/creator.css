@@ -9645,5 +9645,22 @@ ul.ascii > li > ul > li:last-child > ul > li:last-child > ul > li:last-child > u
   width: 35%;
 }
 
+.support-box{
+  background-color: #fcefb4;
+}
 
+.boba-div{
+  background-color: #fcefb4;
+  border-radius: 10px;
+}
+
+span.emoji {
+  font-size: 40px;
+  vertical-align: middle;
+  /* line-height: 2; */
+}
+
+.support-btn{
+  border-radius: 20px;
+}
 /*# sourceMappingURL=main.css.map */

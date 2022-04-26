@@ -220,6 +220,9 @@ async function main() {
 // async function main() {
 //   let result = await userProfile.updateMany({}, { about: '' });
 // }
+// async function main() {
+//   let result = await userProfile.find({}, { about: '' });
+// }
 
 // main();
 

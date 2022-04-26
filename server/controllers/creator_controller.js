@@ -17,7 +17,7 @@ router.get('/creator/:name', async (req, res) => {
       intro_post: 1,
     }
   );
-  let user_id = user._id;
+  let user_id = user['_id'];
 
   let postList = await post.find(
     { user_id: user_id },

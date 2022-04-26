@@ -22,7 +22,7 @@ axios.get(`/api/1.0/${creatorPath}`).then((res) => {
 
   let pic = `
   <a href="/${creatorPath}">
-  <img src="${profile_pic}" class = "rounded-circle" height="100"  width="100" pt-1/>
+   <img src="${profile_pic}" class = "rounded-circle" height="100"  width="100" pt-1/>
   </a>`;
   profilePic.innerHTML = pic;
 
