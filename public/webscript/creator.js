@@ -3,8 +3,15 @@ let creatorPath = window.location.pathname;
 axios.get(`/api/1.0/${creatorPath}`).then((res) => {
   let data = res.data;
   //follower count need to be fixed for supporter count, now is for fake data
-  let { user_name, profile_pic, intro_post, about, follower_count, post } =
-    data;
+  let {
+    user_name,
+    profile_pic,
+    intro_post,
+    about,
+    follower_count,
+    post,
+    popular,
+  } = data;
   if (!follower_count) {
     follower_count = 0;
   }
@@ -66,7 +73,34 @@ axios.get(`/api/1.0/${creatorPath}`).then((res) => {
       </div>
     </div>
     `;
-  });
 
+    let popColumn = document.getElementById('pop-srticle');
+    let pop = ``;
+
+    for (let i = 0; i < popular.length; i++) {
+      let popularPost = popular[i];
+      let d = new Date(popularPost.create_time);
+      let time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
+      pop += `
+      <li>
+      <span>
+      <h6 class="font-weight-bold">
+      <a href="./article.html" class="text-dark">${popularPost.title}</a>
+      </h6>
+      <p class="text-muted">
+        ${time}
+      </p>
+      </span>
+      </li>`;
+    }
+    popColumn.innerHTML = pop;
+
+    let supportImg = document.getElementById('profile-basic');
+    let supportContent = `
+      <img src="${profile_pic}" id="profile-pic" alt="Avatar" class = "p-1 rounded-circle mx-auto d-block align-self-center avatar" height="95"  width="95" style="background-size:cover"/>
+      <h4 class="modal-title">Support <span class='font-weight-bold'>${user_name}</span>&nbsp&nbsp:)</h4>
+              <button type="button" class="close mr-1 pr-1" data-dismiss="modal" aria-hidden="true">&times;</button>`;
+    supportImg.innerHTML = supportContent;
+  });
   articleColumn.innerHTML = article;
 });

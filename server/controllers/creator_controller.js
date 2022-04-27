@@ -19,18 +19,33 @@ router.get('/creator/:name', async (req, res) => {
   );
   let user_id = user['_id'];
 
-  let postList = await post.find(
-    { user_id: user_id },
-    {
-      title: 1,
-      description: 1,
-      content: 1,
-      comment: 1,
-      liked_by: 1,
-      like_count: 1,
-      create_time: 1,
-    }
-  );
+  let postList = await post
+    .find(
+      { user_id: user_id },
+      {
+        title: 1,
+        description: 1,
+        content: 1,
+        comment: 1,
+        liked_by: 1,
+        like_count: 1,
+        create_time: 1,
+      }
+    )
+    .sort({ create_time: -1 });
+
+  let postPopular = await post
+    .find(
+      { user_id: user_id },
+      {
+        title: 1,
+        liked_by: 1,
+        like_count: 1,
+        create_time: 1,
+      }
+    )
+    .sort({ like_count: -1 })
+    .limit(4);
 
   let {
     user_page,
@@ -52,6 +67,7 @@ router.get('/creator/:name', async (req, res) => {
     _id,
   };
   data['post'] = postList;
+  data['popular'] = postPopular;
   return res.status(200).json(data);
 });
 
