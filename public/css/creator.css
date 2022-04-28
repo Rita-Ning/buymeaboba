@@ -9812,4 +9812,41 @@ span.emoji {
   font-family: Source Sans Pro;
 }
 
-/*# sourceMappingURL=main.css.map */
+.hrdivider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 13px;
+  color: lightgrey;
+  letter-spacing: 0.5em;
+  padding: 0 8px;
+}
+
+/* To show the lines on right 
+and left sides of the text */
+.hrdivider::after,
+.hrdivider::before {
+  content: "";
+  border: 1px solid lightgrey;
+  flex: 1;
+}
+.hrdivider:not(:empty)::before {
+  margin-right: 0.5em;
+}
+
+.hrdivider:not(:empty)::after {
+  margin-left: 0.5em;
+}
+
+#card-form{
+  display:none;
+}
+
+#card-choose{
+  display: block;
+}
+
+.notMember{
+  display: block;
+}
+/* sourceMappingURL = main.css.map */

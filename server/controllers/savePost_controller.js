@@ -26,7 +26,7 @@ router.post('/post/create', async (req, res) => {
     create_time: Date.now(),
   };
 
-  console.log(postInfo);
+  // console.log(postInfo)
 
   try {
     let userId = mongoose.mongo.ObjectId(user_id);
