@@ -20,6 +20,9 @@ axios
     }
     let profileColumn = document.getElementById('self-intro');
     let profilePic = document.getElementById('profile-pic');
+    if (typeof intro_post == 'undefined') {
+      intro_post = `Hello I am ${user_name}, Welcom to join me @buymeboba.today`;
+    }
     let profile = `
     <h4 class="secondfont mb-1 font-weight-bold">${user_name}</h4>
 		<p class="mb-3 pl-1">${about}</p>	
@@ -281,6 +284,7 @@ $('form').on('submit', function (event) {
 function thankMsg() {
   let thanks = document.getElementById('support-line');
   let thankMsg = `
+  <h>
   <h4 class="modal-title">Thank you for your support ! &nbsp&nbsp:)</h4>	
   <button type="button" class="close mr-1 mb-4 pr-1" data-dismiss="modal" aria-hidden="true">&times;</button>
   `;

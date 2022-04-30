@@ -244,9 +244,10 @@ async function main() {
 // async function main() {
 //   let result = await userProfile.updateMany({}, { about: '' });
 // }
-// async function main() {
-//   let result = await userProfile.find({}, { about: '' });
-// }
+async function main() {
+  let result = await userProfile.find({ user_name: /da/ });
+  console.log(result);
+}
 
 // main();
 

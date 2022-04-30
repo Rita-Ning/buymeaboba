@@ -1,45 +1,67 @@
-let name_list = [
-  'jakubferencik',
-  'herbertlui',
-  'markstarmach',
-  'enriquedans',
-  'jacquelinedooley',
-  'jillfrancis',
-  'juliovincentgambuto',
-  'alexanderziperovich',
-  'potluckzine',
-  'dankadlec',
-  'rebeccawmorris',
-  'willleitch',
-];
-let creatorColumn = document.getElementById('creator');
-let creator = ``;
+axios.get(`/api/1.0/search`).then((res) => {
+  let data = res.data;
 
-for (let i = 0; i < name_list.length; i++) {
-  let name = name_list[i];
-  axios.get(`/api/1.0/creator/${name}`).then((res) => {
-    let data = res.data;
-    //follower count need to be fixed for supporter count, now is for fake data
-    let { user_name, profile_pic, intro_post, user_page } = data;
-    creator += `
-    <div class="col-lg-4 col-md-12 mb-4">
-    <div class="card">
-      <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-        <img src="${profile_pic}" class="img-fluid" />
-        <a href="#!">
-          <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+  for (let i = 0; i < data.length; i++) {
+    let choose = data[i];
+    let creatorColumn = document.getElementById(`${choose.category}`);
+    let creatorInfo = ``;
+    for (let j = 0; j < 4; j++) {
+      let creator = choose.creators[j];
+      creatorInfo += `
+      <div class="col-lg-3 col-md-12 mb-4 creator-box p-1">
+      <div class="card border-0" >
+        <a class="bg-image hover-overlay ripple" data-mdb-ripple-color="light" href='/creator/${creator.user_page}'>
+          <img src="${creator.profile_pic}" class="img-fluid bg-warning p-2 rounded-circle" style='width:200px;height:200px'/>
         </a>
+        <div class="card-body">
+          <h5 class="card-title ellipsis1">${creator.user_name}</h5>
+          <p class="card-text ellipsis2">
+            ${creator.about}
+          </p>
+        </div>
       </div>
-      <div class="card-body">
-        <h5 class="card-title">${user_name}</h5>
-        <p class="card-text">
-          ${intro_post}
-        </p>
-        <a href="/creator/${user_page}" class="btn btn-warning">Visit</a>
       </div>
-    </div>
-  </div>
-    `;
-    creatorColumn.innerHTML = creator;
-  });
+      `;
+      creatorColumn.innerHTML = creatorInfo;
+    }
+  }
+});
+
+function search() {
+  document.getElementById('search').style.display = 'block';
+  let searchText = document.getElementById('search-text').value;
+
+  axios
+    .get(`/api/1.0/search?keyword=${searchText}`)
+    .then((res) => {
+      let data = res.data;
+      let searchColumn = document.getElementById('search-result');
+      let result = ``;
+
+      for (let i = 0; i < data.length; i++) {
+        let creator = data[i];
+
+        result += `
+        <div class="col-lg-3 col-md-12 mb-4 creator-box p-1">
+        <div class="card border-0" >
+          <a class="bg-image hover-overlay ripple" data-mdb-ripple-color="light" href='/creator/${creator.user_page}'>
+            <img src="${creator.profile_pic}" class="img-fluid bg-warning p-2 rounded-circle" style='width:200px;height:200px'/>
+          </a>
+          <div class="card-body">
+            <h5 class="card-title ellipsis1">${creator.user_name}</h5>
+            <p class="card-text ellipsis2">
+              ${creator.about}
+            </p>
+          </div>
+        </div>
+        </div>
+        `;
+        console.log(i);
+      }
+      searchColumn.innerHTML = result;
+    })
+    .catch(function (err) {
+      msg = err.response.data.error;
+      alert(msg);
+    });
 }

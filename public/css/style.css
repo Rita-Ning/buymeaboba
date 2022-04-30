@@ -8309,3 +8309,34 @@ input::-webkit-input-placeholder {
 .pr-0{
   padding-right: 0px !important;
 }
+
+.bg-yellow{
+  background-color: lightyellow;
+}
+
+body {
+  margin: 0;
+  font-family: "Source Sans Pro", "Segoe UI", "Helvetica Neue", "Arial" !important;
+}
+
+#recommand-font{
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight:bolder !important;
+  letter-spacing: 0.1cm;
+  color:#333533
+}
+
+.ellipsis2 {
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2; /*行數*/
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+
+.ellipsis1 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
