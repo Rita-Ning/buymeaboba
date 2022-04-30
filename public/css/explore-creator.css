@@ -1,0 +1,43 @@
+#search-div{
+  height:30vh;
+  margin-top: 2.5cm;
+}
+
+body {
+  margin: 0;
+  font-family: "Source Sans Pro", "Segoe UI", "Helvetica Neue", "Arial" !important;
+}
+
+.creator-box{
+  width:200px;
+}
+
+.ccard-body{
+  height:220px;
+}
+
+.ellipsis2 {
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2; /*行數*/
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+
+.ellipsis1 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+h2 {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 600;
+}
+
+h3 {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 600;
+  color:grey
+}

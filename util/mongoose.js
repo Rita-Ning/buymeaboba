@@ -161,10 +161,13 @@ const post = mongoose.model('post', {
   title: {
     type: String,
   },
+  description: {
+    type: String,
+  },
   content: {
     type: String,
   },
-  date: {
+  create_time: {
     type: Date,
     default: Date.now,
   },
@@ -197,6 +200,30 @@ const post = mongoose.model('post', {
   },
 });
 
+const support = mongoose.model('support', {
+  user_name: {
+    type: String,
+  },
+  user_email: {
+    type: String,
+  },
+  creator_id: {
+    type: mongoose.SchemaTypes.ObjectId,
+  },
+  amount: {
+    type: Number,
+  },
+  pay_time: {
+    type: Date,
+    default: Date.now,
+  },
+  recieve_time: {
+    type: Date,
+    //add 3 days
+    default: () => new Date(+new Date() + 3 * 24 * 60 * 60 * 1000),
+  },
+});
+
 async function main() {
   let result = await userProfile
     .findOne({ email: 'test100@test.com' })
@@ -214,10 +241,18 @@ async function main() {
 //   name: 1,
 //   email:1
 // })
+// async function main() {
+//   let result = await userProfile.updateMany({}, { about: '' });
+// }
+async function main() {
+  let result = await userProfile.find({ user_name: /da/ });
+  console.log(result);
+}
 
 // main();
 
 module.exports = {
+  support,
   chatMsg,
   chatRoom,
   userProfile,

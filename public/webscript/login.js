@@ -1,19 +1,5 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-// let profileContent = `
-//     <div id = 'profile_container'>
-//         <h2>會員資料</h2>
-//         <div id = 'profile_info'>
-//             <div class='profile_column'>姓名:
-//                 <span class='user' id = 'user_name'>
-//             </div>
-//             <div class='profile_column' >Email:
-//                 <span class='user' id = 'user_email'>
-//             </div>
-//         </div>
-//     </div>`;
-console.log('ho');
 let token = localStorage.getItem('token');
+let user_info = localStorage.getItem('user_info');
 
 if (!token) {
   document.getElementById('profile_view').innerHTML = ` 
@@ -33,28 +19,21 @@ if (!token) {
             </form>
         </div>
         `;
-} //else導到creator page
-// else {
-//   axios({
-//     method: 'get',
-//     url: '/api/1.0/user/profile',
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   })
-//     .then((res) => {
-//       console.log(res.data.admin);
-//       let data = res.data.userJson.data;
-//       document.getElementById('profile_view').innerHTML = profileContent;
-//       document.getElementById('user_name').innerHTML = data.name;
-//       document.getElementById('user_email').innerHTML = data.email;
-//     })
-//     .catch(function (err) {
-//       let msg = err.response.data.error;
-//       document.getElementById('profile_view').innerHTML = msg;
-//       localStorage.removeItem('token');
-//     });
-// }
+} else {
+  let user_id = localStorage.getItem('user_info');
+  axios({
+    method: 'get',
+    url: `/api/1.0/creator?id=${user_id}`,
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then((res) => {
+      window.location.href = `./creator/${res.data.user_page}`;
+    })
+    .catch(function (err) {
+      let msg = err.response.data.err;
+      alert(msg);
+    });
+}
 
 function log_in() {
   let email = document.getElementById('sigin_email').value;
@@ -67,7 +46,7 @@ function log_in() {
     password: password,
   };
   axios({
-    method: 'post',
+    method: 'get',
     url: '/api/1.0/user/login',
     data: JSON.stringify(userInfo),
     headers: headers,

@@ -1,5 +1,3 @@
-console.log('Hi');
-
 let token = localStorage.getItem('token');
 
 if (!token) {
@@ -19,28 +17,21 @@ if (!token) {
             </form>
         </div>
         `;
+} else {
+  let user_id = localStorage.getItem('user_info');
+  axios({
+    method: 'get',
+    url: `/api/1.0/creator?id=${user_id}`,
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then((res) => {
+      window.location.href = `./creator/${res.data.user_page}`;
+    })
+    .catch(function (err) {
+      let msg = err.response.data.err;
+      alert(msg);
+    });
 }
-// else {
-//   axios({
-//     method: 'get',
-//     url: '/api/1.0/user/profile',
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   })
-//     .then((res) => {
-//       console.log(res.data.admin);
-//       let data = res.data.userJson.data;
-//       document.getElementById('profile_view').innerHTML = profileContent;
-//       document.getElementById('user_name').innerHTML = data.name;
-//       document.getElementById('user_email').innerHTML = data.email;
-//     })
-//     .catch(function (err) {
-//       let msg = err.response.data.error;
-//       document.getElementById('profile_view').innerHTML = msg;
-//       localStorage.removeItem('token');
-//     });
-// }
 
 function sign_up() {
   let email = document.getElementById('signup_email').value;
@@ -70,6 +61,7 @@ function sign_up() {
     })
     .catch(function (err) {
       msg = err.response.data.err;
+      console.log(err.response);
       alert(msg);
     });
 }

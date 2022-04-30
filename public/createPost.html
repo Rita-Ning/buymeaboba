@@ -15,23 +15,27 @@
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
-<body class="mr-5 ml-5 mt-5">
-	<h3 class="mt-3 mb-3">Create New Post</h3>
-  <div>
-    <div class="md-form form-group">
-      <input placeholder="Title" class="border">
+<body class="mr-5 mt-5">
+  <div style="margin-left: 10%; width: 500px; height: 200px; ">
+    <h2 class="mt-3 mb-3">Create New Post</h2>
+    <hr style="width: 800px"/>
+    <div class="form" style="width: 800px">
+      <div>
+        <input style="margin-bottom: 10px;" class="form-control w-50" id="post-title" placeholder="Title">
+      </div>
+      <div>
+        <input style="margin-bottom: 10px;" class="form-control w-75" id="description" placeholder="description">
+      </div>
     </div>
-    <div class>
-      <input placeholder="description" class="mb-2 border w-50">
-    </div>
+    <div id="myeditor" class="mb-4"></div>
+    <button type="button"
+        class="btn btn-success mt-4 bg-warning border-0 mb-4"
+        onclick="postArticle()"> Publish
+    </button>
   </div>
-	<div id="myeditor" class="mb-4"></div>
-	<button type="button"
-			class="btn btn-success mt-4 bg-warning border-0"
-			onclick="showContent()"> Show
-	</button>
 
 	<div id="myContent" class="container"></div>
 
@@ -39,19 +43,50 @@
 	$(document).ready(function() {
 		$("#myeditor").summernote({
 			placeholder: "Write somthing...",
-			height: 300,
+			height: 500,
       width: 800,
-      lineHeights: 30,
-
-		});
+      focus: true,
+		}).summernote('lineHeight', 0.6);
 	});
 
-	function showContent() {
-    console.log($("#myeditor").summernote("code"))
-		document.getElementById("myContent").innerHTML =
-		$("#myeditor").summernote("code");
+	function postArticle() {
+    if(document.getElementById("post-title").value == ''){
+        alert('Title cannot be empty')
+      }
+    if ($('#myeditor').summernote("post-title")=='<p style="line-height: 0.5;"><br></p>')
+    {
+      alert('Content is empty');
+    }
+		// document.getElementById("myContent").innerHTML =
+		// $("#myeditor").summernote("code");
+    let title = document.getElementById("post-title").value
+    let description = document.getElementById("description").value
+    let content = $("#myeditor").summernote("code");
+    console.log(content)
+    let user_id = localStorage.getItem('user_info')
+    let postInfo = {title, description, content, user_id}
+    savePost(postInfo)
     $("#myeditor").summernote("code",'');
+    // console.log(postInfo)
 	}
+
+  function savePost(postInfo){
+    let headers = { 'Content-Type': 'application/json' };
+    axios({
+      method: 'post',
+      url: '/api/1.0/post/create',
+      data: JSON.stringify(postInfo),
+      headers: headers,
+    })
+      .then((res) => {
+        let user_page = res.data.user_page
+        window.location.href=`./creator/${user_page}`
+      })
+      .catch(function (err) {
+        msg = err.response.data.error;
+        alert(msg);
+      });
+  }
 	</script>
 </body>
 

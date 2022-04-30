@@ -18,7 +18,10 @@ router.post('/user/create', fields, async (req, res) => {
   if (!req.files.profile_img) {
     picturePath = 'default';
   } else {
-    picturePath = req.files.profile_img[0].path.replace('public/', '');
+    picturePath = req.files.profile_img[0].path.replace(
+      'public/',
+      'http://localhost:3000/'
+    );
   }
 
   const profileInfo = {

@@ -500,7 +500,8 @@ input {
 
 button,
 select {
-  text-transform: none; }
+  text-transform: none,
+   }
 
 button,
 html [type="button"],
@@ -2052,12 +2053,12 @@ fieldset:disabled a.btn {
 
 .btn-success {
   color: #fff;
-  background-color: #03a87c;
-  border-color: #03a87c; }
+  background-color: #FFD500;
+  border-color: #FFD500; }
   .btn-success:hover {
     color: #fff;
-    background-color: #028260;
-    border-color: #027657; }
+    background-color: black;
+    border-color: black; }
   .btn-success:focus, .btn-success.focus {
     box-shadow: 0 0 0 0.2rem rgba(3, 168, 124, 0.5); }
   .btn-success.disabled, .btn-success:disabled {
@@ -9645,5 +9646,207 @@ ul.ascii > li > ul > li:last-child > ul > li:last-child > ul > li:last-child > u
   width: 35%;
 }
 
+.support-box{
+  background-color: #fcefb4;
+}
 
-/*# sourceMappingURL=main.css.map */
+.boba-div{
+  background-color: #fcefb4;
+  border-radius: 10px;
+}
+
+span.emoji {
+  font-size: 40px;
+  vertical-align: middle;
+  /* line-height: 2; */
+}
+
+.support-btn{
+  border-radius: 20px;
+}
+
+
+.modal-login {		
+  color: #636363;
+  width: 350px;
+  margin: 80px auto 0;
+}
+.modal-login .modal-content {
+  padding: 20px;
+  border-radius: 10px;
+  border: none;
+}
+.modal-login .modal-header {
+  border-bottom: none;   
+      position: relative;
+      justify-content: center;
+}
+.modal-login h4 {
+  text-align: center;
+  font-size: 26px;
+  margin: 30px 0 -15px;
+}
+.modal-login .form-control:focus {
+  border-color: #70c5c0;
+}
+.modal-login .form-control, .modal-login .btn {
+  min-height: 40px;
+  border-radius: 3px; 
+}
+.modal-login .close {
+      position: absolute;
+  top: -5px;
+  right: -5px;
+}	
+.modal-login .modal-footer {
+  background: #ecf0f1;
+  border-color: #dee4e7;
+  text-align: center;
+      justify-content: center;
+  margin: 0 -20px -20px;
+  border-radius: 5px;
+  font-size: 13px;
+}
+.modal-login .modal-footer a {
+  color: #999;
+}		
+
+.modal-login .btn {
+      color: #fff;
+      border-radius: 4px;
+  background: #60c7c1;
+  text-decoration: none;
+  transition: all 0.4s;
+      line-height: normal;
+      border: none;
+  }
+.modal-login .btn:hover, .modal-login .btn:focus {
+  background: #45aba6;
+  outline: none;
+}
+.trigger-btn {
+  display: inline-block;
+  margin: 100px auto;
+}
+
+/* modal */
+.modal-login {		
+  color: #636363;
+  width: 400px;
+  margin: 80px auto 0;
+  
+}
+.modal-login .modal-content {
+  padding: 20px;
+  border-radius: 5px;
+  border: none;
+}
+.modal-login .modal-header {
+  border-bottom: none;   
+      position: relative;
+      justify-content: center;
+}
+.modal-login h4 {
+  text-align: center;
+  font-size: 26px;
+  margin: 30px 0 -15px;
+}
+.modal-login .form-control:focus {
+  border-color: #70c5c0;
+}
+.modal-login .form-control, .modal-login .btn {
+  min-height: 40px;
+  border-radius: 3px; 
+}
+.modal-login .close {
+      position: absolute;
+  top: -5px;
+  right: -5px;
+}	
+.modal-login .modal-footer {
+  background: #ecf0f1;
+  border-color: #dee4e7;
+  text-align: center;
+      justify-content: center;
+  margin: 0 -20px -20px;
+  border-radius: 5px;
+  font-size: 13px;
+}
+.modal-login .modal-footer a {
+  color: #999;
+}		
+.modal-login .avatar {
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: -70px;
+  border-radius: 50%;
+  z-index: 9;
+  background: black;
+  padding: 15px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+.modal-login .avatar img {
+  width: 100%;
+} 
+  .modal-login .btn {
+      color: #636363;
+      border-radius: 20px;
+  background: #FFD500;
+  text-decoration: none;
+  transition: all 0.4s;
+      line-height: 8px;
+      border: none;
+  }
+.modal-login .btn:hover, .modal-login .btn:focus {
+  background: #FFD500;
+  outline: none;
+}
+.trigger-btn {
+  display: inline-block;
+  margin: 100px auto;
+}
+
+.payBtn{
+  font-family: Source Sans Pro;
+}
+
+.hrdivider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 13px;
+  color: lightgrey;
+  letter-spacing: 0.5em;
+  padding: 0 8px;
+}
+
+/* To show the lines on right 
+and left sides of the text */
+.hrdivider::after,
+.hrdivider::before {
+  content: "";
+  border: 1px solid lightgrey;
+  flex: 1;
+}
+.hrdivider:not(:empty)::before {
+  margin-right: 0.5em;
+}
+
+.hrdivider:not(:empty)::after {
+  margin-left: 0.5em;
+}
+
+#card-form{
+  display:none;
+}
+
+#card-choose{
+  display: block;
+}
+
+.notMember{
+  display: block;
+}
+/* sourceMappingURL = main.css.map */
