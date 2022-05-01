@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Profile Page</title>
+    <title>Message</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -48,23 +48,23 @@
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
                   <img src="./images/logo.jpeg" height="45" class='border rounded-circle border-2 border-white'/>
                 </a>
-                <div class="d-flex align-items-center ms-4 mb-4 mt-5">
-                    <div class="position-relative">
+                <div class="d-flex align-items-center ms-4 mb-4 mt-5" id="leftbar-img">
+                    <!-- <div class="position-relative">
                         <img class="rounded-circle" src="./images/Rita Tang.png" alt="" style="width: 40px; height: 40px;">
                         <div class="rounded-circle bg-warning border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
                         <h6 class="mb-0">Rita Tang</h6>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="table.html" class="nav-item nav-link"><i class="fa fa-user-astronaut me-2"></i>Creators | Follow</a>
-                    <a href="widget.html" class="nav-item nav-link"><i class="fa fa-pen me-2"></i>My Post</a>
-                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-envelope me-2"></i>Messages</a>
+                    <a href="follow.html" class="nav-item nav-link"><i class="fa fa-user-astronaut me-2"></i>Creators | Follow</a>
+                    <a href="post.html" class="nav-item nav-link"><i class="fa fa-pen me-2"></i>My Post</a>
+                    <a href="chatroom.html" class="nav-item nav-link"><i class="fa fa-envelope me-2"></i>Messages</a>
                     <hr class="l-5">
-                    <a href="index.html" class="nav-item nav-link"><i class="fa fa-chart-column  me-2"></i>Dashboard</a>
-                    <a href="table.html" class="nav-item nav-link"><i class="fa-solid fa-calendar-plus me-2"></i>Extras</a>
-                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-gear me-2"></i>Setting</a>
+                    <a href="dashboard.html" class="nav-item nav-link"><i class="fa fa-chart-column  me-2"></i>Dashboard</a>
+                    <a href="event.html" class="nav-item nav-link"><i class="fa-solid fa-calendar-plus me-2"></i>Extras</a>
+                    <a href="setting.html" class="nav-item nav-link"><i class="fa fa-gear me-2"></i>Setting</a>
                 </div>
             </nav>
         </div>
@@ -76,7 +76,7 @@
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-white navbar-light px-5 ml-4 mr-4 mb-5 py-0 rounded-pill">
                 <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                  <img src="./images/logo.jpeg" height="45" class='border rounded-circle border-2 border-white'/>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars text-warning"></i>
@@ -107,8 +107,8 @@
                         </div>
                     </div>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="./images/Rita Tang.png" alt="" style="width: 40px; height: 40px;">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="nav-img">
+                            <!-- <img class="rounded-circle me-lg-2" src="./images/Rita Tang.png" alt="" style="width: 40px; height: 40px;"> -->
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
@@ -121,34 +121,45 @@
             <!-- Navbar End -->
 
 
-            <!-- Blank Start -->
+            <!-- Chart Start -->
             <div class="container-fluid pt-4 px-4">
-                <div class="row vh-100 rounded align-items-center justify-content-center mx-0 blank">
-                    <div class="col-md-6 text-center">
-                        <h3>This is blank page</h3>
+              <div class="row g-4 vh-100 rounded justify-content-center mx-0 blank bg-white">
+                  <div class="col-sm-12 col-xl-4 w-100">
+                      <div class="h-100 bg-light rounded p-5">
+                          
+                          <div class="d-flex align-items-center justify-content-between mb-4">
+                              <div class="d-flex justify-content-between align-items-center" style="width:140px">
+                                <a href="/chatroom.html"><i class="fa-solid fa-angle-left"></i></a>
+                                <div class="d-flex align-items-center" style="width:90px" id="chat-member">
+                                    <!-- <img class="rounded-circle flex-shrink-0" src="./images/Rita Tang.png" alt="" style="width: 30px; height: 30px;">
+                                    <p class="mb-0 pl-5 font-weight-bold text-dark">Joseph</p> -->
+                                </div>
+                              </div>
+                          </div>
+                          <hr style="height:2px">
+                          <div id="chat-container" class="pt-2" id="chat-box">
+                            <!-- <div class="d-flex align-items-center py-3">
+                                <img class="rounded-circle flex-shrink-0" src="./images/Rita Tang.png" alt="" style="width: 40px; height: 40px;">
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex justify-content-between" style="width:170px">
+                                        <h6 class="mb-0">Jhon Doe</h6>
+                                        <small class="ml-5">15 minutes ago</small>
+                                    </div>
+                                    <span class="mt-3">Short message goes here...</span>
+                                </div>
+                            </div> -->
+                          </div>
+                            <form class="text-muted d-flex justify-content-start pe-3 bg-light p-2 rounded bg-white" id="send-container">
+                                <textarea type="text" class="form-control form-control-m border-0 pr-0" id="message-input"
+                                placeholder="Type message"></textarea>
+                                <button type="submit" id="send-button" class="btn btn-warning btn-m btn-rounded float-end">Send</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Blank End -->
-
-
-            <!-- Footer Start -->
-            <!-- <div class="container-fluid pt-4 px-4">
-                <div class="bg-light rounded-top p-4">
-                    <div class="row">
-                        <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
-                        </div>
-                        <div class="col-12 col-sm-6 text-center text-sm-end"> -->
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                            <!-- Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- Footer End -->
-        <!-- </div> -->
-        <!-- Content End -->
+        </div>
+        <!-- Content End-->
 
 
         <!-- Back to Top -->
@@ -167,7 +178,11 @@
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./js/profile.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./webscript/message.js"></script>
+    <script src="./webscript/profile-share.js"></script>
 </body>
 
 </html>

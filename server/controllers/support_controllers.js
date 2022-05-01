@@ -72,8 +72,32 @@ router.post('/support/checkout', async (req, res, next) => {
       amount,
     };
 
+    // add into support db
     let addSupport = await support.create(supportInfo);
-    console.log(addSupport);
+
+    let userInfo = {
+      user_name: userName,
+      email: userEmail,
+    };
+
+    //add into user db
+    let addUser = await userProfile.create(userInfo);
+    // console.log(addUser)
+
+    let creatorId = mongoose.mongo.ObjectId(creator_id);
+
+    //update creator support list
+    let supporterInfo = {
+      event: homepage,
+      user_name: userName,
+      user_email: userEmail,
+      time: Date.now(),
+    };
+    userProfile.update(
+      { _id: creatorId },
+      { $push: { supporter: supporterInfo } },
+      done
+    );
 
     let data = { data: addSupport._id };
     res.send(data);

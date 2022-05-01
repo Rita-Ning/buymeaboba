@@ -67,7 +67,6 @@
 
 /*** Layout ***/
 .sidebar {
-    background-color: #FFD500;
     position: fixed;
     top: 0;
     left: 0;
@@ -75,9 +74,9 @@
     width: 250px;
     height: 100vh;
     overflow-y: auto;
+    background: var(--light);
     transition: 0.5s;
     z-index: 999;
-    margin-left: 15 !important;
 }
 
 .content {
@@ -123,9 +122,6 @@
 
 
 /*** Navbar ***/
-.navbar{
-    background-color: #FFD500 ;
-}
 .sidebar .navbar .navbar-nav .nav-link {
     padding: 7px 20px;
     color: var(--dark);
@@ -278,23 +274,4 @@
 .testimonial-carousel .owl-dot.active {
     background: var(--dark);
     border-color: var(--primary);
-}
-
-.blank{
-    background-color: #f5f3f4;
-}
-
-.display-7{
-    font-size: 2rem;
-}
-
-#send-container {
-    position: fixed;
-    bottom: 0;
-    margin-bottom: 30px;
-    width: 700px;
-  }
-#chat-container {
-    overflow-y: auto;
-    height: calc(100vh - 280px);
 }

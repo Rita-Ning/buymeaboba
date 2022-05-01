@@ -20,6 +20,8 @@ axios
     }
     let profileColumn = document.getElementById('self-intro');
     let profilePic = document.getElementById('profile-pic');
+    localStorage.setItem('profile_pic', profile_pic);
+    localStorage.setItem('user_name', user_name);
     if (typeof intro_post == 'undefined') {
       intro_post = `Hello I am ${user_name}, Welcom to join me @buymeboba.today`;
     }
