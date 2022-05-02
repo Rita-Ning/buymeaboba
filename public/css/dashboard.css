@@ -298,3 +298,11 @@
     overflow-y: auto;
     height: calc(100vh - 280px);
 }
+
+.note-editor{
+    width:auto !important;
+}
+
+.post-container{
+    width:auto !important;
+}
