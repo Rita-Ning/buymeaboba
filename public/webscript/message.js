@@ -2,6 +2,7 @@ let urlParams = new URLSearchParams(window.location.search);
 let roomId = urlParams.get('roomid');
 let memberId = urlParams.get('member');
 let userId = localStorage.getItem('user_info');
+let type = urlParams.get('type');
 
 const messageContainer = document.getElementById('chat-container');
 const messageForm = document.getElementById('send-container');
@@ -11,7 +12,7 @@ var socket = io();
 
 // get history msg
 axios
-  .get(`/api/1.0/msg?roomid=${roomId}&member=${memberId}`)
+  .get(`/api/1.0/chat/msg?roomid=${roomId}&member=${memberId}`)
   .then((res) => {
     // member profile setting
     let memberInfo = res.data.member;

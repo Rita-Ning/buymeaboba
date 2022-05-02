@@ -221,6 +221,9 @@ const support = mongoose.model('support', {
     type: String,
     default: 'homepage',
   },
+  user_id: {
+    type: String,
+  },
   user_name: {
     type: String,
   },
@@ -272,43 +275,43 @@ async function main() {
 // }
 
 //push data to my profile
+// async function main() {
+//   let creatorId = mongoose.mongo.ObjectId('626c1229b7da2f66cadad033');
+//   await userProfile.updateOne(
+//     { _id: creatorId },
+//     {
+//       $addToSet: {
+//         supporter: {
+//           $each: [
+//             {
+//               user_id: '6266aa2f6dc20b624d2b429c',
+//               user_name: 'Enrique Dans',
+//               user_email: 'enriquedans@user.com',
+//               time: Date.now(),
+//             },
+//             {
+//               user_id: '6266aa2f6dc20b624d2b42a5',
+//               user_name: 'Will Leitch',
+//               user_email: 'willleitch@user.com',
+//               time: Date.now(),
+//             },
+//           ],
+//         },
+//       },
+//     },
+//     { new: true, upsert: true }
+//   );
+// }
+
+// check if chat member includes
 async function main() {
-  let creatorId = mongoose.mongo.ObjectId('626c1229b7da2f66cadad033');
-  await userProfile.updateOne(
-    { _id: creatorId },
-    {
-      $addToSet: {
-        supporter: {
-          $each: [
-            {
-              user_name: 'Rita',
-              user_email: 'userEmail1@user.com',
-              time: Date.now(),
-            },
-            {
-              user_name: 'Ashley',
-              user_email: 'userEmail2@user.com',
-              time: Date.now(),
-            },
-            {
-              user_name: 'Hoho',
-              user_email: 'userEmail3@user.com',
-              time: Date.now(),
-            },
-            {
-              user_name: 'Barbie',
-              user_email: 'userEmail4@user.com',
-              time: Date.now(),
-            },
-          ],
-        },
-      },
-    },
-    { new: true, upsert: true }
-  );
+  let checkroom = await chatRoom.findOne({
+    members: { $all: ['6266aa2f6dc20b624d2b4297', '626c1229b7da2f66cadad033'] },
+  });
+  console.log(checkroom);
 }
 
-main();
+// main();
 
 module.exports = {
   support,
