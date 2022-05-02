@@ -1,5 +1,6 @@
 let userName = localStorage.getItem('user_name');
 let myProfile = localStorage.getItem('profile_pic');
+let myPage = localStorage.getItem('page_name');
 
 let leftbar = document.getElementById('leftbar-img');
 let myInfo = `
@@ -15,3 +16,7 @@ leftbar.innerHTML = myInfo;
 let navImg = document.getElementById('nav-img');
 let myImg = ` <img class="rounded-circle me-lg-2" src="${myProfile}" alt="" style="width: 40px; height: 40px;">`;
 navImg.innerHTML = myImg;
+
+let toProfile = document.getElementById('menu-list');
+let pagePath = `<a href="./creator/${myPage}" class="dropdown-item">View My Page</a>`;
+toProfile.innerHTML = pagePath;

@@ -1,4 +1,5 @@
 let creatorPath = window.location.pathname;
+let pageName = creatorPath.replace('/creator/', '');
 
 //follow function
 function follow() {
@@ -76,7 +77,8 @@ axios
         following = false;
       }
     });
-    console.log(following);
+    // console.log(following);
+
     if (user == _id) {
       document.getElementById('edit-page').style.display = 'block';
       document.getElementById('feat-follow').style.display = 'none';
@@ -98,8 +100,10 @@ axios
     let profilePic = document.getElementById('profile-pic');
 
     if (user == _id) {
+      //only add when you are creator itself
       localStorage.setItem('profile_pic', profile_pic);
       localStorage.setItem('user_name', user_name);
+      localStorage.setItem('page_name', pageName);
     }
     if (typeof intro_post == 'undefined') {
       intro_post = `Hello I am ${user_name}, Welcom to join me @buymeboba.today`;
@@ -131,7 +135,6 @@ axios
         comment,
         like_count,
         create_time,
-        liked_by,
         _id,
       } = data;
       if (!description) {
