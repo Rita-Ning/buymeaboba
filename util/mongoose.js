@@ -217,6 +217,10 @@ const post = mongoose.model('post', {
 });
 
 const support = mongoose.model('support', {
+  event: {
+    type: String,
+    default: 'homepage',
+  },
   user_name: {
     type: String,
   },
@@ -260,12 +264,51 @@ async function main() {
 // async function main() {
 //   let result = await userProfile.updateMany({}, { about: '' });
 // }
+
+//find function test
+// async function main() {
+//   let result = await userProfile.find({ user_name: /da/ });
+//   console.log(result);
+// }
+
+//push data to my profile
 async function main() {
-  let result = await userProfile.find({ user_name: /da/ });
-  console.log(result);
+  let creatorId = mongoose.mongo.ObjectId('626c1229b7da2f66cadad033');
+  await userProfile.updateOne(
+    { _id: creatorId },
+    {
+      $addToSet: {
+        supporter: {
+          $each: [
+            {
+              user_name: 'Rita',
+              user_email: 'userEmail1@user.com',
+              time: Date.now(),
+            },
+            {
+              user_name: 'Ashley',
+              user_email: 'userEmail2@user.com',
+              time: Date.now(),
+            },
+            {
+              user_name: 'Hoho',
+              user_email: 'userEmail3@user.com',
+              time: Date.now(),
+            },
+            {
+              user_name: 'Barbie',
+              user_email: 'userEmail4@user.com',
+              time: Date.now(),
+            },
+          ],
+        },
+      },
+    },
+    { new: true, upsert: true }
+  );
 }
 
-// main();
+main();
 
 module.exports = {
   support,

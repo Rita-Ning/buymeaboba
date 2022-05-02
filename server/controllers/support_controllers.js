@@ -70,6 +70,7 @@ router.post('/support/checkout', async (req, res, next) => {
       user_email: userEmail,
       creator_id,
       amount,
+      event: 'homepage',
     };
 
     // add into support db
@@ -88,7 +89,7 @@ router.post('/support/checkout', async (req, res, next) => {
 
     //update creator support list
     let supporterInfo = {
-      event: homepage,
+      event: 'homepage',
       user_name: userName,
       user_email: userEmail,
       time: Date.now(),
