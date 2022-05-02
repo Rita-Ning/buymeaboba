@@ -135,7 +135,7 @@ const userProfile = mongoose.model('user', {
     type: Array,
   },
   following: {
-    type: [String],
+    type: Array,
   },
   supporter: {
     type: Array,

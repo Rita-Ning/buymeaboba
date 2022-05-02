@@ -93,10 +93,10 @@ router.post('/support/checkout', async (req, res, next) => {
       user_email: userEmail,
       time: Date.now(),
     };
-    userProfile.update(
+    await userProfile.updateOne(
       { _id: creatorId },
       { $push: { supporter: supporterInfo } },
-      done
+      { new: true, upsert: true }
     );
 
     let data = { data: addSupport._id };

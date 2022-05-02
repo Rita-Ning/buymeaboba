@@ -1,5 +1,54 @@
 let creatorPath = window.location.pathname;
 
+//follow function
+function follow() {
+  let following_name = creatorPath.split('/')[2];
+  let user = localStorage.getItem('user_info');
+  let followInfo = {
+    follower_id: user,
+    following_name,
+  };
+  document.getElementById('feat-follow').style.display = 'none';
+  document.getElementById('feat-unfollow').style.display = 'block';
+  axios({
+    method: 'post',
+    url: '/api/1.0/follow/add',
+    data: JSON.stringify(followInfo),
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch(function (err) {
+      msg = err.data;
+      alert(msg);
+    });
+}
+
+function unfollow() {
+  let unfollowing_name = creatorPath.split('/')[2];
+  let user = localStorage.getItem('user_info');
+  let unfollowInfo = {
+    unfollower_id: user,
+    unfollowing_name,
+  };
+  document.getElementById('feat-follow').style.display = 'block';
+  document.getElementById('feat-unfollow').style.display = 'none';
+  axios({
+    method: 'post',
+    url: '/api/1.0/follow/delete',
+    data: JSON.stringify(unfollowInfo),
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch(function (err) {
+      msg = err.data;
+      alert(msg);
+    });
+}
+
 axios
   .get(`/api/1.0/${creatorPath}`)
   .then((res) => {
@@ -11,17 +60,47 @@ axios
       intro_post,
       about,
       follower_count,
+      follower,
       post,
       popular,
+      _id,
     } = data;
+
+    let following;
+    // check if user self and if following
+    let user = localStorage.getItem('user_info');
+    follower.forEach((follower) => {
+      if (follower.follower_id == user) {
+        following = true;
+      } else {
+        following = false;
+      }
+    });
+    console.log(following);
+    if (user == _id) {
+      document.getElementById('edit-page').style.display = 'block';
+      document.getElementById('feat-follow').style.display = 'none';
+      document.getElementById('feat-unfollow').style.display = 'none';
+    } else if (following) {
+      document.getElementById('edit-page').style.display = 'none';
+      document.getElementById('feat-follow').style.display = 'none';
+      document.getElementById('feat-unfollow').style.display = 'block';
+    } else {
+      document.getElementById('edit-page').style.display = 'none';
+      document.getElementById('feat-follow').style.display = 'block';
+      document.getElementById('feat-unfollow').style.display = 'none';
+    }
 
     if (!follower_count) {
       follower_count = 0;
     }
     let profileColumn = document.getElementById('self-intro');
     let profilePic = document.getElementById('profile-pic');
-    localStorage.setItem('profile_pic', profile_pic);
-    localStorage.setItem('user_name', user_name);
+
+    if (user == _id) {
+      localStorage.setItem('profile_pic', profile_pic);
+      localStorage.setItem('user_name', user_name);
+    }
     if (typeof intro_post == 'undefined') {
       intro_post = `Hello I am ${user_name}, Welcom to join me @buymeboba.today`;
     }
