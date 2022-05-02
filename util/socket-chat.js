@@ -1,7 +1,7 @@
-const { chatMsg } = require('../util/mongoose');
+const { chatMsg, userProfile } = require('../util/mongoose');
 var mongoose = require('mongoose');
 
-function campaign(server) {
+async function campaign(server) {
   const io = require('socket.io')(server, {
     cors: {
       origin: '*',
@@ -14,29 +14,34 @@ function campaign(server) {
     });
 
     socket.on('send-chat-message', (data) => {
-      console.log(data);
-      storeMsg(data);
-      io.to(data.roomId).emit('chat-message', data);
+      (async () => {
+        let sendInfo = await storeMsg(data);
+        io.to(data.roomId).emit('chat-message', sendInfo);
+      })();
     });
   });
 }
 
-function storeMsg(data) {
+async function storeMsg(data) {
   var room_id = mongoose.mongo.ObjectId(data.roomId);
-  const msg = new chatMsg({
+  var userId = mongoose.mongo.ObjectId(data.sender);
+  var senderInfo = await userProfile.findOne(
+    { _id: userId },
+    { profile_pic: 1, user_name: 1 }
+  );
+  let sendInfo = {
     room_id: room_id,
     sender: data.sender,
+    sender_name: senderInfo.user_name,
+    sender_pic: senderInfo.profile_pic,
     msg: data.message,
-  });
+    time: Date.now(),
+  };
 
-  msg
-    .save()
-    .then(() => {
-      console.log(msg);
-    })
-    .catch((error) => {
-      console.log('error', error);
-    });
+  const msg = await chatMsg.create(sendInfo).catch((error) => {
+    console.log('error', error);
+  });
+  return sendInfo;
 }
 
 // async function historyMsg(roomId) {

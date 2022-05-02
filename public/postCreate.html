@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Profile Page</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Post Create</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -29,6 +30,17 @@
 
     <!-- Template Stylesheet -->
     <link href="./css/dashboard.css" rel="stylesheet">
+
+    <!-- From Summernote -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body class="bg-white">
@@ -48,9 +60,9 @@
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
                   <img src="./images/logo.jpeg" height="45" class='border rounded-circle border-2 border-white'/>
                 </a>
-                <div class="d-flex align-items-center ms-4 mb-4 mt-5">
+                <div class="d-flex align-items-center ms-4 mb-4 mt-5" id="leftbar-img">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="./images/Rita Tang.png" alt="" style="width: 40px; height: 40px;">
+                        <img class="rounded-circle" src="./images/Rita Tang.png" style="width: 40px; height: 40px;">
                         <div class="rounded-circle bg-warning border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
@@ -58,13 +70,13 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="table.html" class="nav-item nav-link"><i class="fa fa-user-astronaut me-2"></i>Creators | Follow</a>
-                    <a href="widget.html" class="nav-item nav-link"><i class="fa fa-pen me-2"></i>My Post</a>
-                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-envelope me-2"></i>Messages</a>
+                    <a href="follow.html" class="nav-item nav-link"><i class="fa fa-user-astronaut me-2"></i>Creators | Follow</a>
+                    <a href="postCreate.html" class="nav-item nav-link"><i class="fa fa-pen me-2"></i>My Post</a>
+                    <a href="chatroom.html" class="nav-item nav-link"><i class="fa fa-envelope me-2"></i>Messages</a>
                     <hr class="l-5">
-                    <a href="index.html" class="nav-item nav-link"><i class="fa fa-chart-column  me-2"></i>Dashboard</a>
-                    <a href="table.html" class="nav-item nav-link"><i class="fa-solid fa-calendar-plus me-2"></i>Extras</a>
-                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-gear me-2"></i>Setting</a>
+                    <a href="dashboard.html" class="nav-item nav-link"><i class="fa fa-chart-column  me-2"></i>Dashboard</a>
+                    <a href="event.html" class="nav-item nav-link"><i class="fa-solid fa-calendar-plus me-2"></i>Extras</a>
+                    <a href="setting.html" class="nav-item nav-link"><i class="fa fa-gear me-2"></i>Setting</a>
                 </div>
             </nav>
         </div>
@@ -76,7 +88,7 @@
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-white navbar-light px-5 ml-4 mr-4 mb-5 py-0 rounded-pill">
                 <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                    <img src="./images/logo.jpeg" height="45" class='border rounded-circle border-2 border-white'/>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars text-warning"></i>
@@ -107,7 +119,7 @@
                         </div>
                     </div>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="nav-img">
                             <img class="rounded-circle me-lg-2" src="./images/Rita Tang.png" alt="" style="width: 40px; height: 40px;">
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -120,43 +132,91 @@
             </nav>
             <!-- Navbar End -->
 
-
-            <!-- Blank Start -->
+            <!-- Column Start -->
             <div class="container-fluid pt-4 px-4">
-                <div class="row vh-100 rounded align-items-center justify-content-center mx-0 blank">
-                    <div class="col-md-6 text-center">
-                        <h3>This is blank page</h3>
-                    </div>
-                </div>
+              <div class="row g-4 vh-100 rounded justify-content-center mx-0 blank bg-white">
+                  <div class="col-sm-12 w-100">
+                      <div class="h-100 bg-light rounded p-5 post-container">
+                          <div class="d-flex align-items-center mb-4">
+                              <div>
+                                <h2 class="mt-3 mb-3">Create New Post</h2>
+                                <hr/>
+                                <div class="form">
+                                  <div>
+                                    <input style="margin-bottom: 10px;" class="form-control" id="post-title" placeholder="Title">
+                                  </div>
+                                  <div>
+                                    <input style="margin-bottom: 10px;" class="form-control" id="description" placeholder="description">
+                                  </div>
+                                </div>
+                                <div id="myeditor" class="mb-4"></div>
+                                <button type="button"
+                                    class="btn btn-success mt-4 bg-warning border-0 mb-4"
+                                    onclick="postArticle()"> Publish
+                                </button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
             </div>
             <!-- Blank End -->
-
-
-            <!-- Footer Start -->
-            <!-- <div class="container-fluid pt-4 px-4">
-                <div class="bg-light rounded-top p-4">
-                    <div class="row">
-                        <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
-                        </div>
-                        <div class="col-12 col-sm-6 text-center text-sm-end"> -->
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                            <!-- Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- Footer End -->
-        <!-- </div> -->
-        <!-- Content End -->
-
+        </div>
+        <!-- Content End-->
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
+  <!-- Summer Note -->
+  <script>
+    $(document).ready(function() {
+      $("#myeditor").summernote({
+        placeholder: "Write somthing...",
+        height: 500,
+        width: 800,
+        focus: true,
+      }).summernote('lineHeight', 0.6);
+    });
+  
+    function postArticle() {
+      if(document.getElementById("post-title").value == ''){
+          alert('Title cannot be empty')
+        }
+      if ($('#myeditor').summernote("post-title")=='<p style="line-height: 0.5;"><br></p>')
+      {
+        alert('Content is empty');
+      }
+      let title = document.getElementById("post-title").value
+      let description = document.getElementById("description").value
+      let content = $("#myeditor").summernote("code");
+      console.log(content)
+      let user_id = localStorage.getItem('user_info')
+      let postInfo = {title, description, content, user_id}
+      savePost(postInfo)
+      $("#myeditor").summernote("code",'');
+    }
+  
+    function savePost(postInfo){
+      let headers = { 'Content-Type': 'application/json' };
+      axios({
+        method: 'post',
+        url: '/api/1.0/post/create',
+        data: JSON.stringify(postInfo),
+        headers: headers,
+      })
+        .then((res) => {
+          let user_page = res.data.user_page
+          window.location.href=`./creator/${user_page}`
+        })
+        .catch(function (err) {
+          msg = err.response.data.error;
+          alert(msg);
+        });
+    }
+    </script>
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/chart/chart.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
@@ -168,6 +228,7 @@
 
     <!-- Template Javascript -->
     <script src="./js/profile.js"></script>
+    <script src="./webscript/profile-share.js"></script>
 </body>
 
 </html>

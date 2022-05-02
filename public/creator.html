@@ -33,13 +33,19 @@ NAVBAR
 	</button>
 	<div class="navbar-collapse collapse" id="navbarColor02">
 		<ul class="navbar-nav mr-auto d-flex align-items-center">
-			<li class="nav-item">
-			<a class="nav-link" href="#">Edit Page</a>
+			<li class="nav-item" id="edit-page">
+				<a class="nav-link" href="#">Edit Page</a>
+			</li>
+			<li class="nav-item pr-3" id="feat-follow">
+				<button type="button" href="#" class="btn btn-sm btn-outline-warning rounded-pill" style="height:35px" onclick="follow()">Follow</button>
+			</li>
+			<li class="nav-item pr-3" id="feat-unfollow">
+				<button type="button" href="#" class="btn btn-sm btn-outline-warning rounded-pill text-center" style="height:35px;" onclick="unfollow()">Following</button>
 			</li>
 		</ul>
 		<ul class="navbar-nav ml-auto d-flex align-items-center">
 			<li class="nav-item highlight">
-			<a class="nav-link" href="/profile.html">My Profile</a>
+				<a class="nav-link" href="/profile-home.html">My Profile</a>
 			</li>
 		</ul>
 	</div>
@@ -78,8 +84,7 @@ MAIN
 	<div class="row">
 		<div class="leftcolumn">
 		<div class="col-lg-9">
-			<div class="card border-0 mb-4 box-shadow h-xl-300">              
-                <!-- <div style="background-image: url(./assets/img/demo/1.jpg); height: 150px;    background-size: cover;    background-repeat: no-repeat;"></div>                -->
+			<div class="card border-0 mb-4 box-shadow h-xl-300">            
 				<div class="card-body px-0 pb-0 pt-0 pl-1 d-flex flex-column align-items-start">
 					<h2 class="h4 font-weight-bold">About Me</h2>
 					<div id ='about'>

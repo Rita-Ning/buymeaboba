@@ -20,9 +20,10 @@ const chatRoom = mongoose.model('chatRoom', {
   },
 });
 
-// const room = new chatRoom({
-//   members: ['d', 'c'],
+// const room = chatRoom.create({
+//   members: ['626c1229b7da2f66cadad033', '6266aa2f6dc20b624d2b42a3'],
 // });
+// console.log(room);
 
 // room
 //   .save()
@@ -42,6 +43,13 @@ const chatMsg = mongoose.model('chatMsg', {
     type: String,
     required: true,
   },
+  sender_name: {
+    type: String,
+    required: true,
+  },
+  sender_pic: {
+    type: String,
+  },
   msg: {
     type: String,
   },
@@ -50,6 +58,14 @@ const chatMsg = mongoose.model('chatMsg', {
     default: Date.now,
   },
 });
+
+// let roomId = mongoose.mongo.ObjectId('626d4fe273078862cd855710');
+
+// chatMsg.create({
+//   room_id: roomId,
+//   sender: '626c1229b7da2f66cadad033',
+//   msg: 'Welcome!!',
+// });
 
 //find功能
 // chatRoom.find({ members: 'a' }, function (err, docs) {
@@ -119,7 +135,7 @@ const userProfile = mongoose.model('user', {
     type: Array,
   },
   following: {
-    type: [String],
+    type: Array,
   },
   supporter: {
     type: Array,
