@@ -133,7 +133,7 @@ router.post('/user/login', async (req, res, next) => {
       // Response Format
       let data = await userProfile
         .findOne({ email: email })
-        .select('_id is_admin page_create');
+        .select('_id is_admin page_create user_page');
 
       console.log(data);
       const token = jwt.sign(
@@ -152,6 +152,7 @@ router.post('/user/login', async (req, res, next) => {
           access_expired: expireTime,
           user: data._id,
           page_create: data.page_create,
+          user_page: data.user_page,
         },
       };
       // check if sign in success

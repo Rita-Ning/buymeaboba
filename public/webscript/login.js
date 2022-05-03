@@ -46,7 +46,7 @@ function log_in() {
     password: password,
   };
   axios({
-    method: 'get',
+    method: 'post',
     url: '/api/1.0/user/login',
     data: JSON.stringify(userInfo),
     headers: headers,
@@ -56,17 +56,19 @@ function log_in() {
       let token = data.access_token;
       let userInfo = data.user;
       let page_create = data.page_create;
+      let user_page = data.user_page;
       // console.log(userInfo);
 
       localStorage.setItem('token', token);
       localStorage.setItem('user_info', userInfo);
       if (page_create == '1') {
-        window.location.href = 'creator.html';
+        window.location.href = `/creator/${user_page}`;
       } else {
         window.location.href = `./complete-profile.html`;
       }
     })
     .catch(function (err) {
+      console.log(err);
       msg = err.response.data.error;
       alert(msg);
     });
