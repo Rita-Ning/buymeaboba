@@ -2948,13 +2948,13 @@ input[type="button"].btn-block {
   background-color: transparent;
   border: 0; }
   .dropdown-item:hover, .dropdown-item:focus {
-    color: #16181b;
+    color: #fff;
     text-decoration: none;
-    background-color: #f8f9fa; }
+    background-color: #333533; }
   .dropdown-item.active, .dropdown-item:active {
     color: #fff;
     text-decoration: none;
-    background-color: #03a87c; }
+    background-color: #333533; }
   .dropdown-item.disabled, .dropdown-item:disabled {
     color: #6c757d;
     background-color: transparent; }
@@ -9853,5 +9853,9 @@ and left sides of the text */
 #comment-box {
   overflow-y: auto;
   height: calc(100vh - 280px);
+}
+
+.highlight{
+  background-color: #FFD500;
 }
 /* sourceMappingURL = main.css.map */

@@ -38,12 +38,19 @@ NAVBAR
 			<li class="nav-item pr-3" id="feat-unfollow">
 				<button type="button" href="#" class="btn btn-sm btn-outline-warning rounded-pill text-center" style="height:35px;" onclick="unfollow()">Following</button>
 			</li>
-		</ul>
-		<ul class="navbar-nav ml-auto d-flex align-items-center">
-			<li class="nav-item highlight" id="my-profile">
-			<a class="nav-link" href="/profile-home.html">My Profile</a>
+			<li class="nav-item dropdown" id="my-profile">
+				<a class="nav-link dropdown-toggle highlight rounded pt-1 pb-1 pl-2 pr-2 text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Profile</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="/" id="my-page">View My Page</a>
+					<a class="dropdown-item" href="/profile-home.html">My Profile</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="/" onclick="logOut()">Log Out</a>
+				</div>
 			</li>
-		</ul>
+			<!-- <li class="nav-item highlight rounded" id="my-profile">
+				<a class="nav-link" href="/profile-home.html">My Profile</a>
+			</li> -->
+		</ul>		
 	</div>
 </div>
 </nav>
@@ -175,6 +182,20 @@ JAVASCRIPTS
 
   });
 </script>  -->
+<script>
+	function logOut(){
+		localStorage.clear()
+	}
+	// change view my page href
+	let myPage = localStorage.getItem('page_name')
+	document.getElementById('my-page').href=`/creator/${myPage}`
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+	// document.getElementById('menu-list')
+</script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/webscript/article.js"></script>
 </body>

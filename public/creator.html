@@ -43,10 +43,14 @@ NAVBAR
 			<li class="nav-item pr-3" id="feat-unfollow">
 				<button type="button" href="#" class="btn btn-sm btn-outline-warning rounded-pill text-center" style="height:35px;" onclick="unfollow()">Following</button>
 			</li>
-		</ul>
-		<ul class="navbar-nav ml-auto d-flex align-items-center">
-			<li class="nav-item highlight" id="my-profile">
-				<a class="nav-link" href="/profile-home.html">My Profile</a>
+			<li class="nav-item dropdown" id="my-profile">
+				<a class="nav-link dropdown-toggle highlight rounded pt-1 pb-1 pl-2 pr-2 text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Profile</a>
+				<div class="dropdown-menu" id="drop-list">
+					<a class="dropdown-item" href="/" id="my-page">View My Page</a>
+					<a class="dropdown-item" href="/profile-home.html">My Profile</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="/" onclick="logOut()">Log Out</a>
+				</div>
 			</li>
 		</ul>
 	</div>
@@ -227,6 +231,13 @@ JAVASCRIPTS
   });
 </script> -->
 <script>
+	function logOut(){
+		localStorage.clear()
+	}
+	// change view my page href
+	let myPage = localStorage.getItem('page_name')
+	document.getElementById('my-page').href=`/creator/${myPage}`
+
 	let setCount = document.getElementById("bobaAmount")
 	let oneBtn = document.getElementById("amountOne")
 	oneBtn.addEventListener('click',function(){

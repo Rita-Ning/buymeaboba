@@ -4,11 +4,11 @@ let currentName = localStorage.getItem('user_name');
 let articleId = articlePath.split('/')[2];
 let userToken = localStorage.getItem('token');
 
-if (!userToken) {
-  document.getElementById('my-profile').style.display = 'none';
-} else {
-  document.getElementById('my-profile').style.display = 'block';
-}
+// if (!userToken) {
+//   document.getElementById('my-profile').style.display = 'none';
+// } else {
+//   document.getElementById('my-profile').style.display = 'block';
+// }
 
 // like Btn change and send back
 function like() {
