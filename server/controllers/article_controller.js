@@ -30,6 +30,7 @@ router.get('/article/:postid', async (req, res) => {
       user_name: 1,
       profile_pic: 1,
       follower_count: 1,
+      follower: 1,
       about: 1,
     }
   );

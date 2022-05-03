@@ -1,8 +1,21 @@
 let creatorPath = window.location.pathname;
 let pageName = creatorPath.replace('/creator/', '');
+let userToken = localStorage.getItem('token');
+
+//check if login
+if (!userToken) {
+  document.getElementById('my-profile').style.display = 'none';
+} else {
+  document.getElementById('my-profile').style.display = 'block';
+}
 
 //follow function
 function follow() {
+  // if not login -> signup
+  if (!userToken) {
+    window.location.href = '/signup.html';
+    return;
+  }
   let following_name = creatorPath.split('/')[2];
   let user = localStorage.getItem('user_info');
   let followInfo = {

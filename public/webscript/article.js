@@ -2,9 +2,20 @@ let articlePath = window.location.pathname;
 let currentId = localStorage.getItem('user_info');
 let currentName = localStorage.getItem('user_name');
 let articleId = articlePath.split('/')[2];
+let userToken = localStorage.getItem('token');
+
+if (!userToken) {
+  document.getElementById('my-profile').style.display = 'none';
+} else {
+  document.getElementById('my-profile').style.display = 'block';
+}
 
 // like Btn change and send back
 function like() {
+  if (!userToken) {
+    window.location.href = '/signup.html';
+    return;
+  }
   axios.get(`/api/1.0${articlePath}`).then((res) => {
     let { like_count } = res.data;
     if (!like_count) {
@@ -71,6 +82,10 @@ const commentColumn = document.getElementById('comment-box');
 
 commentForm.addEventListener('submit', (e) => {
   e.preventDefault();
+  if (!userToken) {
+    window.location.href = '/signup.html';
+    return;
+  }
   comment = commentInput.value;
   axios({
     method: 'post',
@@ -119,7 +134,7 @@ commentForm.addEventListener('submit', (e) => {
 axios.get(`/api/1.0${articlePath}`).then((res) => {
   let data = res.data;
   //follower count need to be fixed for supporter count, now is for fake data
-  let { content, user, popular, comment, liked_by, like_count } = data;
+  let { content, user, popular, comment, liked_by, like_count, user_id } = data;
   let profileColumn = document.getElementById('self-intro');
   let profilePic = document.getElementById('profile-pic');
   let follower_count = user.follower_count;
@@ -191,6 +206,30 @@ axios.get(`/api/1.0${articlePath}`).then((res) => {
     </div>`;
   }
   commentColumn.innerHTML = comments;
+
+  let following;
+  user.follower.forEach((follow) => {
+    if (follow.follower_id == currentId) {
+      following = true;
+    } else {
+      following = false;
+    }
+  });
+
+  //follow,following,edit auth setting
+  if (currentId == user_id) {
+    document.getElementById('edit-page').style.display = 'block';
+    document.getElementById('feat-follow').style.display = 'none';
+    document.getElementById('feat-unfollow').style.display = 'none';
+  } else if (following) {
+    document.getElementById('edit-page').style.display = 'none';
+    document.getElementById('feat-follow').style.display = 'none';
+    document.getElementById('feat-unfollow').style.display = 'block';
+  } else {
+    document.getElementById('edit-page').style.display = 'none';
+    document.getElementById('feat-follow').style.display = 'block';
+    document.getElementById('feat-unfollow').style.display = 'none';
+  }
 
   //check if user liked
   if (!like_count) {
