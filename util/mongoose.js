@@ -216,7 +216,25 @@ const post = mongoose.model('post', {
   },
 });
 
+// create post comment fake data test
+// let postMy = mongoose.mongo.ObjectId('626e42a0bf8d9fc02be88029');
+// async function main() {
+//   let re = await post.updateOne(
+//     { _id: postMy },
+//     { $push: { comment: { comment: 'Test form Rita haha' } } }
+//   );
+//   console.log(re);
+// }
+// main();
+
 const support = mongoose.model('support', {
+  event: {
+    type: String,
+    default: 'homepage',
+  },
+  user_id: {
+    type: String,
+  },
   user_name: {
     type: String,
   },
@@ -240,15 +258,15 @@ const support = mongoose.model('support', {
   },
 });
 
-async function main() {
-  let result = await userProfile
-    .findOne({ email: 'test100@test.com' })
-    .select('_id user_name is_admin is_creator profile_pic email');
-  if (!result) {
-    console.log('no result');
-  }
-  console.log(result);
-}
+// async function main() {
+//   let result = await userProfile
+//     .findOne({ email: 'test100@test.com' })
+//     .select('_id user_name is_admin is_creator profile_pic email');
+//   if (!result) {
+//     console.log('no result');
+//   }
+//   console.log(result);
+// }
 
 // await userProfile.create();
 
@@ -260,11 +278,58 @@ async function main() {
 // async function main() {
 //   let result = await userProfile.updateMany({}, { about: '' });
 // }
-async function main() {
-  let result = await userProfile.find({ user_name: /da/ });
-  console.log(result);
-}
 
+//find function test
+// async function main() {
+//   let result = await userProfile.find({ user_name: /da/ });
+//   console.log(result);
+// }
+
+//push data to my profile
+// async function main() {
+//   let creatorId = mongoose.mongo.ObjectId('626c1229b7da2f66cadad033');
+//   await userProfile.updateOne(
+//     { _id: creatorId },
+//     {
+//       $addToSet: {
+//         supporter: {
+//           $each: [
+//             {
+//               user_id: '6266aa2f6dc20b624d2b429c',
+//               user_name: 'Enrique Dans',
+//               user_email: 'enriquedans@user.com',
+//               time: Date.now(),
+//             },
+//             {
+//               user_id: '6266aa2f6dc20b624d2b42a5',
+//               user_name: 'Will Leitch',
+//               user_email: 'willleitch@user.com',
+//               time: Date.now(),
+//             },
+//           ],
+//         },
+//       },
+//     },
+//     { new: true, upsert: true }
+//   );
+// }
+
+// check if chat member includes
+// async function main() {
+//   let checkroom = await chatRoom.findOne({
+//     members: { $all: ['6266aa2f6dc20b624d2b4297', '626c1229b7da2f66cadad033'] },
+//   });
+//   console.log(checkroom);
+// }
+
+// async function main() {
+//   let result = await post.updateMany(
+//     { 'comment.comment': '' },
+//     // { 'comment.comment': 'Test form Rita Tang' }
+//     { $pull: { comment: { comment: '' } } }
+//   );
+//   console.log(result);
+// }
 // main();
 
 module.exports = {

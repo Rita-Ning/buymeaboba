@@ -306,3 +306,7 @@
 .post-container{
     width:auto !important;
 }
+
+#newMsg-box{
+    display: none;
+}

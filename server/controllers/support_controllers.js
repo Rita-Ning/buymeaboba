@@ -16,6 +16,7 @@ router.post('/support/checkout', async (req, res, next) => {
 
   let userName;
   let userEmail;
+  let userId;
 
   if (user.user_name) {
     userName = user.user_name;
@@ -28,6 +29,7 @@ router.post('/support/checkout', async (req, res, next) => {
     );
     userName = userFind.user_name;
     userEmail = userFind.user_id;
+    userId = userFind._id;
   }
 
   // Send data to TapPay
@@ -65,34 +67,57 @@ router.post('/support/checkout', async (req, res, next) => {
       { _id: 1 }
     );
 
-    let supportInfo = {
-      user_name: userName,
-      user_email: userEmail,
-      creator_id,
-      amount,
-    };
+    let supportInfo;
+    if (userId) {
+      supportInfo = {
+        user_id: userId,
+        user_name: userName,
+        user_email: userEmail,
+        creator_id,
+        amount,
+        event: 'homepage',
+      };
+    } else {
+      supportInfo = {
+        user_name: userName,
+        user_email: userEmail,
+        creator_id,
+        amount,
+        event: 'homepage',
+      };
+    }
 
     // add into support db
     let addSupport = await support.create(supportInfo);
 
-    let userInfo = {
-      user_name: userName,
-      email: userEmail,
-    };
+    // //add into user db
+    // let userInfo = {
+    //   user_name: userName,
+    //   email: userEmail,
+    // };
 
-    //add into user db
-    let addUser = await userProfile.create(userInfo);
-    // console.log(addUser)
+    // let addUser = await userProfile.create(userInfo);
+    // // console.log(addUser)
 
     let creatorId = mongoose.mongo.ObjectId(creator_id);
 
     //update creator support list
-    let supporterInfo = {
-      event: homepage,
-      user_name: userName,
-      user_email: userEmail,
-      time: Date.now(),
-    };
+    if (userId) {
+      supporterInfo = {
+        event: 'homepage',
+        user_id: userId,
+        user_name: userName,
+        user_email: userEmail,
+        time: Date.now(),
+      };
+    } else {
+      supporterInfo = {
+        event: 'homepage',
+        user_name: userName,
+        user_email: userEmail,
+        time: Date.now(),
+      };
+    }
     await userProfile.updateOne(
       { _id: creatorId },
       { $push: { supporter: supporterInfo } },

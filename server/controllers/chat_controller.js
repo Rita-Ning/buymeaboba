@@ -4,7 +4,8 @@ var mongoose = require('mongoose');
 const router = express.Router();
 const { chatMsg, chatRoom, userProfile } = require('../../util/mongoose');
 
-router.post('/chatroom', async (req, res, next) => {
+// send user chatted back
+router.post('/chat/chatroom', async (req, res, next) => {
   try {
     let userId = req.body['user_id'];
     const rooms = await chatRoom.find({ members: userId });
@@ -40,7 +41,8 @@ router.post('/chatroom', async (req, res, next) => {
   }
 });
 
-router.get(`/msg`, async (req, res, next) => {
+// send history information back
+router.get(`/chat/msg`, async (req, res, next) => {
   try {
     const { roomid, member } = req.query;
     memberId = mongoose.mongo.ObjectId(member);
@@ -63,6 +65,110 @@ router.get(`/msg`, async (req, res, next) => {
     res.json(data);
   } catch (error) {
     next(error);
+  }
+});
+
+// sending back data for sending to memberships
+router.post('/chat/member', async (req, res, next) => {
+  try {
+    let userId = req.body['user_id'];
+    let id = mongoose.mongo.ObjectId(userId);
+    const userInfo = await userProfile.findOne(
+      { _id: id },
+      { follower: 1, supporter: 1 }
+    );
+    // console.log(userInfo);
+
+    // save follower
+    let follower_count = userInfo.follower.length;
+    let supporter_count = userInfo.supporter.length;
+
+    let data = {
+      follower_count,
+      supporter_count,
+    };
+
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// get data and save to db
+router.post('/chat/multiple-msg', async (req, res, next) => {
+  try {
+    let { user_id, type, msg } = req.body;
+
+    let id = mongoose.mongo.ObjectId(user_id);
+    const userInfo = await userProfile.findOne(
+      { _id: id },
+      { follower: 1, supporter: 1, user_name: 1, sender_pic: 1 }
+    );
+
+    // save supporter and check if user is a member if not then not send/ send by email
+    //supporter might duplicate
+    let supporter_list = [];
+    userInfo.supporter.forEach((supporter) => {
+      if (supporter.user_id) {
+        if (!supporter_list.includes(supporter.user_id))
+          supporter_list.push(supporter.user_id);
+      }
+    });
+
+    //check type and save to db
+    let roomId;
+    let creator_name = userInfo.user_name;
+    let creator_pic = userInfo.sender_pic;
+    if (type == 'follow') {
+      userInfo.follower.forEach((follower) => {
+        if (!ifRoom(user_id, follower.follower_id)) {
+          roomId = createRoom(user_id, follower.follower_id);
+          createMsg(roomId, user_id, msg, creator_name, creator_pic);
+        } else {
+          rooomId = ifRoom(user_id, follower.follower_id);
+          createMsg(roomId, user_id, msg, creator_name, creator_pic);
+        }
+      });
+    } else {
+      supporter_list.forEach((supporter) => {
+        if (!ifRoom(user_id, supporter)) {
+          roomId = createRoom(user_id, supporter);
+          createMsg(roomId, user_id, msg, creator_name, creator_pic);
+        } else {
+          rooomId = ifRoom(user_id, supporter);
+          createMsg(roomId, user_id, msg, creator_name, creator_pic);
+        }
+      });
+    }
+    res.send('sucess');
+  } catch (err) {
+    next(err);
+  }
+
+  async function createRoom(user_id, member) {
+    let newRoom = await chatRoom.create({ members: [user_id, member] });
+    return newRoom._id;
+  }
+
+  async function createMsg(roomId, sender, msg, creator_name, creator_pic) {
+    await chatMsg.create({
+      room_id: roomId,
+      sender: sender,
+      sender_name: creator_name,
+      sender_pic: creator_pic,
+      msg: msg,
+    });
+  }
+
+  async function ifRoom(user_id, member) {
+    let checkroom = await chatRoom.findOne({
+      members: { $all: [user_id, member] },
+    });
+    if (checkroom) {
+      return checkroom._id;
+    } else {
+      return false;
+    }
   }
 });
 

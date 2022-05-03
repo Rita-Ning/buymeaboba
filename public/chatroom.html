@@ -82,7 +82,7 @@
                     <i class="fa fa-bars text-warning"></i>
                 </a>
                 <div class="navbar-nav align-items-center ms-auto">
-                    <div class="nav-item dropdown">
+                    <!-- <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-bell me-lg-2"></i>
                             <span class="d-none d-lg-inline-flex">Notificatin</span>
@@ -105,7 +105,7 @@
                             <hr class="dropdown-divider">
                             <a href="#" class="dropdown-item text-center">See all notifications</a>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="nav-img">
                             <img class="rounded-circle me-lg-2" src="./images/Rita Tang.png" alt="" style="width: 40px; height: 40px;">
@@ -122,13 +122,13 @@
 
 
             <!-- Chart Start -->
-            <div class="container-fluid pt-4 px-4">
+            <div class="container-fluid pt-4 px-4" id="chatroom-box">
               <div class="row g-4 vh-100 rounded justify-content-center mx-0 blank bg-white">
                   <div class="col-sm-12 col-xl-4 w-100">
                       <div class="h-100 bg-light rounded p-5">
                           <div class="d-flex align-items-center justify-content-between mb-4">
                               <h5 class="mb-0">Messages</h5>
-                              <a href="" class='display-7'>
+                              <a class='display-7' onclick="newMsg()">
                                 +
                               </a>
                           </div>
@@ -148,6 +148,41 @@
                       </div>
                   </div>
               </div>
+            </div>
+            <div class="container-fluid pt-4 px-4" id="newMsg-box">
+                <div class="row g-4 vh-100 rounded justify-content-center mx-0 blank bg-white">
+                    <div class="col-sm-12 col-xl-4 w-100">
+                        <div class="h-100 bg-light rounded p-5">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h5 class="mb-0">New Messages</h5>
+                                <a class='display-7' onclick="toChatRoom()">
+                                    x
+                                </a>
+                            </div>
+                            <hr style="height:2px">
+                            <div id="memberset" class="pt-2" >
+                                <div class="d-flex align-items-center border-bottom py-3">
+                                    <div class="w-100 ms-3" id="follower-count">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-0">Followers</h6>
+                                            <a class="btn-sm btn-warning rounded-pill text-white">Message</a>
+                                        </div>
+                                        <span>0</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center border-bottom py-3">
+                                    <div class="w-100 ms-3" id="supporter-count">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-0">Supporters</h6>
+                                            <a class="btn-sm btn-warning rounded-pill text-white">Message</a>
+                                        </div>
+                                        <span>0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
             </div>
 
         </div>

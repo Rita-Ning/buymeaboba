@@ -58,12 +58,15 @@ router.get('/article/:postid', async (req, res) => {
     create_time,
   } = postInfo;
 
+  // let comment sent sort by comment time
+  let commentSort = comment.sort((a, b) => b.comment_time - a.comment_time);
+
   data = {
     user_id,
     title,
     description,
     content,
-    comment,
+    comment: commentSort,
     liked_by,
     like_count,
     create_time,
@@ -73,6 +76,64 @@ router.get('/article/:postid', async (req, res) => {
   data['popular'] = postPopular;
 
   return res.status(200).json(data);
+});
+
+//recieve comment and save
+router.post('/comment/add', async (req, res) => {
+  let { article_id, user_id, user_name, comment_time, comment } = req.body;
+  let result = await post.updateOne(
+    { _id: mongoose.mongo.ObjectId(article_id) },
+    {
+      $push: {
+        comment: {
+          user_id,
+          user_name,
+          comment_time,
+          comment,
+        },
+      },
+    }
+  );
+  // res.send('updated!');
+});
+
+//recieve like and save
+router.post('/like/add', async (req, res) => {
+  let { article_id, user_id, time } = req.body;
+  let result = await post.updateOne(
+    { _id: mongoose.mongo.ObjectId(article_id) },
+    {
+      $push: {
+        liked_by: {
+          user_id,
+          time,
+        },
+      },
+      $inc: { like_count: 1 },
+    },
+    { new: true, upsert: true }
+  );
+  console.log(result);
+  res.send('updated!');
+});
+
+//delete like
+router.post('/like/delete', async (req, res) => {
+  let { article_id, user_id } = req.body;
+  let result = await post.updateOne(
+    { _id: mongoose.mongo.ObjectId(article_id) },
+    {
+      $pull: {
+        liked_by: {
+          user_id,
+        },
+      },
+      $inc: { like_count: -1 },
+    },
+    { new: true, upsert: true }
+  );
+  // console.log(result);
+  res.send('updated!');
 });
 
 module.exports = router;

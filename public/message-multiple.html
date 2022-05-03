@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Profile Page</title>
+    <title>Message</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -50,7 +50,7 @@
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4 mt-5" id="leftbar-img">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="./images/Rita Tang.png" style="width: 40px; height: 40px;">
+                        <img class="rounded-circle" src="./images/Rita Tang.png" alt="" style="width: 40px; height: 40px;">
                         <div class="rounded-circle bg-warning border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
@@ -76,7 +76,7 @@
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-white navbar-light px-5 ml-4 mr-4 mb-5 py-0 rounded-pill">
                 <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                    <img src="./images/logo.jpeg" height="45" class='border rounded-circle border-2 border-white'/>
+                  <img src="./images/logo.jpeg" height="45" class='border rounded-circle border-2 border-white'/>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars text-warning"></i>
@@ -108,12 +108,12 @@
                     </div> -->
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="nav-img">
-                            <img class="rounded-circle me-lg-2" src="./images/Rita Tang.png" alt="" style="width: 40px; height: 40px;">
+                            <!-- <img class="rounded-circle me-lg-2" src="./images/Rita Tang.png" alt="" style="width: 40px; height: 40px;"> -->
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0" id="menu-list">
-                            <a href="./creator/" class="dropdown-item">View My Page</a>
-                            <!-- <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a> -->
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">My Profile</a>
+                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="#" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -121,17 +121,31 @@
             <!-- Navbar End -->
 
 
-            <!-- Blank Start -->
+            <!-- Chart Start -->
             <div class="container-fluid pt-4 px-4">
-                <div class="row vh-100 rounded align-items-center justify-content-center mx-0 blank">
-                    <div class="col-md-6 text-center">
-                        <h3>This is blank page</h3>
+              <div class="row g-4 vh-100 rounded justify-content-center mx-0 blank bg-white">
+                  <div class="col-sm-12 col-xl-4 w-100">
+                      <div class="h-100 bg-light rounded p-5">
+                          
+                          <div class="d-flex align-items-center justify-content-between mb-4">
+                              <div class="d-flex justify-content-between align-items-center" style="width:140px">
+                                <a href="/chatroom.html"><i class="fa-solid fa-angle-left"></i></a>
+                                <div class="d-flex align-items-center" style="width:90px" id="chat-member">
+                                    <img class="rounded-circle flex-shrink-0" src="./images/logo2.jpg" alt="" style="width: 30px; height: 30px;">
+                                    <div id ='type'><p class="mb-0 pl-5 font-weight-bold text-dark">Type</p></div>
+                                </div>
+                              </div>
+                          </div>
+                          <hr style="height:2px">
+                            <form class="text-muted d-flex justify-content-start pe-3 bg-light p-2 rounded bg-white mt-5" id ='send-all'>
+                                <textarea type="text" class="form-control form-control-m border-0 pr-0" rows="4" style="height:100%;" id="message-input"
+                                placeholder="Type message"></textarea>
+                                <button type="submit" id="send-button" class="btn btn-warning btn-m btn-rounded float-end">Send</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Blank End -->
-
-
         </div>
         <!-- Content End-->
 
@@ -152,8 +166,10 @@
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./js/profile.js"></script>
-    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./webscript/message-multiple.js"></script>
     <script src="./webscript/profile-share.js"></script>
 </body>
 

@@ -1,8 +1,21 @@
 let userId = window.localStorage.getItem('user_info');
 
+let chatroomPage = document.getElementById('chatroom-box');
+let sendForm = document.getElementById('newMsg-box');
+
+async function newMsg() {
+  chatroomPage.style.display = 'none';
+  sendForm.style.display = 'block';
+}
+
+async function toChatRoom() {
+  chatroomPage.style.display = 'block';
+  sendForm.style.display = 'none';
+}
+
 axios({
   method: 'post',
-  url: '/api/1.0/chatroom',
+  url: '/api/1.0/chat/chatroom',
   //API要求的資料
   data: {
     user_id: userId,
@@ -52,3 +65,35 @@ function showChatroom(res) {
 //     localStorage.setItem('member_pic',memberPic);
 //   }
 // }
+
+axios({
+  method: 'post',
+  url: '/api/1.0/chat/member',
+  //API要求的資料
+  data: {
+    user_id: userId,
+  },
+})
+  .then((res) => showMember(res))
+  .catch(function (error) {
+    console.log(error);
+  });
+
+function showMember(res) {
+  const chat = document.getElementById('chat-container');
+  let data = res.data;
+  let followerCount = data.follower_count;
+  let supporterCount = data.supporter_count;
+  document.getElementById('follower-count').innerHTML = `
+    <div class="d-flex w-100 justify-content-between">
+        <h6 class="mb-0">Followers</h6>
+        <a class="btn-sm btn-warning rounded-pill text-white" href='./message-multiple.html?type=follow'>Message</a>
+    </div>
+    <span>${followerCount}</span>`;
+  document.getElementById('supporter-count').innerHTML = `
+    <div class="d-flex w-100 justify-content-between">
+      <h6 class="mb-0">Supporters</h6>
+      <a class="btn-sm btn-warning rounded-pill text-white" href='./message-multiple.html?type=support'>Message</a>
+    </div>
+    <span>${supporterCount}</span>`;
+}
