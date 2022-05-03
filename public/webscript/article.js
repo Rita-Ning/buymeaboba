@@ -5,7 +5,7 @@ let articleId = articlePath.split('/')[2];
 
 // like Btn change and send back
 function like() {
-  axios.get(`/api/1.0/${articlePath}`).then((res) => {
+  axios.get(`/api/1.0${articlePath}`).then((res) => {
     let { like_count } = res.data;
     if (!like_count) {
       like_count = 0;
@@ -35,7 +35,7 @@ function like() {
 }
 
 function unlike() {
-  axios.get(`/api/1.0/${articlePath}`).then((res) => {
+  axios.get(`/api/1.0${articlePath}`).then((res) => {
     let { like_count } = res.data;
     if (!like_count) {
       like_count = 0;
@@ -116,7 +116,7 @@ commentForm.addEventListener('submit', (e) => {
   commentInput.value = '';
 });
 
-axios.get(`/api/1.0/${articlePath}`).then((res) => {
+axios.get(`/api/1.0${articlePath}`).then((res) => {
   let data = res.data;
   //follower count need to be fixed for supporter count, now is for fake data
   let { content, user, popular, comment, liked_by, like_count } = data;
@@ -199,7 +199,6 @@ axios.get(`/api/1.0/${articlePath}`).then((res) => {
 
   if (liked_by.length !== 0) {
     liked_by.forEach((element) => {
-      console.log(3);
       let isLike = element.user_id.includes(currentId);
 
       if (isLike) {

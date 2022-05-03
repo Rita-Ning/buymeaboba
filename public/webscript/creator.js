@@ -51,7 +51,7 @@ function unfollow() {
 }
 
 axios
-  .get(`/api/1.0/${creatorPath}`)
+  .get(`/api/1.0${creatorPath}`)
   .then((res) => {
     let data = res.data;
     //follower count need to be fixed for supporter count, now is for fake data
