@@ -1,5 +1,6 @@
 const express = require('express');
 var mongoose = require('mongoose');
+require('dotenv').config();
 
 const router = express.Router();
 const { upload } = require('../../util/multer');
@@ -20,7 +21,7 @@ router.post('/user/create', fields, async (req, res) => {
   } else {
     picturePath = req.files.profile_img[0].path.replace(
       'public/',
-      'http://localhost:3000/'
+      process.env.DNS
     );
   }
 
