@@ -9849,4 +9849,9 @@ and left sides of the text */
 .notMember{
   display: block;
 }
+
+#comment-box {
+  overflow-y: auto;
+  height: calc(100vh - 280px);
+}
 /* sourceMappingURL = main.css.map */

@@ -216,6 +216,17 @@ const post = mongoose.model('post', {
   },
 });
 
+// create post comment fake data test
+// let postMy = mongoose.mongo.ObjectId('626e42a0bf8d9fc02be88029');
+// async function main() {
+//   let re = await post.updateOne(
+//     { _id: postMy },
+//     { $push: { comment: { comment: 'Test form Rita haha' } } }
+//   );
+//   console.log(re);
+// }
+// main();
+
 const support = mongoose.model('support', {
   event: {
     type: String,
@@ -247,15 +258,15 @@ const support = mongoose.model('support', {
   },
 });
 
-async function main() {
-  let result = await userProfile
-    .findOne({ email: 'test100@test.com' })
-    .select('_id user_name is_admin is_creator profile_pic email');
-  if (!result) {
-    console.log('no result');
-  }
-  console.log(result);
-}
+// async function main() {
+//   let result = await userProfile
+//     .findOne({ email: 'test100@test.com' })
+//     .select('_id user_name is_admin is_creator profile_pic email');
+//   if (!result) {
+//     console.log('no result');
+//   }
+//   console.log(result);
+// }
 
 // await userProfile.create();
 
@@ -304,13 +315,21 @@ async function main() {
 // }
 
 // check if chat member includes
-async function main() {
-  let checkroom = await chatRoom.findOne({
-    members: { $all: ['6266aa2f6dc20b624d2b4297', '626c1229b7da2f66cadad033'] },
-  });
-  console.log(checkroom);
-}
+// async function main() {
+//   let checkroom = await chatRoom.findOne({
+//     members: { $all: ['6266aa2f6dc20b624d2b4297', '626c1229b7da2f66cadad033'] },
+//   });
+//   console.log(checkroom);
+// }
 
+// async function main() {
+//   let result = await post.updateMany(
+//     { 'comment.comment': '' },
+//     // { 'comment.comment': 'Test form Rita Tang' }
+//     { $pull: { comment: { comment: '' } } }
+//   );
+//   console.log(result);
+// }
 // main();
 
 module.exports = {
