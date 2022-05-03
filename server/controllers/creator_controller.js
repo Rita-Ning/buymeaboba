@@ -34,7 +34,7 @@ router.post('/follow/add', async (req, res, next) => {
       { $push: { following: following_name } },
       { new: true, upsert: true }
     );
-    console.log(result);
+    // console.log(result);
     res.send('success');
   } catch (error) {
     next(error);
@@ -170,7 +170,7 @@ router.get('/creator', async (req, res) => {
 
 router.get('/search', async (req, res) => {
   const { keyword } = req.query;
-  console.log(keyword);
+  // console.log(keyword);
   if (keyword) {
     let data = [];
     let resultName = await userProfile

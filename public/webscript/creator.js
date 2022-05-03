@@ -119,7 +119,7 @@ axios
     aboutColumn.innerHTML = aboutMe;
 
     let pic = `
-  <a href="/${creatorPath}">
+  <a href="${creatorPath}">
    <img src="${profile_pic}" class = "rounded-circle" height="100"  width="100" pt-1/>
   </a>`;
     profilePic.innerHTML = pic;
@@ -176,7 +176,7 @@ axios
       <li>
       <span>
       <h6 class="font-weight-bold">
-      <a href="./article.html" class="text-dark">${popularPost.title}</a>
+      <a href="/article/${popularPost._id}" class="text-dark">${popularPost.title}</a>
       </h6>
       <p class="text-muted">
         ${time}

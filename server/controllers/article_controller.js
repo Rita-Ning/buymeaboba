@@ -113,7 +113,7 @@ router.post('/like/add', async (req, res) => {
     },
     { new: true, upsert: true }
   );
-  console.log(result);
+  // console.log(result);
   res.send('updated!');
 });
 
