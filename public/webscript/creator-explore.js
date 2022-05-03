@@ -1,3 +1,4 @@
+//get category creators
 axios.get(`/api/1.0/search`).then((res) => {
   let data = res.data;
 
@@ -56,7 +57,6 @@ function search() {
         </div>
         </div>
         `;
-        console.log(i);
       }
       searchColumn.innerHTML = result;
     })

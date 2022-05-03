@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="follow.html" class="nav-item nav-link"><i class="fa fa-user-astronaut me-2"></i>Creators | Follow</a>
+                    <a href="profile-home.html" class="nav-item nav-link"><i class="fa fa-user-astronaut me-2"></i>Creators | Follow</a>
                     <a href="postCreate.html" class="nav-item nav-link"><i class="fa fa-pen me-2"></i>My Post</a>
                     <a href="chatroom.html" class="nav-item nav-link"><i class="fa fa-envelope me-2"></i>Messages</a>
                     <hr class="l-5">
@@ -111,9 +111,7 @@
                             <img class="rounded-circle me-lg-2" src="./images/Rita Tang.png" alt="" style="width: 40px; height: 40px;">
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0" id="menu-list">
-                            <!-- <a href="./creator/" class="dropdown-item">View My Page</a> -->
-                            <!-- <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a> -->
+                            <!-- profile-share.js -->
                         </div>
                     </div>
                 </div>
@@ -123,9 +121,33 @@
 
             <!-- Blank Start -->
             <div class="container-fluid pt-4 px-4">
-                <div class="row vh-100 rounded align-items-center justify-content-center mx-0 blank">
-                    <div class="col-md-6 text-center">
-                        <h3>This is blank page</h3>
+                <div class="d-flex justify-content-center row">
+                    <div class="col-md-9">
+                        <div class="feed p-2">
+                            <h5 class="ml-4 mb-4 text-secondary">All Posts</h5>
+                            <div id="news-feed">
+                                <div class="bg-white border mt-4 rounded shadow-sm">
+                                    <div class="d-flex align-items-center p-3 border-bottom">
+                                        <img class="rounded-circle p-1" src="https://i.imgur.com/aoKusnD.jpg" width="45">
+                                        <span class="font-weight-bold p-1">Thomson ben</span>
+                                    </div>
+                                    <div class="p-2 px-3">
+                                        <div class="mt-1 p-1">
+                                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span>
+                                        </div>
+                                        <div class="pt-4 p-1">
+                                            <span class="font-weight-bold">2022/5/4</span>
+                                        </div>
+                                        <div class="p-1">
+                                            <h5>Title here</h5>
+                                        </div>
+                                        <div class="d-flex socials mt-1 mb-2 m-1">
+                                            <small class="text-muted">  💛 &nbsp; 20 &middot; 10 comments</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -139,7 +161,7 @@
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -152,9 +174,10 @@
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="./js/profile.js"></script>
-    
+
+    <script src="./js/profile.js"></script>   
     <script src="./webscript/profile-share.js"></script>
+    <script src="./webscript/profile-home.js"></script>
 </body>
 
 </html>

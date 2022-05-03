@@ -4,11 +4,11 @@ let currentName = localStorage.getItem('user_name');
 let articleId = articlePath.split('/')[2];
 let userToken = localStorage.getItem('token');
 
-// if (!userToken) {
-//   document.getElementById('my-profile').style.display = 'none';
-// } else {
-//   document.getElementById('my-profile').style.display = 'block';
-// }
+if (!userToken) {
+  document.getElementById('my-profile').style.display = 'none';
+} else {
+  document.getElementById('my-profile').style.display = 'block';
+}
 
 // like Btn change and send back
 function like() {
@@ -25,7 +25,7 @@ function like() {
     let newLike = like_count + 1;
     document.getElementById(
       'likeBtn'
-    ).innerHTML = `<a onclick="unlike()"><i class="fa-solid fa-heart fa-lg"></i><a> &nbsp ${newLike} `;
+    ).innerHTML = `<a onclick="unlike()"><i class="fa-solid fa-heart fa-lg heart"></i><a> &nbsp ${newLike} `;
   });
   //send like back
   axios({
@@ -243,7 +243,7 @@ axios.get(`/api/1.0${articlePath}`).then((res) => {
       if (isLike) {
         document.getElementById(
           'likeBtn'
-        ).innerHTML = `<a onclick="unlike()"><i class="fa-solid fa-heart fa-lg"></i><a> &nbsp ${like_count} `;
+        ).innerHTML = `<a onclick="unlike()"><i class="fa-solid fa-heart fa-lg heart"></i><a> &nbsp ${like_count} `;
       } else {
         document.getElementById(
           'likeBtn'

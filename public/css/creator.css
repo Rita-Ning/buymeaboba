@@ -9858,4 +9858,9 @@ and left sides of the text */
 .highlight{
   background-color: #FFD500;
 }
+
+.heart{
+  color: #FFD500;
+  border-color: #fff;
+}
 /* sourceMappingURL = main.css.map */
