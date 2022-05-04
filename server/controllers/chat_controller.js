@@ -120,25 +120,29 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
     let creator_name = userInfo.user_name;
     let creator_pic = userInfo.sender_pic;
     if (type == 'follow') {
-      userInfo.follower.forEach((follower) => {
-        if (!ifRoom(user_id, follower.follower_id)) {
-          roomId = createRoom(user_id, follower.follower_id);
-          createMsg(roomId, user_id, msg, creator_name, creator_pic);
+      for (let i = 0; i < userInfo.follower.length; i++) {
+        let follow = userInfo.follower[i];
+        let checkRoom = await ifRoom(user_id, follow.follower_id);
+        if (!checkRoom) {
+          roomId = await createRoom(user_id, follow.follower_id);
+          await createMsg(roomId, user_id, msg, creator_name, creator_pic);
         } else {
-          rooomId = ifRoom(user_id, follower.follower_id);
-          createMsg(roomId, user_id, msg, creator_name, creator_pic);
+          rooomId = await ifRoom(user_id, follow.follower_id);
+          await createMsg(roomId, user_id, msg, creator_name, creator_pic);
         }
-      });
+      }
     } else {
-      supporter_list.forEach((supporter) => {
-        if (!ifRoom(user_id, supporter)) {
-          roomId = createRoom(user_id, supporter);
-          createMsg(roomId, user_id, msg, creator_name, creator_pic);
+      for (let j = 0; j < supporter_list.length; j++) {
+        let support = supporter_list[j];
+        let checkRoom = await ifRoom(user_id, support);
+        if (!checkRoom) {
+          roomId = await createRoom(user_id, support);
+          await createMsg(roomId, user_id, msg, creator_name, creator_pic);
         } else {
-          rooomId = ifRoom(user_id, supporter);
-          createMsg(roomId, user_id, msg, creator_name, creator_pic);
+          rooomId = await ifRoom(user_id, support);
+          await createMsg(roomId, user_id, msg, creator_name, creator_pic);
         }
-      });
+      }
     }
     res.send('sucess');
   } catch (err) {
@@ -147,10 +151,12 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
 
   async function createRoom(user_id, member) {
     let newRoom = await chatRoom.create({ members: [user_id, member] });
+    // console.log(newRoom);
     return newRoom._id;
   }
 
   async function createMsg(roomId, sender, msg, creator_name, creator_pic) {
+    // console.log(roomId);
     await chatMsg.create({
       room_id: roomId,
       sender: sender,

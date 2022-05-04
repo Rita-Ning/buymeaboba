@@ -317,7 +317,7 @@ const support = mongoose.model('support', {
 // check if chat member includes
 // async function main() {
 //   let checkroom = await chatRoom.findOne({
-//     members: { $all: ['6266aa2f6dc20b624d2b4297', '626c1229b7da2f66cadad033'] },
+//     members: { $all: ['626c1229b7da2f66cadad033', '6266aa2f6dc20b624d2b42c3'] },
 //   });
 //   console.log(checkroom);
 // }
