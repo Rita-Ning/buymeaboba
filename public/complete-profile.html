@@ -18,7 +18,7 @@
       <div id = 'form_container'>
         <form class='login_form' id = 'form' method="post" enctype="multipart/form-data">
             <h2> Create My Page </h2>
-            <div class='form_input form'>
+            <div class='form_input form' id="imageForm">
               <label>Profile Pic</label>
               <input id="profile_image" type="file" name="profile_img" required>
             <div>
@@ -43,52 +43,77 @@
         <div id="result"></div>
       </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-      let page_name = localStorage.getItem('page_name')
-      let pageSet = document.getElementById('set-page')
-      if(page_name)(
-        pageSet.innerHTML = `
-        <p class="url position-absolute">buymeboba.today/creator/</p>
-        <input type='text'  class = 'page-input' id='page_name' name="page_name" placeholder="yournamehere" value=${page_name} required>
-        `
-      )
-      const btn = document.getElementById('create_btn');
-      let token = localStorage.getItem('token');
-      let userInfo = localStorage.getItem('user_info');
-      if(!token || !userInfo){
-        window.location.href='./login.html'
-      }
-      btn.addEventListener('click', (e) => { 
-          e.preventDefault();
-          const form = document.getElementById('form');
-          if(!form.checkValidity()){
-              form.reportValidity()
-              return;
-          } 
-      let data = new FormData(document.getElementById('form'))
-      data.append('user_id', userInfo);
-      document.getElementById("form").reset();
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  let page_name = localStorage.getItem('page_name')
+  let pageSet = document.getElementById('set-page')
+  if(page_name)(
+    pageSet.innerHTML = `
+    <p class="url position-absolute">buymeboba.today/creator/</p>
+    <input type='text'  class = 'page-input' id='page_name' name="page_name" placeholder="yournamehere" value=${page_name} required>
+    `
+  )
+  const btn = document.getElementById('create_btn');
+  let token = localStorage.getItem('token');
+  let userInfo = localStorage.getItem('user_info');
+  if(!token || !userInfo){
+    window.location.href='./login.html'
+  }
+  btn.addEventListener('click', async (e) => { 
+      e.preventDefault();
+      const form = document.getElementById('form');
+      if(!form.checkValidity()){
+          form.reportValidity()
+          return;
+      } 
+  let data = new FormData(document.getElementById('form'))
+  document.getElementById("form").reset();
+  data.append('user_id', userInfo);
+  // S3 img processing
+  let profileImg = data.get('profile_img')[0]
 
-      axios({
-        method: 'post',
-        url: '/api/1.0/user/create',
-        data: data,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-        .then((res) => {
-          console.log(res)
-          page = res.data.user_page
-          console.log(page)
-          window.location.href = `./creator/${page}`;
-        })
-        .catch(function (err) {
-          msg = err.response.data
-          alert(msg)
-        });
+  const { url } = await fetch("/api/1.0/s3Url").then(res => res.json())
+  console.log(url)
+
+  await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "multipart/form-data"
+    },
+    body: profileImg
+  })
+
+  const imageUrl = url.split('?')[0]
+  console.log(imageUrl)
+  
+  data.delete('profile_img')
+  data.append('profile_pic', imageUrl);
+  // for (const [key, value] of data ) {
+  //     console.log('»', key, value)
+  //   }
+
+  var object = {};
+  data.forEach((value, key) => object[key] = value);
+
+  axios({
+    method: 'post',
+    url: '/api/1.0/user/create',
+    data: JSON.stringify(object),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then((res) => {
+      console.log(res)
+      page = res.data.user_page
+      console.log(page)
+      window.location.href = `./creator/${page}`;
     })
-    </script>
+    .catch(function (err) {
+      msg = err.response.data
+      alert(msg)
+    });
+})
+</script>
   </main>
 </body>

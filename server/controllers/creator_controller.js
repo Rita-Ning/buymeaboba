@@ -79,73 +79,78 @@ router.post('/follow/delete', async (req, res, next) => {
 });
 
 router.get('/creator/:name', async (req, res) => {
-  const { name } = req.params;
-  let user = await userProfile.findOne(
-    { user_page: name },
-    {
-      user_page: 1,
-      user_name: 1,
-      profile_pic: 1,
-      follower_count: 1,
-      follower: 1,
-      about: 1,
-      intro_post: 1,
-    }
-  );
-  let user_id = user['_id'];
-
-  let postList = await post
-    .find(
-      { user_id: user_id },
+  try {
+    const { name } = req.params;
+    let user = await userProfile.findOne(
+      { user_page: name },
       {
-        title: 1,
-        description: 1,
-        content: 1,
-        comment: 1,
-        liked_by: 1,
-        like_count: 1,
-        create_time: 1,
+        user_page: 1,
+        user_name: 1,
+        profile_pic: 1,
+        follower_count: 1,
+        follower: 1,
+        about: 1,
+        intro_post: 1,
       }
-    )
-    .sort({ create_time: -1 });
+    );
+    let user_id = user['_id'];
 
-  let postPopular = await post
-    .find(
-      { user_id: user_id },
-      {
-        title: 1,
-        liked_by: 1,
-        like_count: 1,
-        create_time: 1,
-      }
-    )
-    .sort({ like_count: -1 })
-    .limit(4);
+    let postList = await post
+      .find(
+        { user_id: user_id },
+        {
+          title: 1,
+          description: 1,
+          content: 1,
+          comment: 1,
+          liked_by: 1,
+          like_count: 1,
+          create_time: 1,
+        }
+      )
+      .sort({ create_time: -1 });
 
-  let {
-    user_page,
-    user_name,
-    profile_pic,
-    follower_count,
-    follower,
-    intro_post,
-    about,
-    _id,
-  } = user;
+    let postPopular = await post
+      .find(
+        { user_id: user_id },
+        {
+          title: 1,
+          liked_by: 1,
+          like_count: 1,
+          create_time: 1,
+        }
+      )
+      .sort({ like_count: -1 })
+      .limit(4);
 
-  let data = {
-    user_page,
-    user_name,
-    profile_pic,
-    intro_post,
-    about,
-    follower_count,
-    follower,
-    _id,
-  };
-  data['post'] = postList;
-  data['popular'] = postPopular;
-  return res.status(200).json(data);
+    let {
+      user_page,
+      user_name,
+      profile_pic,
+      follower_count,
+      follower,
+      intro_post,
+      about,
+      _id,
+    } = user;
+
+    let data = {
+      user_page,
+      user_name,
+      profile_pic,
+      intro_post,
+      about,
+      follower_count,
+      follower,
+      _id,
+    };
+    data['post'] = postList;
+    data['popular'] = postPopular;
+    return res.status(200).json(data);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
 });
 
 router.get('/creator', async (req, res) => {

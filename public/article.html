@@ -114,50 +114,105 @@ MAIN
 									</div>									 -->
 								</div>
 					</div>
-
 				</div>
-				<!--Donate column-->
-				<!-- <div class="border p-5 support-box mt-6">
-					<div class="row justify-content-between">
-						<div class="col-md-5 mb-2 mb-md-0">
-							<h5 class="font-weight-bold secondfont">Become a member</h5>
-							 Get the latest news right in your inbox. We never spam!
-						</div>
-						<div class="col-md-7">
-							<div class="row">
-								<div class="col-md-12">
-									<input type="text" class="form-control" placeholder="Enter your e-mail address">
-								</div>
-								<div class="col-md-12 mt-2">
-									<button type="submit" class="btn btn-success btn-block btn-secondary ">Support</button>
-								</div>
+			</div>			
+		</div>
+
+		<div class="rightcolumn">
+
+			<div class="col-md-11 pl-5">
+							<h5 class="font-weight-bold spanborder"><span>Popular</span></h5>
+				<ol class="list-featured" id="pop-article">
+					<li>
+					<span>
+					<h6 class="font-weight-bold">
+					<a href="./article.html" class="text-dark">Did Supernovae Kill Off Large Ocean Animals?</a>
+					</h6>
+					<p class="text-muted">
+						Jake Bittle in SCIENCE
+					</p>
+					</span>
+					</li>
+				</ol>
+			</div>
+
+			<div class="col-lg-11 pl-5 pt-4" id="donate-box">
+				<div class="flex-md-row mb-4 box-shadow h-xl-300">
+					<h5 class="font-weight-bold spanborder mb-3"><span>Buy Me Boba</span></h5>
+					<div class="mb-2 border border-warning boba-div" style="height:64px ;width:290px">
+						<div class="pl-5 pr-5 d-flex row justify-content-around align-items-center">
+							<div class=""><span class="emoji">🧋</span></div>
+							<div class=""><span>x</span></div>
+							<div id= "amountOne">
+								<button class="rounded-circle bg-warning border-warning text-white text-center mb-0" style="height:35px ;width:35px" onclick="setOne()">1</button>
+							</div>
+							<div id="bobaAmount">
+								<input type='text' class="bg-white border-warning text-center mb-0 amount" style="width:35px" oninput="bobaCount(event)" value="1" >
 							</div>
 						</div>
 					</div>
-				</div> -->
-			</div>	
-			
+						<textarea style="width:290px" class="form-control bg-light" id="exampleFormControlTextarea1" rows="3" placeholder="say something nice...(optional)"></textarea>
+						<button href="#myModal" class="btn btn-dark mt-3 mb-3 support-btn display-6 trigger-btn" data-toggle="modal" style="width:290px" id="supportBtn">
+							Support  &nbsp NT$ <span id="supportAmount">80</span>
+						</button> 
+					</div>
+			</div>
 		</div>
-		<div class="rightcolumn">
-		<div class="col-md-11 pl-5">
-            <h5 class="font-weight-bold spanborder"><span>Popular</span></h5>
-			<ol class="list-featured" id="pop-article">
-				<li>
-				<span>
-				<h6 class="font-weight-bold">
-				<a href="./article.html" class="text-dark">Did Supernovae Kill Off Large Ocean Animals?</a>
-				</h6>
-				<p class="text-muted">
-					Jake Bittle in SCIENCE
-				</p>
-				</span>
-				</li>
-			</ol>
-		</div>
-	</div>
 </div>
 </div>
     
+<!-- Modal -->
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog modal-login modal-dialog-centered">
+		<div class="modal-content pl-2 pr-2 pb-0">
+			<div class="modal-header mb-2" id="profile-basic">
+				<div class="avatar">
+					<!-- <img src="/examples/images/avatar.png" alt="Avatar"> -->
+				</div>
+				<div id="support-line">				
+					<h4 class="modal-title">Support</h4>	
+					<button type="button" class="close mr-1 pr-1" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+			</div>
+			<div class="modal-body">
+				<form action="#" method="post" id="support-form">
+					<!-- credit card form -->
+					<div id="card-form">		
+						<div class="form-group notMember">
+							<input type="text" class="form-control" id="username" placeholder="name" style="height:40px">		
+						</div>
+						<div class="form-group notMember">
+							<input type="text" class="form-control" id="email" placeholder="Email" style="height:40px" required="required">	
+						</div> 
+						<div class="form-group card-number-group bg-light" style="height:40px" required="required">
+								<div class="form-control card-number" style="height:40px" required="required" placeholder="Card Number"></div>
+						</div>
+						<div class="form-group expiration-date-group bg-light" >
+								<div class="form-control expiration-date" id="tappay-expiration-date" style="height:40px" required="required"></div>
+						</div>
+						<div class="form-group cvc-group bg-light">
+								<div class="form-control cvc" style="height:40px" required="required" placeholder="Card Number"></div>
+						</div>      
+						<div class="form-group">
+							<button type="submit" class="btn btn-dark btn-lg btn-block login-btn payBtn" id="payBtn">pay with card</button>
+						</div>
+					</div>
+					
+					<!--card selection form -->
+					<div id="card-choose">
+						<div class="hrdivider mb-2">PAY WITH</div>	
+						<div class="form-group">
+							<button type="button" class="btn btn-dark btn-lg btn-block login-btn payBtn" onclick="formChange()">pay with card</button>
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-dark btn-lg btn-block login-btn payBtn">line pay</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>  
 <!--------------------------------------
 FOOTER
 --------------------------------------->
@@ -182,21 +237,15 @@ JAVASCRIPTS
 
   });
 </script>  -->
-<script>
-	function logOut(){
-		localStorage.clear()
-	}
-	// change view my page href
-	let myPage = localStorage.getItem('page_name')
-	document.getElementById('my-page').href=`/creator/${myPage}`
-</script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script>
-	// document.getElementById('menu-list')
-</script>
+<!--for tap pay-->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://js.tappaysdk.com/tpdirect/v5.8.0"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/webscript/article.js"></script>
+<script src="/webscript/tappay.js"></script>
 </body>
 </html>

@@ -9863,4 +9863,10 @@ and left sides of the text */
   color: #FFD500;
   border-color: #fff;
 }
+
+#donate-box{
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 100px;
+}
 /* sourceMappingURL = main.css.map */

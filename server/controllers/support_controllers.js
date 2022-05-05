@@ -12,6 +12,7 @@ router.post('/support/checkout', async (req, res, next) => {
       .status(400)
       .json({ error: 'Content type need to be application/json' });
   }
+
   let { prime, amount, user, creator } = req.body;
 
   let userName;
@@ -22,13 +23,13 @@ router.post('/support/checkout', async (req, res, next) => {
     userName = user.user_name;
     userEmail = user.user_email;
   } else {
-    userId = mongoose.mongo.ObjectId(user.user_id);
+    userId = mongoose.mongo.ObjectId(user);
     let userFind = await userProfile.findOne(
       { _id: userId },
-      { user_name: 1, user_email: 1 }
+      { user_name: 1, email: 1 }
     );
     userName = userFind.user_name;
-    userEmail = userFind.user_id;
+    userEmail = userFind.email;
     userId = userFind._id;
   }
 
@@ -60,6 +61,7 @@ router.post('/support/checkout', async (req, res, next) => {
   if (tapResponse.data.status !== 0) {
     return res.status(400).json({ error: 'get wrong prime' });
   }
+
   // support info
   try {
     let creator_id = await userProfile.findOne(
@@ -89,15 +91,6 @@ router.post('/support/checkout', async (req, res, next) => {
 
     // add into support db
     let addSupport = await support.create(supportInfo);
-
-    // //add into user db
-    // let userInfo = {
-    //   user_name: userName,
-    //   email: userEmail,
-    // };
-
-    // let addUser = await userProfile.create(userInfo);
-    // // console.log(addUser)
 
     let creatorId = mongoose.mongo.ObjectId(creator_id);
 

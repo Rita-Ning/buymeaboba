@@ -148,13 +148,24 @@ axios.get(`/api/1.0${articlePath}`).then((res) => {
   `;
   profileColumn.innerHTML = profile;
 
+  // set user profile
   let pic = `
   <a href="/creator/${user.user_page}">
   <img src="${user.profile_pic}" class = "rounded-circle" height="100"  width="100" pt-1/>
   </a>`;
-
   profilePic.innerHTML = pic;
 
+  // set support form
+  let supportImg = document.getElementById('profile-basic');
+  let supportContent = `
+      <img src="${user.profile_pic}" id="profile-pic" alt="Avatar" class = "p-1 rounded-circle mx-auto d-block align-self-center avatar" height="95"  width="95" style="background-size:cover"/>
+      <div id="support-line">	
+      <h4 class="modal-title">Support <span class='font-weight-bold'>${user.user_name}</span>&nbsp&nbsp:)</h4>
+      <button type="button" class="close mr-1 pr-1" data-dismiss="modal" aria-hidden="true" onclick='recoverForm()'>&times;</button>
+      </div>`;
+  supportImg.innerHTML = supportContent;
+
+  // set article content
   let articleColumn = document.getElementById('article-content');
 
   article = `
