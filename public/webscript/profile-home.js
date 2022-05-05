@@ -18,10 +18,10 @@ axios({
       let time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
       feed += `
       <div class="bg-white border mt-4 rounded shadow-sm">
-        <div class="d-flex align-items-center p-3 border-bottom">
+        <a class="d-flex align-items-center p-3 border-bottom" href='/creator/${info.user.user_page}'>
             <img class="rounded-circle p-1" src=${info.user.profile_pic} width="45">
             <span class="font-weight-bold p-1">${info.user.user_name}</span>
-        </div>
+        </a>
         <div class="p-2 px-3">
             <div class="mt-1 p-1">
                 <span>${info.description}</span>
@@ -30,7 +30,7 @@ axios({
                 <span class="font-weight-bold">${time}</span>
             </div>
             <div class="p-1">
-                <h5>${info.title}</h5>
+                <a href='/article/${info._id}' class='h5'>${info.title}</a>
             </div>
             <div class="d-flex socials mt-1 mb-2 m-1">
                 <small class="text-muted">  💛 &nbsp; ${info.like_count} &middot; ${info.comment} comment</small>

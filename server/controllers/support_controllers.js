@@ -13,7 +13,7 @@ router.post('/support/checkout', async (req, res, next) => {
       .json({ error: 'Content type need to be application/json' });
   }
 
-  let { prime, amount, user, creator } = req.body;
+  let { prime, amount, user, creator, event } = req.body;
 
   let userName;
   let userEmail;
@@ -77,7 +77,7 @@ router.post('/support/checkout', async (req, res, next) => {
         user_email: userEmail,
         creator_id,
         amount,
-        event: 'homepage',
+        event,
       };
     } else {
       supportInfo = {
@@ -85,7 +85,7 @@ router.post('/support/checkout', async (req, res, next) => {
         user_email: userEmail,
         creator_id,
         amount,
-        event: 'homepage',
+        event,
       };
     }
 
@@ -97,7 +97,7 @@ router.post('/support/checkout', async (req, res, next) => {
     //update creator support list
     if (userId) {
       supporterInfo = {
-        event: 'homepage',
+        event,
         user_id: userId,
         user_name: userName,
         user_email: userEmail,
@@ -105,7 +105,7 @@ router.post('/support/checkout', async (req, res, next) => {
       };
     } else {
       supporterInfo = {
-        event: 'homepage',
+        event,
         user_name: userName,
         user_email: userEmail,
         time: Date.now(),

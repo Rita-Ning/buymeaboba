@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>buymeboba</title>
+    <link rel="icon" type="image/x-icon" class ='rounded' href="./images/favicon.ico">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -59,7 +60,7 @@
                 </div>
                 <div class="navbar-nav w-100">
                     <a href="profile-home.html" class="nav-item nav-link"><i class="fa fa-user-astronaut me-2"></i>Creators | Follow</a>
-                    <a href="postCreate.html" class="nav-item nav-link"><i class="fa fa-pen me-2"></i>My Post</a>
+                    <a href="post-create.html" class="nav-item nav-link"><i class="fa fa-pen me-2"></i>My Post</a>
                     <a href="chatroom.html" class="nav-item nav-link"><i class="fa fa-envelope me-2"></i>Messages</a>
                     <hr class="l-5">
                     <a href="dashboard.html" class="nav-item nav-link"><i class="fa fa-chart-column  me-2"></i>Dashboard</a>
@@ -110,7 +111,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="nav-img">
                             <img class="rounded-circle me-lg-2" src="./images/Rita Tang.png" alt="" style="width: 40px; height: 40px;">
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0" id="menu-list">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
                             <a href="#" class="dropdown-item">Log Out</a>
@@ -120,16 +121,278 @@
             </nav>
             <!-- Navbar End -->
 
-
-            <!-- Blank Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row vh-100 rounded align-items-center justify-content-center mx-0 blank">
-                    <div class="col-md-6 text-center">
-                        <h3>This is blank page</h3>
+            <!-- Dahboard Start -->
+            <div class="container-fluid pt-4 px-5">
+                <div class="row">
+                    <div class="row mb-4" id ='overview-box'>
+                        <h5 class="px-4 pt-2 text-info">Overview</h5>
+                        <div class="row bg-light m-3 rounded">
+                            <div class="col-sm-6 col-xl-4 border-end border-muted">
+                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                    <div class="ms-3">
+                                        <p class="mb-2">Followers</p>
+                                        <h6 class="mb-0">$1234</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xl-4 border-end border-muted">
+                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                    <div class="ms-3">
+                                        <p class="mb-2">Supporters</p>
+                                        <h6 class="mb-0">$1234</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xl-4">
+                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                    <div class="ms-3">
+                                        <p class="mb-2">Earnings</p>
+                                        <h6 class="mb-0">$1234</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="ms-2 mt-3">
+                    </div>
+                    <div class="row" id ='pagesummary-box'>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h5 class="ps-4 pt-2 text-info">Page Summary</h5>
+                            <span class="ps-2">( last 30 days )</span>
+                        </div>
+                        <div class="row bg-light ms-3 mb-0 rounded">
+                            <div class="col-sm-6 col-xl-4 border border-muted border-start-0 border-top-0">
+                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                    <div class="ms-3">
+                                        <p class="mb-2">Followers</p>
+                                        <h6 class="mb-0">$1234</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xl-4 border border-muted border-top-0">
+                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                    <div class="ms-3">
+                                        <p class="mb-2">Supporters</p>
+                                        <h6 class="mb-0">$1234</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xl-4 border border-muted border-end-0 border-top-0">
+                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                    <div class="ms-3">
+                                        <p class="mb-2">Earnings</p>
+                                        <h6 class="mb-0">$1234</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row bg-light ms-3 mt-0">
+                            <div class="col-sm-6 col-xl-4 border border-muted border-start-0 border-top-0">
+                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                    <div class="ms-3">
+                                        <p class="mb-2">Page View</p>
+                                        <h6 class="mb-0">$1234</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xl-4 border border-muted border-top-0">
+                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                    <div class="ms-3">
+                                        <p class="mb-2">Page Engagement</p>
+                                        <h6 class="mb-0">$1234</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xl-4 border border-muted border-end-0 border-top-0">
+                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                    <div class="ms-3">
+                                        <p class="mb-2">Page Likes</p>
+                                        <h6 class="mb-0">$1234</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 mt-5 mb-2" id ='recentpost-box'>
+                            <h5 class="ps-4 pt-2 text-info">Your 3 Most Recent Post</h5>
+                            <div class="m-2 p-2">
+                                <div class="bg-light rounded h-100 p-3">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Published</th>
+                                                    <th scope="col">Post</th>
+                                                    <th scope="col">View</th>
+                                                    <th scope="col">Engagement</th>
+                                                    <th scope="col">Earnings</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class=>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>John</td>
+                                                    <td>Doe</td>
+                                                    <td>jhon@email.com</td>
+                                                    <td>USA</td>
+                                                    <td>123</td>
+                                                    <td>Member</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>Mark</td>
+                                                    <td>Otto</td>
+                                                    <td>mark@email.com</td>
+                                                    <td>UK</td>
+                                                    <td>456</td>
+                                                    <td>Member</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>Jacob</td>
+                                                    <td>Thornton</td>
+                                                    <td>jacob@email.com</td>
+                                                    <td>AU</td>
+                                                    <td>789</td>
+                                                    <td>Member</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 mt-4 mb-2" id ='popularpost-box'>
+                            <h5 class="ps-4 pt-2 text-info">Your 3 Most Popular Post</h5>
+                            <div class="m-2 p-2">
+                                <div class="bg-light rounded h-100 p-3">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Published</th>
+                                                    <th scope="col">Post</th>
+                                                    <th scope="col">View</th>
+                                                    <th scope="col">Engagement</th>
+                                                    <th scope="col">Earnings</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class=>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>John</td>
+                                                    <td>Doe</td>
+                                                    <td>jhon@email.com</td>
+                                                    <td>USA</td>
+                                                    <td>123</td>
+                                                    <td>Member</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2</th>
+                                                    <td>Mark</td>
+                                                    <td>Otto</td>
+                                                    <td>mark@email.com</td>
+                                                    <td>UK</td>
+                                                    <td>456</td>
+                                                    <td>Member</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>Jacob</td>
+                                                    <td>Thornton</td>
+                                                    <td>jacob@email.com</td>
+                                                    <td>AU</td>
+                                                    <td>789</td>
+                                                    <td>Member</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 mt-4 mb-2" id ='example-box'>
+                            <div class="ps-4">
+                                <h5 class="mb-0 text-info">Pages to watch</h5>
+                                <small>Compare the performance of your Page and posts with similar Pages.</small>
+                            </div>
+                            <div class="m-2 p-2">
+                                <div class="bg-light rounded h-100 p-3">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Published</th>
+                                                <th scope="col">Post</th>
+                                                <th scope="col">View</th>
+                                                <th scope="col">Engagement</th>
+                                                <th scope="col">Earnings</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class=>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>John</td>
+                                                <td>Doe</td>
+                                                <td>jhon@email.com</td>
+                                                <td>USA</td>
+                                                <td>123</td>
+                                                <td>Member</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">2</th>
+                                                <td>Mark</td>
+                                                <td>Otto</td>
+                                                <td>mark@email.com</td>
+                                                <td>UK</td>
+                                                <td>456</td>
+                                                <td>Member</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">3</th>
+                                                <td>Jacob</td>
+                                                <td>Thornton</td>
+                                                <td>jacob@email.com</td>
+                                                <td>AU</td>
+                                                <td>789</td>
+                                                <td>Member</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">4</th>
+                                                <td>Jacob</td>
+                                                <td>Thornton</td>
+                                                <td>jacob@email.com</td>
+                                                <td>AU</td>
+                                                <td>789</td>
+                                                <td>Member</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 mt-4 mb-2" id ='popularpost-box'>
+                            <h5 class="ps-4 pt-2 text-info">Your Reader's Interest</h5>
+                            <div class="m-2 p-2 mb-5">
+                                <div class="bg-light rounded h-100 p-3">
+                                    <div class="d-flex ps-2">
+                                        <div class="h4 align-items-center">
+                                            <span class="badge bg-secondary">Primary</span>
+                                            <span class="badge bg-secondary">Secondary</span>
+                                            <span class="badge bg-secondary">Success</span>
+                                            <span class="badge bg-secondary">Success</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Blank End -->
+            <!-- Dahboard End -->
 
 
         </div>
@@ -153,6 +416,7 @@
 
     <!-- Template Javascript -->
     <script src="./js/profile.js"></script>
+    <script src="./webscript/dashboard.js"></script>
     <script src="./webscript/profile-share.js"></script>
 </body>
 

@@ -7,6 +7,7 @@ const postSave = require('../controllers/savePost_controller');
 const supportRecord = require('../controllers/support_controllers');
 const exploreCreator = require('../controllers/exploreCreator_controller');
 let followPost = require('../controllers/followPost_controller');
+// const favicon = require('serve-favicon');
 
 const path = require('path');
 

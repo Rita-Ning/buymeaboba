@@ -28,7 +28,6 @@ router.post('/chat/chatroom', async (req, res, next) => {
       // console.log(chatShow['chatWith']);
       room_id = rooms[i]['_id'];
       let lastMsg = await chatMsg.find({ room_id: room_id }).sort({ date: -1 });
-      console.log(lastMsg);
       lastMsg = lastMsg[0];
       chatShow['lastMsg'] = lastMsg['msg'];
       chatShow['time'] = lastMsg['date'];

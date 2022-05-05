@@ -3,33 +3,33 @@ var mongoose = require('mongoose');
 
 const { userProfile, post } = require('../util/mongoose');
 
-let userJson = require('./user_info.json');
-let postJson = require('./posts_info.json');
+let userJson = require('./user_info2.json');
+let postJson = require('./posts_info2.json');
 let accountJson = require('./user_account.json');
 
-// userJson.forEach((data) => {
-//   let { user_name, profile_pic, about, category } = data;
-//   let follower_count = data.followers;
-//   let user_page = user_name.replace(/\s/g, '');
-//   const profile = new userProfile({
-//     user_name,
-//     user_page,
-//     profile_pic: `https://${profile_pic}`,
-//     about,
-//     category,
-//     is_creator: '1',
-//     follower_count,
-//     intro_post: about,
-//   });
-//   profile
-//     .save()
-//     .then(() => {
-//       console.log(profile);
-//     })
-//     .catch((error) => {
-//       console.log('error', error);
-//     });
-// });
+userJson.forEach((data) => {
+  let { user_name, profile_pic, about, category } = data;
+  let follower_count = data.followers;
+  let user_page = user_name.replace(/\s/g, '');
+  const profile = new userProfile({
+    user_name,
+    user_page,
+    profile_pic: `https://${profile_pic}`,
+    about,
+    category,
+    is_creator: '1',
+    follower_count,
+    intro_post: about,
+  });
+  profile
+    .save()
+    .then(() => {
+      console.log(profile);
+    })
+    .catch((error) => {
+      console.log('error', error);
+    });
+});
 
 const forLoop = async (_) => {
   for (let i = 0; i < postJson.length; i++) {

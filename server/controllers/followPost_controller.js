@@ -24,6 +24,7 @@ router.post('/newsfeed', async (req, res) => {
       let creatorPost = await post.find(
         { user_id: creatorId._id },
         {
+          _id: 1,
           title: 1,
           description: 1,
           like_count: 1,
@@ -52,6 +53,7 @@ router.post('/newsfeed', async (req, res) => {
         }
       );
       let {
+        _id,
         title,
         description,
         like_count,
@@ -65,6 +67,7 @@ router.post('/newsfeed', async (req, res) => {
         description = content.split('.')[0] + '.';
       }
       let data = {
+        _id,
         title,
         description,
         like_count,
