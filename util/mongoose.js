@@ -140,9 +140,6 @@ const userProfile = mongoose.model('user', {
   supporter: {
     type: Array,
   },
-  my_member: {
-    type: Array,
-  },
   post: {
     type: [mongoose.SchemaTypes.ObjectId],
   },
@@ -195,6 +192,7 @@ const post = mongoose.model('post', {
   },
   like_count: {
     type: Number,
+    default: 0,
   },
   liked_by: {
     type: Array,

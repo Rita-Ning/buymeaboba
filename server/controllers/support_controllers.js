@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 const axios = require('axios');
 
 const router = express.Router();
-const { userProfile, support } = require('../../util/mongoose');
+const { userProfile, support, post } = require('../../util/mongoose');
 
 router.post('/support/checkout', async (req, res, next) => {
   // check header
@@ -75,7 +75,7 @@ router.post('/support/checkout', async (req, res, next) => {
         user_id: userId,
         user_name: userName,
         user_email: userEmail,
-        creator_id,
+        creator_id: creator_id._id,
         amount,
         event,
       };
@@ -83,17 +83,50 @@ router.post('/support/checkout', async (req, res, next) => {
       supportInfo = {
         user_name: userName,
         user_email: userEmail,
-        creator_id,
+        creator_id: creator_id._id,
         amount,
         event,
       };
     }
+    // console.log(supportInfo);
 
     // add into support db
     let addSupport = await support.create(supportInfo);
 
-    let creatorId = mongoose.mongo.ObjectId(creator_id);
+    // if post support add into post doc
+    if (event !== 'homepage') {
+      let postSupport;
+      if (userId) {
+        postSupport = {
+          user_id: userId,
+          amount,
+          time: Date.now(),
+        };
+      } else {
+        postSupport = {
+          user_id: userEmail,
+          amount,
+          time: Date.now(),
+        };
+      }
+      let postID = mongoose.mongo.ObjectId(event);
+      console.log(postSupport);
+      await post.updateOne(
+        { _id: postID },
+        { $push: { earning_from: postSupport } },
+        { new: true, upsert: true }
+      );
 
+      await post.findOneAndUpdate(
+        { _id: postID },
+        { $inc: { earning_amount: amount } },
+        { new: true }
+      );
+    }
+
+    let creatorId = creator_id._id;
+
+    let supporterInfo;
     //update creator support list
     if (userId) {
       supporterInfo = {
@@ -111,6 +144,8 @@ router.post('/support/checkout', async (req, res, next) => {
         time: Date.now(),
       };
     }
+
+    // console.log(supporterInfo);
     await userProfile.updateOne(
       { _id: creatorId },
       { $push: { supporter: supporterInfo } },

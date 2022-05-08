@@ -96,7 +96,6 @@ router.get('/search/frontpage', async (req, res) => {
         user_name: 1,
         about: 1,
         profile_pic: 1,
-        follower_count: 1,
       }
     )
     .sort({ follower_count: -1 })

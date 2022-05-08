@@ -3,8 +3,8 @@ var mongoose = require('mongoose');
 
 const { userProfile, post } = require('../util/mongoose');
 
-let userJson = require('./user_info2.json');
-let postJson = require('./posts_info2.json');
+let userJson = require('./user_info3.json');
+let postJson = require('./posts_info3.json');
 let accountJson = require('./user_account.json');
 
 userJson.forEach((data) => {
@@ -72,4 +72,4 @@ const forLoop = async (_) => {
   }
 };
 
-forLoop();
+// forLoop();

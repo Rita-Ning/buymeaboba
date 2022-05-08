@@ -7,6 +7,7 @@ const postSave = require('../controllers/savePost_controller');
 const supportRecord = require('../controllers/support_controllers');
 const exploreCreator = require('../controllers/exploreCreator_controller');
 let followPost = require('../controllers/followPost_controller');
+let dashboard = require('../controllers/dashboard_controller');
 // const favicon = require('serve-favicon');
 
 const path = require('path');
@@ -21,6 +22,7 @@ module.exports = (app) => {
   app.use('/api/1.0', supportRecord);
   app.use('/api/1.0', exploreCreator);
   app.use('/api/1.0', followPost);
+  app.use('/api/1.0', dashboard);
   app.use('/creator/:name', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/creator.html'));
   });

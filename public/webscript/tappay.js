@@ -188,7 +188,7 @@ $('form').on('submit', function (event) {
   let supporterInfo;
   let supportAmount = JSON.parse(localStorage.getItem('support_amount'));
   let supporter = JSON.parse(localStorage.getItem('supporter_info'));
-  let creator = localStorage.getItem('user_page');
+  let creator = localStorage.getItem('creator_page');
   if (supporter) {
     supporterInfo = supporter;
   } else {
@@ -222,7 +222,7 @@ $('form').on('submit', function (event) {
     localStorage.removeItem('supporter_info');
     localStorage.removeItem('support_amount');
 
-    console.log(supportInfo);
+    // console.log(supportInfo);
 
     axios({
       method: 'post',

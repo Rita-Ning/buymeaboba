@@ -147,6 +147,8 @@ axios.get(`/api/1.0${articlePath}`).then((res) => {
 		<small class="text-muted pl-1">${follower_count} followers</small>
   `;
   profileColumn.innerHTML = profile;
+  //for supportInfo to get user page name
+  localStorage.setItem('creator_page', user.user_page);
 
   // set user profile
   let pic = `

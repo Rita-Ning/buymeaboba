@@ -1,5 +1,6 @@
 let creatorPath = window.location.pathname;
 let pageName = creatorPath.replace('/creator/', '');
+localStorage.setItem('creator_page', pageName);
 let userToken = localStorage.getItem('token');
 
 //check if login
