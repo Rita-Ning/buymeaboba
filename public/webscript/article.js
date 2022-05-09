@@ -189,7 +189,7 @@ axios.get(`/api/1.0${articlePath}`).then((res) => {
     if (ele.user_id == currentId) {
       checkSupporter = true;
     } else {
-      checkSupporter = fallse;
+      checkSupporter = false;
     }
   });
 
