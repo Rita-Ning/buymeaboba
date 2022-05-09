@@ -71,7 +71,8 @@
   document.getElementById("form").reset();
   data.append('user_id', userInfo);
   // S3 img processing
-  let profileImg = data.get('profile_img')[0]
+  let profileImg = data.get('profile_img')
+  // console.log(profileImg)
 
   const { url } = await fetch("/api/1.0/s3Url").then(res => res.json())
   console.log(url)
