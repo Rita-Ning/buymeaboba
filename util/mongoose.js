@@ -164,6 +164,10 @@ const userProfile = mongoose.model('user', {
   total: {
     type: Number,
   },
+  view: {
+    type: Number,
+    default: 0,
+  },
 });
 
 // post info
@@ -213,6 +217,10 @@ const post = mongoose.model('post', {
     type: Array,
   },
   support_only: {
+    type: Number,
+    default: 0,
+  },
+  view: {
     type: Number,
     default: 0,
   },
@@ -277,8 +285,13 @@ const support = mongoose.model('support', {
 //   name: 1,
 //   email:1
 // })
+let random = Math.floor(Math.random() * 600);
+
+// let ids = await userProfile.find({},{_id;1})
+
 async function main() {
-  let result = await userProfile.updateMany({}, { intro_post: '' });
+  let result = await post.updateMany({}, { view: 239 });
+  console.log(result);
 }
 // main();
 
@@ -335,7 +348,7 @@ async function main() {
 // }
 
 async function main() {
-  let result = await post.updateMany({}, { support_only: 0 });
+  let result = await post.updateMany({}, { view: 103 });
 }
 
 // main();

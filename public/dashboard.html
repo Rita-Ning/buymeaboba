@@ -136,57 +136,8 @@
                             <h5 class="ps-4 pt-2 text-info">Page Summary</h5>
                             <span class="ps-2"> last 30 days </span>
                         </div>
-                        <div class="row bg-light ms-3 mb-0 rounded">
-                            <div class="col-sm-6 col-xl-4 border border-muted border-start-0 border-top-0">
-                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                                    <div class="ms-3">
-                                        <p class="mb-2">Followers</p>
-                                        <h6 class="mb-0">$1234</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-xl-4 border border-muted border-top-0">
-                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                                    <div class="ms-3">
-                                        <p class="mb-2">Supporters</p>
-                                        <h6 class="mb-0">$1234</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-xl-4 border border-muted border-end-0 border-top-0">
-                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                                    <div class="ms-3">
-                                        <p class="mb-2">Earnings</p>
-                                        <h6 class="mb-0">$1234</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row bg-light ms-3 mt-0">
-                            <div class="col-sm-6 col-xl-4 border border-muted border-start-0 border-top-0">
-                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                                    <div class="ms-3">
-                                        <p class="mb-2">Page View</p>
-                                        <h6 class="mb-0">$1234</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-xl-4 border border-muted border-top-0">
-                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                                    <div class="ms-3">
-                                        <p class="mb-2">Page Engagement</p>
-                                        <h6 class="mb-0">$1234</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-xl-4 border border-muted border-end-0 border-top-0">
-                                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                                    <div class="ms-3">
-                                        <p class="mb-2">Page Likes</p>
-                                        <h6 class="mb-0">$1234</h6>
-                                    </div>
-                                </div>
-                            </div>
+                        <div id="page-summary">
+                            <!--summary content-->
                         </div>
                         <div class="row g-2 mt-5 mb-2" id ='recentpost-box'>
                             <h5 class="ps-4 pt-2 text-info">Your 3 Most Recent Post</h5>
@@ -202,7 +153,7 @@
                                                     <th scope="col">View</th>
                                                     <th scope="col">Earnings</th>
                                                     <th scope="col">Engagement</th>
-                                                    <th scope="col">Status</th>
+                                                    <!-- <th scope="col">Status</th> -->
                                                 </tr>
                                             </thead>
                                             <div>
@@ -229,7 +180,7 @@
                                                     <th scope="col">View</th>
                                                     <th scope="col">Earnings</th>
                                                     <th scope="col">Engagement</th>
-                                                    <th scope="col">Status</th>
+                                                    <!-- <th scope="col">Status</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody id ='earn-column'>
@@ -240,7 +191,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row g-2 mt-4 mb-2" id ='example-box'>
+                        <!-- <div class="row g-2 mt-4 mb-2" id ='example-box'>
                             <div class="ps-4">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div>
@@ -261,7 +212,6 @@
                                                 <th scope="col">Total Followers</th>
                                                 <th scope="col">View</th>
                                                 <th scope="col">Engagement</th>
-                                                <th scope="col">Status</th>
                                             </tr>
                                         </thead>
                                         <tbody class=>
@@ -272,7 +222,6 @@
                                                 <td>jhon@email.com</td>
                                                 <td>USA</td>
                                                 <td>123</td>
-                                                <td>Member</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">2</th>
@@ -281,7 +230,6 @@
                                                 <td>mark@email.com</td>
                                                 <td>UK</td>
                                                 <td>456</td>
-                                                <td>Member</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">3</th>
@@ -290,7 +238,6 @@
                                                 <td>jacob@email.com</td>
                                                 <td>AU</td>
                                                 <td>789</td>
-                                                <td>Member</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">4</th>
@@ -299,23 +246,19 @@
                                                 <td>jacob@email.com</td>
                                                 <td>AU</td>
                                                 <td>789</td>
-                                                <td>Member</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row g-2 mt-4 mb-2" id ='popularpost-box'>
                             <h5 class="ps-4 pt-2 text-info">Your Reader's Interest</h5>
                             <div class="m-2 p-2 mb-5">
                                 <div class="bg-light rounded h-100 p-3">
                                     <div class="d-flex ps-2">
-                                        <div class="h4 align-items-center">
-                                            <span class="badge bg-warning">Primary</span>
-                                            <span class="badge bg-warning">Secondary</span>
-                                            <span class="badge bg-warning">Success</span>
-                                            <span class="badge bg-warning">Success</span>
+                                        <div class="h4 align-items-center" id="top-tag">
+                                            <!--top 4 tags content-->
                                         </div>
                                     </div>
                                 </div>

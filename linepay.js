@@ -52,11 +52,11 @@ let configs = {
 console.log(nonce);
 console.log(hmacBase64);
 
-// axios
-//   .post('https://sandbox-api-pay.line.me/v3/payments/request', order, configs)
-//   .then((res) => {
-//     console.log(res.data);
-//   });
+axios
+  .post('https://sandbox-api-pay.line.me/v3/payments/request', order, configs)
+  .then((res) => {
+    console.log(res.data);
+  });
 
 content = {
   amount: 4000,

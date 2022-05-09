@@ -9,8 +9,64 @@ axios({
   header: { 'Content-Type': 'application/json' },
 })
   .then((res) => {
-    console.log(res.data);
-    let { overview, earning_post, recent_post } = res.data;
+    let { overview, earning_post, recent_post, summary_page, tags } = res.data;
+    console.log(summary_page);
+    let pageSummary = document.getElementById('page-summary');
+    let summary = ``;
+    summary = `
+    <div class="row bg-light ms-3 mb-0 rounded">
+        <div class="col-sm-6 col-xl-4 border border-muted border-start-0 border-top-0">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <div class="ms-3">
+                    <p class="mb-2">Followers</p>
+                    <h6 class="mb-0">${summary_page.follower_count}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-4 border border-muted border-top-0">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <div class="ms-3">
+                    <p class="mb-2">Supporters</p>
+                    <h6 class="mb-0">${summary_page.supporter}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-4 border border-muted border-end-0 border-top-0">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <div class="ms-3">
+                    <p class="mb-2">Earnings</p>
+                    <h6 class="mb-0">$${summary_page.earnings}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row bg-light ms-3 mt-0">
+        <div class="col-sm-6 col-xl-4 border border-muted border-start-0 border-top-0">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <div class="ms-3">
+                    <p class="mb-2">Page View</p>
+                    <h6 class="mb-0">${summary_page.view}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-4 border border-muted border-top-0">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <div class="ms-3">
+                    <p class="mb-2">Page Engagement</p>
+                    <h6 class="mb-0">${summary_page.engagement}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-4 border border-muted border-end-0 border-top-0">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <div class="ms-3">
+                    <p class="mb-2">Page Likes</p>
+                    <h6 class="mb-0">${summary_page.like}</h6>
+                </div>
+            </div>
+        </div>
+    </div>`;
+    pageSummary.innerHTML = summary;
     let overviewBox = document.getElementById('overview-box');
     let content = `
     <div class="col-sm-6 col-xl-4 border-end border-muted">
@@ -55,10 +111,9 @@ axios({
           <th scope="row">${eCount}</th>
           <td>${time}</td>
           <td><a href = '/article/${ele._id}'>${ele.title}</td>
-          <td>View</td>
+          <td>${ele.view}</td>
           <td>$${ele.earning_amount}</td>
           <td>${engagement}</td>
-          <td>Member</td>
       </tr>
       `;
     });
@@ -81,14 +136,21 @@ axios({
           <th scope="row">${rCount}</th>
           <td>${time}</td>
           <td><a href = '/article/${ele._id}'>${ele.title}</a></td>
-          <td>View</td>
+          <td>${ele.view}</td>
           <td>$${ele.earning_amount}</td>
           <td>${engagement}</td>
-          <td>Member</td>
       </tr>
       `;
     });
     recentPost.innerHTML = recent;
+
+    let topTag = document.getElementById('top-tag');
+    let tag = ``;
+    for (let i = 0; i < 4; i++) {
+      tag += `
+      <span class="badge bg-warning">${tags[i]}</span>`;
+    }
+    topTag.innerHTML = tag;
   })
   .catch(function (error) {
     console.log(error);

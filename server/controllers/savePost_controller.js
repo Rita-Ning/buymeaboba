@@ -19,7 +19,7 @@ router.post('/post/create', async (req, res) => {
     return res.status(400).json({ error: 'Title and Content are required' });
   }
   let post_tag = tags.split(',');
-  post_tag = post_tag.map((s) => s.trim());
+  post_tag = post_tag.map((s) => s.trim().toLowerCase());
   const postInfo = {
     user_id: mongoose.mongo.ObjectId(user_id),
     title,
