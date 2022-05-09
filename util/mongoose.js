@@ -141,7 +141,7 @@ const userProfile = mongoose.model('user', {
     type: Array,
   },
   post: {
-    type: [mongoose.SchemaTypes.ObjectId],
+    type: [Array],
   },
   intro_post: {
     type: String,
@@ -273,9 +273,10 @@ const support = mongoose.model('support', {
 //   name: 1,
 //   email:1
 // })
-// async function main() {
-//   let result = await userProfile.updateMany({}, { about: '' });
-// }
+async function main() {
+  let result = await userProfile.updateMany({}, { intro_post: '' });
+}
+// main();
 
 //find function test
 // async function main() {

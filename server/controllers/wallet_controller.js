@@ -95,7 +95,6 @@ router.post('/balance', async (req, res, next) => {
     data['total'] = ttl_amount;
     data['withdraw'] = ttl_withdraw;
     data['transaction'] = withdraw.withdraw;
-    console.log(data);
     res.json(data);
   } catch (error) {
     res.send(error.message);

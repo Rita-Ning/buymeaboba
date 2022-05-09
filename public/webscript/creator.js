@@ -128,9 +128,9 @@ axios
 		<small class="text-muted pl-1">${follower_count} followers</small>
   `;
     profileColumn.innerHTML = profile;
-    let aboutColumn = document.getElementById('about');
-    let aboutMe = `<p class="card-text pr-5 pl-3">${intro_post}</p>`;
-    aboutColumn.innerHTML = aboutMe;
+    // let aboutColumn = document.getElementById('about');
+    // let aboutMe = `<p class="card-text pr-5 pl-3">${intro_post}</p>`;
+    // aboutColumn.innerHTML = aboutMe;
 
     let pic = `
   <a href="${creatorPath}">
@@ -150,8 +150,15 @@ axios
 
     let articleColumn = document.getElementById('article');
     let article = ``;
-    //like_count should be change, this is for fake data
-    post.forEach((data) => {
+
+    //if no intro post
+    if (intro_post == '') {
+      let pin = document.getElementById('pin-article');
+      let pin_article = `<h2 class="mb-1 h4 font-weight-bold dark-blue">About Me</h2><p class="card-text pr-5 pl-3">${about}</p>`;
+      pin.innerHTML = pin_article;
+    }
+
+    for (let i = 0; i < post.length; i++) {
       let {
         title,
         description,
@@ -160,7 +167,7 @@ axios
         like_count,
         create_time,
         _id,
-      } = data;
+      } = post[i];
       if (!description) {
         description = content.split('.')[0] + '.';
       }
@@ -170,6 +177,28 @@ axios
       let d = new Date(create_time);
       let time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
       let commentCount = comment.length;
+
+      //intro post to top and not in alll stories
+      if (_id == intro_post) {
+        let pin = document.getElementById('pin-article');
+        let pin_article = ``;
+        pin_article = `
+        <div class="mb-3 d-flex justify-content-between" >
+        <div class="pr-3 pt-2">
+          <h2 class="mb-1 h4 font-weight-bold">
+          <a class="dark-blue post-title" id=${_id} href='/article/${_id}'>${title}</a>
+          </h2>
+          <h5 class='text-muted'>${description}</h5>
+          <div class="ellipsis6 pt-1 pb-3 text-muted">${content}</div>
+          <div class="card-text text-muted small">
+            ${time}
+          </div>
+          <small class="text-muted">  💛 &nbsp; ${like_count} &middot; ${commentCount} comments</small>
+        </div>
+      </div>`;
+        pin.innerHTML = pin_article;
+        continue;
+      }
 
       article += `
     <div class="mb-3 d-flex justify-content-between" >
@@ -209,7 +238,7 @@ axios
       </li>`;
       }
       popColumn.innerHTML = pop;
-    });
+    }
     articleColumn.innerHTML = article;
   })
   .catch((error) => {

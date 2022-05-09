@@ -12,7 +12,7 @@ router.post('/post/create', async (req, res) => {
   //     .status(400)
   //     .json({ error: 'Content type need to be application/json' });
   // }
-  let { title, user_id, description, content } = req.body;
+  let { title, user_id, description, content, pin } = req.body;
   console.log(req.body);
   if (!title || !content) {
     return res.status(400).json({ error: 'Title and Content are required' });
@@ -38,10 +38,17 @@ router.post('/post/create', async (req, res) => {
     );
     let user_page = result.user_page;
 
-    console.log(result);
+    if (pin == true) {
+      await userProfile.updateOne(
+        { _id: mongoose.mongo.ObjectId(user_id) },
+        { intro_post: postId }
+      );
+    }
+
     return res.status(200).json({ user_page: user_page });
   } catch (error) {
     res.send(error.message);
+    next(error);
   }
 });
 

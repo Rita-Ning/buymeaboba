@@ -9869,4 +9869,17 @@ and left sides of the text */
   position: sticky;
   top: 100px;
 }
+
+.ellipsis6{
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 6; /*行數*/
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+
+.dark-blue{
+  color:#00509D
+}
 /* sourceMappingURL = main.css.map */

@@ -150,6 +150,12 @@
                                   </div>
                                 </div>
                                 <div id="myeditor" class="mb-4"></div>
+                                <div class="form-check pt-4 ml-3">
+                                  <input class="form-check-input text-warning" type="checkbox" name="pin-article" id="pin-article">
+                                  <label class="form-check-label" for="flexCheckChecked">
+                                    Pinned Article
+                                  </label>
+                                </div>
                                 <button type="button"
                                     class="btn btn-success mt-4 bg-warning border-0 mb-4"
                                     onclick="postArticle()"> Publish
@@ -198,6 +204,8 @@
   
     function savePost(postInfo){
       let headers = { 'Content-Type': 'application/json' };
+      // check if article pin
+      postInfo['pin'] = document.getElementById('pin-article').checked
       axios({
         method: 'post',
         url: '/api/1.0/post/create',
@@ -213,6 +221,7 @@
           alert(msg);
         });
     }
+
     </script>
 
     <!-- JavaScript Libraries -->
