@@ -113,7 +113,7 @@ axios({
     let transaction_history = document.getElementById('transaction-history');
     let history = ``;
 
-    transaction.forEach((ele) => {
+    transaction.reverse().forEach((ele) => {
       let d = new Date(ele.time);
       let time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
       let status;
