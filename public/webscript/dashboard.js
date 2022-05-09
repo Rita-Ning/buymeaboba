@@ -47,13 +47,16 @@ axios({
       let time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
       eCount += 1;
       let engagement = ele.like_count + ele.comment[0] + ele.earning_from[0];
+      if (!ele.earning_amount) {
+        ele.earning_amount = 0;
+      }
       earn += `
       <tr>
           <th scope="row">${eCount}</th>
           <td>${time}</td>
           <td><a href = '/article/${ele._id}'>${ele.title}</td>
           <td>View</td>
-          <td>${ele.earning_amount}</td>
+          <td>$${ele.earning_amount}</td>
           <td>${engagement}</td>
           <td>Member</td>
       </tr>
@@ -70,13 +73,16 @@ axios({
       let time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
       rCount += 1;
       let engagement = ele.like_count + ele.comment[0] + ele.earning_from[0];
+      if (!ele.earning_amount) {
+        ele.earning_amount = 0;
+      }
       recent += `
       <tr>
           <th scope="row">${rCount}</th>
           <td>${time}</td>
           <td><a href = '/article/${ele._id}'>${ele.title}</a></td>
           <td>View</td>
-          <td>${ele.earning_amount}</td>
+          <td>$${ele.earning_amount}</td>
           <td>${engagement}</td>
           <td>Member</td>
       </tr>

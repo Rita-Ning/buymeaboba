@@ -1,6 +1,5 @@
 const express = require('express');
 var mongoose = require('mongoose');
-const axios = require('axios');
 
 const router = express.Router();
 const { userProfile, support } = require('../../util/mongoose');
