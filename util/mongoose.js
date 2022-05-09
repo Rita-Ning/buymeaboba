@@ -212,6 +212,10 @@ const post = mongoose.model('post', {
   earning_from: {
     type: Array,
   },
+  support_only: {
+    type: Number,
+    default: 0,
+  },
 });
 
 // create post comment fake data test
@@ -329,6 +333,11 @@ async function main() {
 //   );
 //   console.log(result);
 // }
+
+async function main() {
+  let result = await post.updateMany({}, { support_only: 0 });
+}
+
 // main();
 
 module.exports = {

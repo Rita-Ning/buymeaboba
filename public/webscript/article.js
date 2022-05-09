@@ -134,7 +134,19 @@ commentForm.addEventListener('submit', (e) => {
 axios.get(`/api/1.0${articlePath}`).then((res) => {
   let data = res.data;
   //follower count need to be fixed for supporter count, now is for fake data
-  let { content, user, popular, comment, liked_by, like_count, user_id } = data;
+  let {
+    content,
+    user,
+    popular,
+    comment,
+    liked_by,
+    like_count,
+    user_id,
+    create_time,
+    read_time,
+    support_only,
+    earning_from,
+  } = data;
   let profileColumn = document.getElementById('self-intro');
   let profilePic = document.getElementById('profile-pic');
   let follower_count = user.follower_count;
@@ -169,12 +181,49 @@ axios.get(`/api/1.0${articlePath}`).then((res) => {
 
   // set article content
   let articleColumn = document.getElementById('article-content');
+  let block = document.getElementById('support-msg');
 
-  article = `
+  //check if support
+  let checkSupporter;
+  earning_from.forEach((ele) => {
+    if (ele.user_id == currentId) {
+      checkSupporter = true;
+    } else {
+      checkSupporter = fallse;
+    }
+  });
+
+  //check if arthur
+  let checkCreator;
+  if (user_id == currentId) {
+    checkCreator = true;
+  } else {
+    checkCreator = false;
+  }
+  if (support_only == 1 && !checkCreator && !checkSupporter) {
+    article = ``;
+    blockMsg = `
+    <div class='pl-2 mt-5 pt-5 mb-5 row align-items-center justify-content-center'>
+    <div><h2>Read this post with support</h2></div>
+    <div><button href="#myModal" class="btn btn-warning mb-3 support-btn display-6 trigger-btn mt-2" data-toggle="modal" id="supportBtn" style="width:290px">
+    Support  &nbsp NT$ <span id="supportAmount">80</span>
+    </button></div>
+    </div>
+    `;
+  } else {
+    article = `
     ${content}
     `;
-
+    blockMsg = ``;
+  }
   articleColumn.innerHTML = article;
+  block.innerHTML = blockMsg;
+
+  //set time and reading time
+  let timeColumn = document.getElementById('create-time');
+  let creatTime = create_time.split('T')[0];
+  time_box = `${creatTime} &middot; ${read_time}`;
+  timeColumn.innerHTML = time_box;
 
   // popular post at left-side
   let popColumn = document.getElementById('pop-article');
@@ -198,7 +247,7 @@ axios.get(`/api/1.0${articlePath}`).then((res) => {
   }
   popColumn.innerHTML = pop;
 
-  //comment section get hostory
+  //comment section get history
   let commentColumn = document.getElementById('comment-box');
   let comments = ``;
 

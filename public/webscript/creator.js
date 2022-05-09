@@ -68,7 +68,7 @@ axios
   .get(`/api/1.0${creatorPath}`)
   .then((res) => {
     let data = res.data;
-    //follower count need to be fixed for supporter count, now is for fake data
+
     let {
       user_name,
       profile_pic,
@@ -167,6 +167,7 @@ axios
         like_count,
         create_time,
         _id,
+        support_only,
       } = post[i];
       if (!description) {
         description = content.split('.')[0] + '.';
@@ -188,9 +189,9 @@ axios
           <h2 class="mb-1 h4 font-weight-bold">
           <a class="dark-blue post-title" id=${_id} href='/article/${_id}'>${title}</a>
           </h2>
-          <h5 class='text-muted'>${description}</h5>
-          <div class="ellipsis6 pt-1 pb-3 text-muted">${content}</div>
-          <div class="card-text text-muted small">
+          <h5 class='text-muted ellipsis2'>${description}</h5>
+          <div class="ellipsis5 pt-1 text-muted">${content}</div>
+          <div class="card-text text-muted small pt-3">
             ${time}
           </div>
           <small class="text-muted">  💛 &nbsp; ${like_count} &middot; ${commentCount} comments</small>
@@ -200,22 +201,60 @@ axios
         continue;
       }
 
-      article += `
-    <div class="mb-3 d-flex justify-content-between" >
-      <div class="pr-3">
-        <h2 class="mb-1 h4 font-weight-bold">
-        <a class="text-dark post-title" id=${_id} href='/article/${_id}'>${title}</a>
-        </h2>
-        <p>
-          ${description}
-        </p>
-        <div class="card-text text-muted small">
-          ${time}
+      if (support_only == 1) {
+        article += `
+        <div class="mb-3 d-flex justify-content-between" >
+          <div class="pr-3">
+            <h2 class="mb-1 h4 font-weight-bold">
+            <a class="text-dark post-title" id=${_id} href='/article/${_id}'>${title}</a>
+            </h2>
+            <span class="badge badge-pill badge-warning" id='support-only'>Support  Only</span>
+            <p>
+              ${description}
+            </p>
+            <div class="card-text text-muted small">
+              ${time}
+            </div>
+            <small class="text-muted">  💛 &nbsp; ${like_count} &middot; ${commentCount} comments</small>
+          </div>
         </div>
-        <small class="text-muted">  💛 &nbsp; ${like_count} &middot; ${commentCount} comments</small>
-      </div>
-    </div>
     `;
+      } else {
+        article += `
+        <div class="mb-3 d-flex justify-content-between" >
+          <div class="pr-3">
+            <h2 class="mb-1 h4 font-weight-bold">
+            <a class="text-dark post-title" id=${_id} href='/article/${_id}'>${title}</a>
+            </h2>
+            <p>
+              ${description}
+            </p>
+            <div class="card-text text-muted small">
+              ${time}
+            </div>
+            <small class="text-muted">  💛 &nbsp; ${like_count} &middot; ${commentCount} comments</small>
+          </div>
+        </div>
+        `;
+      }
+
+      //   article += `
+      // <div class="mb-3 d-flex justify-content-between" >
+      //   <div class="pr-3">
+      //     <h2 class="mb-1 h4 font-weight-bold">
+      //     <a class="text-dark post-title" id=${_id} href='/article/${_id}'>${title}</a>
+      //     </h2>
+      //     <span class="badge badge-pill badge-warning display-none" id='support-only'>Support Only</span>
+      //     <p>
+      //       ${description}
+      //     </p>
+      //     <div class="card-text text-muted small">
+      //       ${time}
+      //     </div>
+      //     <small class="text-muted">  💛 &nbsp; ${like_count} &middot; ${commentCount} comments</small>
+      //   </div>
+      // </div>
+      // `;
 
       let popColumn = document.getElementById('pop-article');
       let pop = ``;

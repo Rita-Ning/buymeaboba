@@ -12,17 +12,21 @@ router.post('/post/create', async (req, res) => {
   //     .status(400)
   //     .json({ error: 'Content type need to be application/json' });
   // }
-  let { title, user_id, description, content, pin } = req.body;
-  console.log(req.body);
+  let { title, user_id, description, content, pin, tags, suppport_only } =
+    req.body;
+  // console.log(req.body);
   if (!title || !content) {
     return res.status(400).json({ error: 'Title and Content are required' });
   }
-
+  let post_tag = tags.split(',');
+  post_tag = post_tag.map((s) => s.trim());
   const postInfo = {
     user_id: mongoose.mongo.ObjectId(user_id),
     title,
     description,
     content,
+    post_tag,
+    suppport_only,
     create_time: Date.now(),
   };
 

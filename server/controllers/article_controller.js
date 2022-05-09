@@ -1,4 +1,5 @@
 const express = require('express');
+const readingTime = require('reading-time');
 var mongoose = require('mongoose');
 
 const router = express.Router();
@@ -19,6 +20,8 @@ router.get('/article/:postid', async (req, res) => {
       liked_by: 1,
       like_count: 1,
       create_time: 1,
+      earning_from: 1,
+      support_only: 1,
     }
   );
 
@@ -57,7 +60,13 @@ router.get('/article/:postid', async (req, res) => {
     liked_by,
     like_count,
     create_time,
+    earning_from,
+    support_only,
   } = postInfo;
+
+  // reading time
+  let stats = readingTime(content);
+  let read_time = stats.text;
 
   // let comment sent sort by comment time
   let commentSort = comment.sort((a, b) => b.comment_time - a.comment_time);
@@ -71,6 +80,9 @@ router.get('/article/:postid', async (req, res) => {
     liked_by,
     like_count,
     create_time,
+    read_time,
+    earning_from,
+    support_only,
   };
 
   data['user'] = user;

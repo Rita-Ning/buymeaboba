@@ -106,6 +106,7 @@ router.get('/creator/:name', async (req, res) => {
           liked_by: 1,
           like_count: 1,
           create_time: 1,
+          support_only: 1,
         }
       )
       .sort({ create_time: -1 });
@@ -119,6 +120,7 @@ router.get('/creator/:name', async (req, res) => {
           liked_by: 1,
           like_count: 1,
           create_time: 1,
+          support_only: 1,
         }
       )
       .sort({ like_count: -1 })

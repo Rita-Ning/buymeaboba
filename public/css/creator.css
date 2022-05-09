@@ -9870,11 +9870,20 @@ and left sides of the text */
   top: 100px;
 }
 
-.ellipsis6{
+.ellipsis5{
   overflow: hidden;
   display: -webkit-box;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 6; /*行數*/
+  -webkit-line-clamp: 5; /*行數*/
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+
+.ellipsis2{
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2; /*行數*/
   -webkit-box-orient: vertical;
   white-space: normal;
 }
@@ -9882,4 +9891,9 @@ and left sides of the text */
 .dark-blue{
   color:#00509D
 }
+
+.display-none{
+  display: none;
+}
+
 /* sourceMappingURL = main.css.map */
