@@ -102,7 +102,7 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
     let id = mongoose.mongo.ObjectId(user_id);
     const userInfo = await userProfile.findOne(
       { _id: id },
-      { follower: 1, supporter: 1, user_name: 1, sender_pic: 1 }
+      { follower: 1, supporter: 1, user_name: 1, profile_pic: 1 }
     );
 
     // save supporter and check if user is a member if not then not send/ send by email
@@ -118,7 +118,7 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
     //check type and save to db
     let roomId;
     let creator_name = userInfo.user_name;
-    let creator_pic = userInfo.sender_pic;
+    let creator_pic = userInfo.profile_pic;
     if (type == 'follow') {
       for (let i = 0; i < userInfo.follower.length; i++) {
         let follow = userInfo.follower[i];
