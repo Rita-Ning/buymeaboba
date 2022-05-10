@@ -94,15 +94,15 @@ axios
     // console.log(following);
 
     if (user == _id) {
-      document.getElementById('edit-page').style.display = 'block';
+      // document.getElementById('edit-page').style.display = 'block';
       document.getElementById('feat-follow').style.display = 'none';
       document.getElementById('feat-unfollow').style.display = 'none';
     } else if (following) {
-      document.getElementById('edit-page').style.display = 'none';
+      // document.getElementById('edit-page').style.display = 'none';
       document.getElementById('feat-follow').style.display = 'none';
       document.getElementById('feat-unfollow').style.display = 'block';
-    } else {
-      document.getElementById('edit-page').style.display = 'none';
+      // } else {
+      //   document.getElementById('edit-page').style.display = 'none';
       document.getElementById('feat-follow').style.display = 'block';
       document.getElementById('feat-unfollow').style.display = 'none';
     }
