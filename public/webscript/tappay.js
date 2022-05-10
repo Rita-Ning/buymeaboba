@@ -167,7 +167,7 @@ TPDirect.card.onUpdate(function (update) {
   }
 });
 
-$('form').on('submit', function (event) {
+$('#support-form').on('submit', function (event) {
   event.preventDefault();
 
   const tappayStatus = TPDirect.card.getTappayFieldsStatus();
@@ -176,7 +176,7 @@ $('form').on('submit', function (event) {
 
   // Check TPDirect.card.getTappayFieldsStatus().canGetPrime before TPDirect.card.getPrime
   if (tappayStatus.canGetPrime === false) {
-    // alert('can not get prime');
+    alert('can not get prime');
     return;
   }
 

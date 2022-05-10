@@ -11,27 +11,25 @@ if (!userToken) {
 }
 
 // like Btn change and send back
-function like() {
+async function like() {
   if (!userToken) {
     window.location.href = '/signup.html';
     return;
   }
   //send like back
-  axios({
-    method: 'post',
-    url: '/api/1.0/like/add',
-    data: {
-      article_id: articleId,
-      user_id: currentId,
-      time: Date.now(),
-    },
-  })
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch(function (error) {
-      console.log(error);
+  try {
+    const result = await axios({
+      method: 'post',
+      url: '/api/1.0/like/add',
+      data: {
+        article_id: articleId,
+        user_id: currentId,
+        time: Date.now(),
+      },
     });
+  } catch (err) {
+    console.log(err);
+  }
 
   //get like back
   axios.get(`/api/1.0${articlePath}`).then((res) => {
@@ -46,22 +44,20 @@ function like() {
   });
 }
 
-function unlike() {
+async function unlike() {
   //send unlike back
-  axios({
-    method: 'post',
-    url: '/api/1.0/like/delete',
-    data: {
-      article_id: articleId,
-      user_id: currentId,
-    },
-  })
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch(function (error) {
-      console.log(error);
+  try {
+    const result = await axios({
+      method: 'post',
+      url: '/api/1.0/like/delete',
+      data: {
+        article_id: articleId,
+        user_id: currentId,
+      },
     });
+  } catch (err) {
+    consoole.log(err);
+  }
 
   //get like back
   axios.get(`/api/1.0${articlePath}`).then((res) => {
@@ -69,7 +65,7 @@ function unlike() {
     if (!like_count) {
       like_count = 0;
     }
-    //like count render
+    //like count
     document.getElementById(
       'likeBtn'
     ).innerHTML = `<a onclick="like()"><i class="fa-regular fa-heart fa-lg"></i><a> &nbsp ${like_count} `;
@@ -77,35 +73,32 @@ function unlike() {
 }
 
 // if comment submit
-const commentForm = document.getElementById('comment-form');
+const commentBtn = document.getElementById('submit-comment-btn');
 const commentInput = document.getElementById('comment-input');
 const commentColumn = document.getElementById('comment-box');
 
-commentForm.addEventListener('submit', (e) => {
+commentBtn.addEventListener('click', async (e) => {
   e.preventDefault();
   if (!userToken) {
     window.location.href = '/signup.html';
     return;
   }
-  comment = commentInput.value;
-  axios({
-    method: 'post',
-    url: '/api/1.0/comment/add',
-    data: {
-      article_id: articleId,
-      user_id: currentId,
-      user_name: currentName,
-      comment_time: Date.now(),
-      comment,
-    },
-  })
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch(function (error) {
-      console.log(error);
+  let comment = commentInput.value;
+  try {
+    const result = await axios({
+      method: 'post',
+      url: '/api/1.0/comment/add',
+      data: {
+        article_id: articleId,
+        user_id: currentId,
+        user_name: currentName,
+        comment_time: Date.now(),
+        comment,
+      },
     });
-
+  } catch (err) {
+    console.log(err);
+  }
   // show comment immediately
   let d = new Date(Date.now());
   let time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();

@@ -107,7 +107,7 @@ router.post('/comment/add', async (req, res) => {
       },
     }
   );
-  // res.send('updated!');
+  res.send('updated!');
 });
 
 //recieve like and save
