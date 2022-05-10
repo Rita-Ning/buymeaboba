@@ -16,7 +16,6 @@ async function toChatRoom() {
 axios({
   method: 'post',
   url: '/api/1.0/chat/chatroom',
-  //API要求的資料
   data: {
     user_id: userId,
   },
@@ -29,6 +28,12 @@ axios({
 function showChatroom(res) {
   const chat = document.getElementById('chat-container');
   let data = res.data;
+  data.sort(function (a, b) {
+    var c = new Date(a.time);
+    var d = new Date(b.time);
+    return d - c;
+  });
+
   let chatDetail = '';
 
   data.forEach((room) => {
@@ -56,20 +61,11 @@ function showChatroom(res) {
 
     chat.innerHTML = chatDetail;
   });
-  // document.body.addEventListener('click', (e) => memberPic(e));
 }
-
-// function memberPic(e) {
-//   if (e.target.closest('.chat-box').getAttribute('name') == 'chat-box') {
-//     let memberPic = e.target.closest('.chat-box').id;
-//     localStorage.setItem('member_pic',memberPic);
-//   }
-// }
 
 axios({
   method: 'post',
   url: '/api/1.0/chat/member',
-  //API要求的資料
   data: {
     user_id: userId,
   },
@@ -92,7 +88,7 @@ function showMember(res) {
     <span>${followerCount}</span>`;
   document.getElementById('supporter-count').innerHTML = `
     <div class="d-flex w-100 justify-content-between">
-      <h6 class="mb-0">Supporters</h6>
+      <h6 class="mb-0">Supporters <small> (only supporters that are members can get message)</small></h6>
       <a class="btn-sm btn-warning rounded-pill text-white" href='./message-multiple.html?type=support'>Message</a>
     </div>
     <span>${supporterCount}</span>`;

@@ -127,7 +127,7 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
           roomId = await createRoom(user_id, follow.follower_id);
           await createMsg(roomId, user_id, msg, creator_name, creator_pic);
         } else {
-          rooomId = await ifRoom(user_id, follow.follower_id);
+          roomId = await ifRoom(user_id, follow.follower_id);
           await createMsg(roomId, user_id, msg, creator_name, creator_pic);
         }
       }
@@ -139,7 +139,7 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
           roomId = await createRoom(user_id, support);
           await createMsg(roomId, user_id, msg, creator_name, creator_pic);
         } else {
-          rooomId = await ifRoom(user_id, support);
+          roomId = await ifRoom(user_id, support);
           await createMsg(roomId, user_id, msg, creator_name, creator_pic);
         }
       }
@@ -151,19 +151,18 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
 
   async function createRoom(user_id, member) {
     let newRoom = await chatRoom.create({ members: [user_id, member] });
-    // console.log(newRoom);
     return newRoom._id;
   }
 
   async function createMsg(roomId, sender, msg, creator_name, creator_pic) {
-    // console.log(roomId);
-    await chatMsg.create({
+    let result = await chatMsg.create({
       room_id: roomId,
       sender: sender,
       sender_name: creator_name,
       sender_pic: creator_pic,
       msg: msg,
     });
+    return result;
   }
 
   async function ifRoom(user_id, member) {
