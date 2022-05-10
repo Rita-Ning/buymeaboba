@@ -12,7 +12,7 @@ router.post('/post/create', async (req, res) => {
   //     .status(400)
   //     .json({ error: 'Content type need to be application/json' });
   // }
-  let { title, user_id, description, content, pin, tags, suppport_only } =
+  let { title, user_id, description, content, pin, tags, support_only } =
     req.body;
   // console.log(req.body);
   if (!title || !content) {
@@ -26,7 +26,7 @@ router.post('/post/create', async (req, res) => {
     description,
     content,
     post_tag,
-    suppport_only,
+    support_only,
     create_time: Date.now(),
   };
 
