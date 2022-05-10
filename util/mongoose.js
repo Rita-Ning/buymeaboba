@@ -130,6 +130,7 @@ const userProfile = mongoose.model('user', {
   },
   follower_count: {
     type: Number,
+    default: 0,
   },
   follower: {
     type: Array,

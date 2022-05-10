@@ -141,21 +141,30 @@ router.post('/dashboard/normal', async (req, res) => {
         tagList.push(tagValue);
       }
     });
-    let result = [];
-    for (let i = 1; i < tagList.length; i++) {
-      if (result.some((tag) => tag.name === tagList[i].name)) {
-        const index = result.findIndex((tag) => tag.name === tagList[i].name);
-        result[index].value += tagList[i].value;
-      } else {
-        result.push(tagList[i]);
-      }
-    }
-    let tagSort = result.sort((a, b) => (b.value > a.value ? 1 : -1));
     let tagTop = [];
-    for (let i = 0; i < 4; i++) {
-      tagTop.push(tagSort[i].name);
+    if (tagList.length !== 0) {
+      let result = [];
+      for (let i = 1; i < tagList.length; i++) {
+        if (result.some((tag) => tag.name === tagList[i].name)) {
+          const index = result.findIndex((tag) => tag.name === tagList[i].name);
+          result[index].value += tagList[i].value;
+        } else {
+          result.push(tagList[i]);
+        }
+      }
+      let tagSort = result.sort((a, b) => (b.value > a.value ? 1 : -1));
+      if (tagSort.length > 4) {
+        for (let i = 0; i < 4; i++) {
+          tagTop.push(tagSort[i].name);
+        }
+      } else {
+        for (let i = 0; i < tagSort.length; i++) {
+          tagTop.push(tagSort[i].name);
+        }
+      }
+    } else {
+      tagTop = [];
     }
-    console.log(tagTop);
 
     data['overview'] = overview;
     data['earning_post'] = earningPost;

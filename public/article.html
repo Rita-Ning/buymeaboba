@@ -5,7 +5,7 @@
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>buymeboba</title>
-<link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700|Source+Sans+Pro:400,600,700" rel="stylesheet">
 <!-- Font Awesome Icons -->
@@ -28,17 +28,17 @@ NAVBAR
 	</button>
 	<div class="navbar-collapse collapse" id="navbarColor02">
 		<ul class="navbar-nav mr-auto d-flex align-items-center">
-			<!-- <li class="nav-item" id="edit-page">
-				<a class="nav-link" href="#">Edit Page</a>
-			</li> -->
+			<li class="nav-item pr-3" id="edit-page">
+				<a class="nav-link btn btn-sm rounded-pill text-white highlight follow-text font-weight-bold" href="/post-create.html">Create Post</a>
+			</li>
 			<li class="nav-item pr-3" id="feat-follow">
-				<button type="button" href="#" class="btn btn-sm btn-outline-warning rounded-pill" style="height:35px" onclick="follow()">Follow</button>
+				<button type="button" href="#" class="btn btn-sm rounded-pill text-white highlight follow-text font-weight-bold" style="height:35px" onclick="follow()">Follow</button>
 			</li>
 			<li class="nav-item pr-3" id="feat-unfollow">
-				<button type="button" href="#" class="btn btn-sm btn-outline-warning rounded-pill text-center" style="height:35px;" onclick="unfollow()">Following</button>
+				<button type="button" href="#" class="btn btn-sm rounded-pill highlight text-white follow-text font-weight-bold" style="height:35px;" onclick="unfollow()">Following</button>
 			</li>
 			<li class="nav-item dropdown" id="my-profile">
-				<a class="nav-link dropdown-toggle highlight rounded pt-1 pb-1 pl-2 pr-2 text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Profile</a>
+				<a class="nav-link dropdown-toggle rounded pt-1 pb-1 pl-2 pr-2 text-warning border border-warning font-weight-bold" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Profile</a>
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="/" id="my-page">View My Page</a>
 					<a class="dropdown-item" href="/profile-home.html">My Profile</a>
@@ -251,7 +251,7 @@ JAVASCRIPTS
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/webscript/article.js"></script>
-<script src="/webscript/creator.js"></script>
+<script src="/webscript/follow.js"></script>
 <script src="/webscript/tappay.js"></script>
 </body>
 </html>

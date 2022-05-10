@@ -65,3 +65,10 @@ function search() {
       alert(msg);
     });
 }
+
+document.getElementById('search-text').addEventListener('keypress', (e) => {
+  if (e.key == 'Enter') {
+    e.preventDefault();
+    document.getElementById('search-btn').click();
+  }
+});

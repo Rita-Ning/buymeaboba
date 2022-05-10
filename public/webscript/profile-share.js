@@ -18,5 +18,10 @@ let myImg = ` <img class="rounded-circle me-lg-2" src="${myProfile}" alt="" styl
 navImg.innerHTML = myImg;
 
 let toProfile = document.getElementById('menu-list');
-let pagePath = `<a href="./creator/${myPage}" class="dropdown-item">View My Page</a>`;
+let pagePath = `<a href="./creator/${myPage}" class="dropdown-item">View My Page</a>
+                <a class="dropdown-item" href="/" onclick="logOut()">Log Out</a>`;
 toProfile.innerHTML = pagePath;
+
+function logOut() {
+  localStorage.clear();
+}

@@ -11,7 +11,7 @@ router.get('/search', async (req, res) => {
     let data = [];
     let resultName = await userProfile
       .find(
-        { user_name: { $regex: keyword } },
+        { user_name: { $regex: keyword, $options: 'i' } },
         {
           user_page: 1,
           user_name: 1,

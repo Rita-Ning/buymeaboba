@@ -146,7 +146,7 @@ axios({
 
     let topTag = document.getElementById('top-tag');
     let tag = ``;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < tags.length; i++) {
       tag += `
       <span class="badge bg-warning">${tags[i]}</span>`;
     }

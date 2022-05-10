@@ -15,8 +15,8 @@ axios
             <img src="${creator.profile_pic}" class="img-fluid bg-warning p-2 rounded-circle" style='width:200px;height:200px'/>
           </div>
           <div class="card-body bg-yellow">
-            <h5 class="card-title ellipsis1">${creator.user_name}</h5>
-            <p class="card-text ellipsis2">
+            <h5 class="card-title ellipsis1 font-weight-bold">${creator.user_name}</h5>
+            <p class="card-text ellipsis2 text-dark">
               ${creator.about}
             </p>
           </div>

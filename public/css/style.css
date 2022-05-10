@@ -8340,3 +8340,7 @@ body {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.card-text:hover {
+  color: #0056b3 !important; 
+}

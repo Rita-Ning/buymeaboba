@@ -94,15 +94,15 @@ axios
     // console.log(following);
 
     if (user == _id) {
-      // document.getElementById('edit-page').style.display = 'block';
+      document.getElementById('edit-page').style.display = 'block';
       document.getElementById('feat-follow').style.display = 'none';
       document.getElementById('feat-unfollow').style.display = 'none';
     } else if (following) {
-      // document.getElementById('edit-page').style.display = 'none';
+      document.getElementById('edit-page').style.display = 'none';
       document.getElementById('feat-follow').style.display = 'none';
       document.getElementById('feat-unfollow').style.display = 'block';
     } else {
-      //   document.getElementById('edit-page').style.display = 'none';
+      document.getElementById('edit-page').style.display = 'none';
       document.getElementById('feat-follow').style.display = 'block';
       document.getElementById('feat-unfollow').style.display = 'none';
     }
@@ -238,24 +238,6 @@ axios
         </div>
         `;
       }
-
-      //   article += `
-      // <div class="mb-3 d-flex justify-content-between" >
-      //   <div class="pr-3">
-      //     <h2 class="mb-1 h4 font-weight-bold">
-      //     <a class="text-dark post-title" id=${_id} href='/article/${_id}'>${title}</a>
-      //     </h2>
-      //     <span class="badge badge-pill badge-warning display-none" id='support-only'>Support Only</span>
-      //     <p>
-      //       ${description}
-      //     </p>
-      //     <div class="card-text text-muted small">
-      //       ${time}
-      //     </div>
-      //     <small class="text-muted">  💛 &nbsp; ${like_count} &middot; ${commentCount} comments</small>
-      //   </div>
-      // </div>
-      // `;
 
       let popColumn = document.getElementById('pop-article');
       let pop = ``;

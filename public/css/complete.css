@@ -81,7 +81,8 @@ main{
 /* header end */
 
 #form_container{
-    margin-top: 210px;
+    margin-top: 100px;
+    margin-bottom: auto;
     width: 550px;
     margin-left: auto; 
     margin-right: auto;
