@@ -16,17 +16,6 @@ function like() {
     window.location.href = '/signup.html';
     return;
   }
-  axios.get(`/api/1.0${articlePath}`).then((res) => {
-    let { like_count } = res.data;
-    if (!like_count) {
-      like_count = 0;
-    }
-    //like count +1, like solid
-    let newLike = like_count + 1;
-    document.getElementById(
-      'likeBtn'
-    ).innerHTML = `<a onclick="unlike()"><i class="fa-solid fa-heart fa-lg heart"></i><a> &nbsp ${newLike} `;
-  });
   //send like back
   axios({
     method: 'post',
@@ -43,21 +32,21 @@ function like() {
     .catch(function (error) {
       console.log(error);
     });
-}
 
-function unlike() {
+  //get like back
   axios.get(`/api/1.0${articlePath}`).then((res) => {
     let { like_count } = res.data;
     if (!like_count) {
       like_count = 0;
     }
-    //like count +1, like solid
-    let newLike = like_count - 1;
+    //like count
     document.getElementById(
       'likeBtn'
-    ).innerHTML = `<a onclick="like()"><i class="fa-regular fa-heart fa-lg"></i><a> &nbsp ${newLike} `;
+    ).innerHTML = `<a onclick="unlike()"><i class="fa-solid fa-heart fa-lg heart"></i><a> &nbsp ${like_count} `;
   });
+}
 
+function unlike() {
   //send unlike back
   axios({
     method: 'post',
@@ -73,6 +62,18 @@ function unlike() {
     .catch(function (error) {
       console.log(error);
     });
+
+  //get like back
+  axios.get(`/api/1.0${articlePath}`).then((res) => {
+    let { like_count } = res.data;
+    if (!like_count) {
+      like_count = 0;
+    }
+    //like count render
+    document.getElementById(
+      'likeBtn'
+    ).innerHTML = `<a onclick="like()"><i class="fa-regular fa-heart fa-lg"></i><a> &nbsp ${like_count} `;
+  });
 }
 
 // if comment submit
@@ -123,10 +124,10 @@ commentForm.addEventListener('submit', (e) => {
   // update comment number immediately
   axios.get(`/api/1.0/${articlePath}`).then((res) => {
     let { comment } = res.data;
-    let newCount = comment.length + 1;
+    let count = comment.length;
     document.getElementById(
       'commentBlock'
-    ).innerHTML = `<i class="fa-regular fa-message fa-lg"></i> &nbsp ${newCount}`;
+    ).innerHTML = `<i class="fa-regular fa-message fa-lg"></i> &nbsp ${count}`;
   });
   commentInput.value = '';
 });
