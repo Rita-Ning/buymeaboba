@@ -34,12 +34,16 @@ router.post('/newsfeed', async (req, res) => {
           content: 1,
         }
       );
-      // console.log(creatorPost);
       postList = postList.concat(creatorPost);
     }
 
     let postSort = postList.sort((a, b) => b.create_time - a.create_time);
-    let recentPost = postSort.slice(11);
+    let recentPost;
+    if (postSort.length > 12) {
+      recentPost = postSort.slice(11);
+    } else {
+      recentPost = postSort;
+    }
     let result = [];
     for (let j = 0; j < recentPost.length; j++) {
       let post = recentPost[j];
@@ -78,6 +82,7 @@ router.post('/newsfeed', async (req, res) => {
       data['user'] = userInfo;
       result.push(data);
     }
+    // console.log(result);
     res.json(result);
   } catch (err) {
     next(err);

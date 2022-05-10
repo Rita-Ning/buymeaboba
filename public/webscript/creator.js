@@ -152,6 +152,7 @@ axios
     let article = ``;
 
     //if no intro post
+    console.log(intro_post);
     if (intro_post == '') {
       let pin = document.getElementById('pin-article');
       let pin_article = `<h2 class="mb-1 h4 font-weight-bold dark-blue">About Me</h2><p class="card-text pr-5 pl-3">${about}</p>`;
