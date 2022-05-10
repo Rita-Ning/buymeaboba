@@ -101,7 +101,7 @@ axios
       // document.getElementById('edit-page').style.display = 'none';
       document.getElementById('feat-follow').style.display = 'none';
       document.getElementById('feat-unfollow').style.display = 'block';
-      // } else {
+    } else {
       //   document.getElementById('edit-page').style.display = 'none';
       document.getElementById('feat-follow').style.display = 'block';
       document.getElementById('feat-unfollow').style.display = 'none';
