@@ -1,3 +1,14 @@
+let token = localStorage.getItem('token');
+let myPage = localStorage.getItem('creator_page');
+
+if (token) {
+  let navShow = document.getElementById('nav-show');
+  let nav = `
+  <li class="nav-item"><a href="./creator-explore.html" class="nav-link">Explore Creator</a></li>
+  <li class="nav-item"><a href="/creator/${myPage}" class="nav-link" id="login-btn">My Page</a></li>`;
+  navShow.innerHTML = nav;
+}
+
 axios
   .get(`/api/1.0/search/frontpage`)
   .then((res) => {

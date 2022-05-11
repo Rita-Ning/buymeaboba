@@ -71,8 +71,10 @@ router.post('/user/create', async (req, res) => {
       user_page: req.body.page_name,
       profile_pic: req.body.profile_pic,
       about: req.body.about,
+      category: req.body.category,
       page_create: '1',
     };
+    console.log(profileInfo);
     const checkPagename = await userProfile.findOne({
       user_page: req.body.page_name,
     });

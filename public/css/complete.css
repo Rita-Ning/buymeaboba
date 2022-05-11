@@ -82,7 +82,7 @@ main{
 
 #form_container{
     margin-top: 100px;
-    margin-bottom: auto;
+    margin-bottom: 100px;
     width: 550px;
     margin-left: auto; 
     margin-right: auto;
@@ -233,4 +233,13 @@ label{
 
  .form{
      margin-top: 20px !important;
+ }
+
+ .dark-grey{
+   color: #837f7f;
+ }
+
+ .border-grey{
+    border: solid 1.5px #b4b2b2;
+    width:100%;
  }
