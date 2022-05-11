@@ -78,6 +78,7 @@ router.post('/support/checkout', async (req, res, next) => {
         creator_id: creator_id._id,
         amount,
         event,
+        method: 'bank',
       };
     } else {
       supportInfo = {
@@ -86,6 +87,7 @@ router.post('/support/checkout', async (req, res, next) => {
         creator_id: creator_id._id,
         amount,
         event,
+        method: 'bank',
       };
     }
     // console.log(supportInfo);

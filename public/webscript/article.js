@@ -4,6 +4,22 @@ let currentName = localStorage.getItem('user_name');
 let articleId = articlePath.split('/')[2];
 let userToken = localStorage.getItem('token');
 
+if (!currentId) {
+  axios({
+    method: 'post',
+    url: '/api/1.0/visitorid',
+    data: { data: 'visitor' },
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then((res) => {
+      let currentId = res.data.visitor_id;
+      localStorage.setItem('user_info', currentId);
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+}
+
 if (!userToken) {
   document.getElementById('my-profile').style.display = 'none';
 } else {
@@ -316,3 +332,17 @@ axios.get(`/api/1.0${articlePath}`).then((res) => {
     'commentBlock'
   ).innerHTML = `<i class="fa-regular fa-message fa-lg"></i> &nbsp ${comment.length}`;
 });
+
+// calculate view
+axios({
+  method: 'post',
+  url: '/api/1.0/view/article',
+  data: { user_id: currentId, page: articleId },
+  headers: { 'Content-Type': 'application/json' },
+})
+  .then((res) => {
+    console.log(res.data);
+  })
+  .catch(function (err) {
+    console.log(err);
+  });

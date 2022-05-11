@@ -1,8 +1,26 @@
 let userId = localStorage.getItem('user_info');
 
+function recoverForm() {
+  let form = document.getElementById('form-content');
+  let content = ``;
+  content = `
+  <div class="d-flex align-items-center justify-content-center mb-5 mt-3 form-group">
+    <h3 class="mb-0 text-warning">$</h3>
+    <input type="text" class="form-control border-0 text-primary" placeholder="amount" style="height:40px ; width:80px" id="withdraw-input" required="required">		
+  </div>
+  <div id="card-choose" class=>
+    <div class="mb-2 text-warning">Withdraw With</div>	
+    <div class="form-group justify-content-center">
+        <button type="submit" class="btn btn-dark btn-block rounded-pill mt-2  col-sm-6" onclick="withdrawBank()">Bank Account</button>
+        <button type="submit" class="btn btn-dark btn-block rounded-pill mt-2  col-sm-6" onclick="withdrawLine()">Line Pay</button>
+    </div>
+  </div>`;
+  form.innerHTML = content;
+}
+
 function withdrawBank() {
   let withdraw = document.getElementById('withdraw-input').value;
-  if (!withdraw || withdraw <= 0) {
+  if (!withdraw || withdraw <= 0 || withdraw > ttlEarning) {
     alert('Please Enter valid amount!');
     return;
   }
@@ -61,6 +79,58 @@ function createBankForm() {
   form.innerHTML = bankAccount;
 }
 
+function withdrawLine() {
+  let withdraw = document.getElementById('withdraw-input').value;
+  if (!withdraw || withdraw <= 0 || withdraw > ttlEarning) {
+    alert('Please Enter valid amount!');
+    return;
+  }
+
+  axios({
+    method: 'post',
+    url: '/api/1.0/withdraw',
+    data: {
+      user_id: userId,
+      method: 'linepay',
+      amount: parseInt(withdraw),
+    },
+  })
+    .then((res) => {
+      if (res.data.data == 'not-create') {
+        createLineForm();
+      }
+      if (res.data.data == 'success') {
+        let form = document.getElementById('form-content');
+        let sucessMsg = ``;
+        sucessMsg = `
+        <h5 class="pt-2 text-warning">Withdraw Sucess!</h5>
+        `;
+        form.innerHTML = sucessMsg;
+        setTimeout(() => {
+          location.reload();
+        }, '3000');
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+function createLineForm() {
+  let form = document.getElementById('form-content');
+  let lineAccount = '';
+  lineAccount = `
+  <h5 class="pt-2 text-warning">Line Account Info</h5>
+  <div id="card-form">		
+      <div class="form-group pt-4">
+          <input type="text" class="form-control" placeholder="Line Account ID" style="height:40px" id="line-acoount" required="required">		
+      </div>
+      <div class="form-group pt-4 pb-4 d-flex justify-content-center rounded-pill">
+          <button type="submit" class="btn btn-dark payBtn col-sm-6" onclick='saveLine()'>save</button>
+      </div>
+  </div>`;
+  form.innerHTML = lineAccount;
+}
+
 function saveBank() {
   let accountNumber = document.getElementById('acoount-number').value;
   axios({
@@ -88,10 +158,35 @@ function saveBank() {
     });
 }
 
-function withdrawLine() {
-  console.log('hi');
+function saveLine() {
+  let accountNumber = document.getElementById('line-acoount').value;
+  axios({
+    method: 'post',
+    url: '/api/1.0/billing',
+    data: {
+      user_id: userId,
+      method: 'linepay',
+      account_num: accountNumber,
+    },
+  })
+    .then((res) => {
+      console.log(res.data);
+      if ((res.data.data = 'success')) {
+        let form = document.getElementById('form-content');
+        let sucessMsg = ``;
+        sucessMsg = `
+      <h5 class="pt-2 text-warning">Line Account Create !</h5>
+      `;
+        form.innerHTML = sucessMsg;
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 }
 
+//history withdraw transaction
+let ttlEarning;
 axios({
   method: 'post',
   url: '/api/1.0/balance',
@@ -101,6 +196,7 @@ axios({
 })
   .then((res) => {
     let { total, withdraw, transaction } = res.data;
+    ttlEarning = total;
     let ttl_box = document.getElementById('total-earning');
     let ttl = `<h6 class="mb-0"> &nbsp $${total}</h6>`;
     ttl_box.innerHTML = ttl;
@@ -117,6 +213,7 @@ axios({
       let d = new Date(ele.time);
       let time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
       let status;
+      console.log(ele.receive_time);
       if (ele.receive_time < Date.now()) {
         status = 'transaction success';
       } else {

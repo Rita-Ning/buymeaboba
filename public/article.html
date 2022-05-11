@@ -203,6 +203,18 @@ MAIN
 							<button type="submit" class="btn btn-dark btn-lg btn-block login-btn payBtn" id="payBtn">pay with card</button>
 						</div>
 					</div>
+					<!-- line pay form -->
+					<div id="line-form">		
+						<div class="form-group notMember">
+							<input type="text" class="form-control" id="linename" placeholder="name" style="height:40px">		
+						</div>
+						<div class="form-group notMember">
+							<input type="text" class="form-control" id="lineemail" placeholder="Email" style="height:40px" required="required">	
+						</div> 
+						<div class="form-group">
+							<button type="submit" class="btn btn-dark btn-lg btn-block login-btn payBtn" id="lineBtn" onclick="linePay()">LINE Pay</button>
+						</div>
+					</div>
 					
 					<!--card selection form -->
 					<div id="card-choose">
@@ -211,7 +223,7 @@ MAIN
 							<button type="button" class="btn btn-dark btn-lg btn-block login-btn payBtn" onclick="formChange()">pay with card</button>
 						</div>
 						<div class="form-group">
-							<button type="button" class="btn btn-dark btn-lg btn-block login-btn payBtn">line pay</button>
+							<button type="button" class="btn btn-dark btn-lg btn-block login-btn payBtn" onclick="formLine()">line pay</button>
 						</div>
 					</div>
 				</form>
@@ -254,5 +266,6 @@ JAVASCRIPTS
 <script src="/webscript/article.js"></script>
 <script src="/webscript/follow.js"></script>
 <script src="/webscript/tappay.js"></script>
+<script src="/webscript/linepay.js"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@ let followPost = require('../controllers/followPost_controller');
 let dashboard = require('../controllers/dashboard_controller');
 let wallet = require('../controllers/wallet_controller');
 let linepay = require('../controllers/linepay_controller');
-// const favicon = require('serve-favicon');
+let view = require('../controllers/view_controller');
 
 const path = require('path');
 
@@ -27,6 +27,7 @@ module.exports = (app) => {
   app.use('/api/1.0', dashboard);
   app.use('/api/1.0', wallet);
   app.use('/api/1.0', linepay);
+  app.use('/api/1.0', view);
   app.use('/creator/:name', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/creator.html'));
   });

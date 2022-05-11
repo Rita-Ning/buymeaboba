@@ -1,15 +1,31 @@
-let page = localStorage.getItem('page_name');
+let creator = localStorage.getItem('creator_page');
 var currentLocation = window.location.href;
 
-function linePay() {
+function formLine() {
+  document.getElementById('line-form').style.display = 'block';
+  document.getElementById('card-choose').style.display = 'none';
+}
+
+let lineBtn = document.getElementById('lineBtn');
+lineBtn.addEventListener('click', function () {
+  if (!localStorage.getItem('user_info')) {
+    let user_name = document.getElementById('linename').value;
+    let user_email = document.getElementById('lineemail').value;
+    let supporterInfo = { user_name, user_email };
+    localStorage.setItem('supporter_info', JSON.stringify(supporterInfo));
+  }
+});
+
+async function linePay() {
   let supportAmount = JSON.parse(localStorage.getItem('support_amount'));
+  let time = Date.now();
   let order = {
     amount: supportAmount,
     currency: 'TWD',
-    orderId: 'buymeboba',
+    orderId: userId + `${time}`,
     packages: [
       {
-        id: `${page}`,
+        id: `${creator}`,
         amount: supportAmount,
         name: 'buymeboba',
         products: [
@@ -23,53 +39,75 @@ function linePay() {
     ],
     redirectUrls: {
       confirmUrl: currentLocation,
-      cancelUrl: 'https://example.com/cancelUrl',
+      cancelUrl: currentLocation,
     },
   };
+
+  try {
+    let result = await axios({
+      method: 'post',
+      url: `/api/1.0/linepay`,
+      data: order,
+      headers: { 'Content-Type': 'application/json' },
+    });
+    let url = result.data.data;
+    location.href = url;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+let url = new URL(window.location.href);
+let transactionId = url.searchParams.get('transactionId');
+let supportAmount = JSON.parse(localStorage.getItem('support_amount'));
+if (transactionId) {
+  let content = {
+    amount: supportAmount,
+    currency: 'TWD',
+  };
+
+  let supporterInfo;
+  let supporter = JSON.parse(localStorage.getItem('supporter_info'));
+  if (supporter) {
+    supporterInfo = supporter;
+  } else {
+    supporterInfo = localStorage.getItem('user_info');
+  }
+  let path = window.location.pathname;
+  let page = path.split('/')[1];
+  let type;
+  if (page == 'article') {
+    type = path.split('/')[2];
+  } else {
+    type = 'homepage';
+  }
+
+  let supportInfo = {
+    amount: supportAmount,
+    user: supporterInfo,
+    creator,
+    event: type,
+  };
+
+  let checkInfo = {
+    content,
+    transactionId,
+    supportInfo,
+  };
+
   axios({
     method: 'post',
-    url: `/api/1.0/linepay`,
-    data: order,
+    url: `/api/1.0/linepay/check`,
+    data: checkInfo,
     headers: { 'Content-Type': 'application/json' },
   })
     .then((res) => {
-      let url = res.data.data;
-      location.href = url;
+      localStorage.removeItem('support_amount');
+      localStorage.removeItem('supporter_info');
+      window.location = window.location.pathname;
     })
     .catch(function (err) {
       console.log(err);
+      console.log(err.response);
     });
 }
-
-// content = {
-//   amount: 4000,
-//   currency: 'TWD',
-// };
-
-// let transactionId = '2022050900712544910';
-// requestUri2 = `/v3/payments/${transactionId}/confirm`;
-
-// let encrypt2 = crypto.HmacSHA256(
-//   key + requestUri2 + JSON.stringify(content) + nonce,
-//   key
-// );
-// let hmacBase642 = crypto.enc.Base64.stringify(encrypt2);
-
-// let configs2 = {
-//   headers: {
-//     'Content-Type': 'application/json',
-//     'X-LINE-ChannelId': '1657058698',
-//     'X-LINE-Authorization-Nonce': nonce,
-//     'X-LINE-Authorization': hmacBase642,
-//   },
-// };
-
-// axios
-//   .post(
-//     `https://sandbox-api-pay.line.me/v3/payments/${transactionId}/confirm`,
-//     content,
-//     configs2
-//   )
-//   .then((res) => {
-//     console.log(res.data);
-//   });

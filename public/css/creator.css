@@ -9842,6 +9842,10 @@ and left sides of the text */
   display:none;
 }
 
+#line-form{
+  display:none;
+}
+
 #card-choose{
   display: block;
 }

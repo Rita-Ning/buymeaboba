@@ -59,6 +59,7 @@ function formChange() {
 
 function recoverForm() {
   document.getElementById('card-form').style.display = 'none';
+  document.getElementById('line-form').style.display = 'none';
   document.getElementById('card-choose').style.display = 'block';
 }
 
@@ -239,9 +240,8 @@ $('#support-form').on('submit', function (event) {
       })
       .catch(function (err) {
         console.log(err);
-        // msg = err.response.data.error;
-        // localStorage.removeItem('token');
-        // alert(msg);
+        msg = err.response.data.error;
+        alert(msg);
       });
   });
 });

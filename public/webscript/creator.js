@@ -2,6 +2,22 @@ let creatorPath = window.location.pathname;
 let pageName = creatorPath.replace('/creator/', '');
 localStorage.setItem('creator_page', pageName);
 let userToken = localStorage.getItem('token');
+let visitId = localStorage.getItem('user_info');
+if (!visitId) {
+  axios({
+    method: 'post',
+    url: '/api/1.0/visitorid',
+    data: { data: 'visitor' },
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then((res) => {
+      let visitorId = res.data.visitor_id;
+      localStorage.setItem('user_info', visitorId);
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+}
 
 //check if login
 if (!userToken) {
@@ -152,7 +168,6 @@ axios
     let article = ``;
 
     //if no intro post
-    console.log(intro_post);
     if (intro_post == '') {
       let pin = document.getElementById('pin-article');
       let pin_article = `<h2 class="mb-1 h4 font-weight-bold dark-blue">About Me</h2><p class="card-text pr-5 pl-3">${about}</p>`;
@@ -265,4 +280,18 @@ axios
   })
   .catch((error) => {
     console.log(error);
+  });
+
+// calculate view
+axios({
+  method: 'post',
+  url: '/api/1.0/view/page',
+  data: { user_id: visitId, page: pageName },
+  headers: { 'Content-Type': 'application/json' },
+})
+  .then((res) => {
+    console.log(res.data);
+  })
+  .catch(function (err) {
+    console.log(err);
   });

@@ -315,6 +315,11 @@ table tr {
     height: 20px;
   }
 
+
+#transaction-history {
+    overflow-y: auto;
+    height: calc(100vh - 200px);
+}
 /* a{
     color: #0dcaf0 ;
 } */

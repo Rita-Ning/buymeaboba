@@ -169,6 +169,9 @@ const userProfile = mongoose.model('user', {
     type: Number,
     default: 0,
   },
+  view_date: {
+    type: Array,
+  },
 });
 
 // post info
@@ -225,6 +228,9 @@ const post = mongoose.model('post', {
     type: Number,
     default: 0,
   },
+  view_date: {
+    type: Array,
+  },
 });
 
 // create post comment fake data test
@@ -266,6 +272,9 @@ const support = mongoose.model('support', {
     type: Date,
     //add 3 days
     default: () => new Date(+new Date() + 3 * 24 * 60 * 60 * 1000),
+  },
+  method: {
+    type: String,
   },
 });
 
@@ -348,9 +357,17 @@ async function main() {
 //   console.log(result);
 // }
 
-async function main() {
-  let result = await post.updateMany({}, { view: 103 });
-}
+// async function main() {
+//   let result = await support.updateMany({}, { method: 'bank' });
+// }
+// async function main() {
+//   let result = await userProfile.updateOne(
+//     { user_page: 'adayacup', view_date: { $elemMatch: { date: '2022/5/11' } } },
+//     { $push: { 'view_date.$.view': 'test' } },
+//     { upsert: true, new: true }
+//   );
+//   console.log(result);
+// }
 
 // main();
 
