@@ -1,5 +1,6 @@
 const express = require('express');
 var mongoose = require('mongoose');
+const { client } = require('../../util/redis');
 
 const router = express.Router();
 const { userProfile, post } = require('../../util/mongoose');
@@ -88,20 +89,43 @@ router.get('/search', async (req, res) => {
 });
 
 router.get('/search/frontpage', async (req, res) => {
-  let result = await userProfile
-    .find(
-      {},
-      {
-        user_page: 1,
-        user_name: 1,
-        about: 1,
-        profile_pic: 1,
-      }
-    )
-    .sort({ follower_count: -1 })
-    .limit(8);
+  // let result = await userProfile
+  //   .find(
+  //     {},
+  //     {
+  //       user_page: 1,
+  //       user_name: 1,
+  //       about: 1,
+  //       profile_pic: 1,
+  //     }
+  //   )
+  //   .sort({ follower_count: -1 })
+  //   .limit(8);
 
-  return res.status(200).json(result);
+  // return res.status(200).json(result);
+  try {
+    const camapaignCache = await client.get('campaign');
+    if (camapaignCache == null) {
+      let result = await userProfile
+        .find(
+          {},
+          {
+            user_page: 1,
+            user_name: 1,
+            about: 1,
+            profile_pic: 1,
+          }
+        )
+        .sort({ follower_count: -1 })
+        .limit(8);
+      await client.set('campaign', JSON.stringify(result));
+      res.json(result);
+    } else {
+      res.json(JSON.parse(camapaignCache));
+    }
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;

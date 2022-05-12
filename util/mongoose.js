@@ -368,7 +368,34 @@ async function main() {
 //   );
 //   console.log(result);
 // }
+// async function main() {
+//   let userId = mongoose.mongo.ObjectId('626c1229b7da2f66cadad033');
+//   let ttl_post = await post.aggregate([
+//     { $match: { user_id: userId } },
+//     {
+//       $group: {
+//         _id: null,
+//         likes: { $sum: '$like_count' },
+//         views: { $sum: '$view' },
+//       },
+//     },
+//   ]);
+//   console.log(ttl_post);
+// }
 
+async function main() {
+  let userId = mongoose.mongo.ObjectId('626c1229b7da2f66cadad033');
+  let result = await post.aggregate([
+    { $match: { user_id: userId } },
+    {
+      $group: {
+        _id: null,
+        comments: { $sum: { $size: '$comment' } },
+      },
+    },
+  ]);
+  console.log(result);
+}
 // main();
 
 module.exports = {

@@ -29,14 +29,79 @@ router.post('/dashboard/normal', async (req, res) => {
       earnings: ttlAmount,
     };
 
-    // find top category
-    // let categoryTop = await userProfile.find({
-    //   category: memberCount.category
-    // },{
-    //   user_page: 1,
-    //   follower_count:1,
-    // })
+    //find top category by earning
+    let categoryTop = await userProfile
+      .find(
+        {
+          category: memberCount.category,
+        },
+        {
+          _id: 1,
+          supporter: 1,
+          follower_count: 1,
+          view: 1,
+          post: 1,
+          user_name: 1,
+          user_page: 1,
+        }
+      )
+      .sort({ supporter: -1 })
+      .limit(4);
 
+    let pageWatch = [];
+    for (let i = 0; i < categoryTop.length; i++) {
+      let ttl_support = await support.aggregate([
+        { $match: { creator_id: categoryTop[i]._id } },
+        {
+          $group: {
+            _id: null,
+            amount: { $sum: '$amount' }, // for your case use local.user_totaldocs
+          },
+        },
+      ]);
+
+      let ttl_post = await post.aggregate([
+        { $match: { user_id: userId } },
+        {
+          $group: {
+            _id: null,
+            likes: { $sum: '$like_count' },
+            views: { $sum: '$view' },
+          },
+        },
+      ]);
+      let ttl_comment = await post.aggregate([
+        { $match: { user_id: userId } },
+        {
+          $group: {
+            _id: null,
+            comments: { $sum: { $size: '$comment' } },
+          },
+        },
+      ]);
+
+      let engagement = categoryTop[i].supporter.length + ttl_post[0].likes;
+      let view =
+        categoryTop[i].view + ttl_post[0].views + ttl_comment[0].comments;
+      if (ttl_support[0] !== undefined) {
+        earning = ttl_support[0].amount;
+      } else {
+        earning = 0;
+      }
+      let data = {
+        user_id: categoryTop[i]._id,
+        user_name: categoryTop[i].user_name,
+        user_page: categoryTop[i].user_page,
+        supporters: categoryTop[i].supporter.length,
+        followers: categoryTop[i].follower_count,
+        earning,
+        engagement,
+        view,
+      };
+      pageWatch.push(data);
+    }
+
+    //top earning post
     let earningPost = await post
       .find(
         { user_id: userId },
@@ -59,6 +124,7 @@ router.post('/dashboard/normal', async (req, res) => {
       data.earning_from = data.earning_from.length;
     });
 
+    //recent post
     let recentPost = await post
       .find(
         { user_id: userId },
@@ -171,6 +237,7 @@ router.post('/dashboard/normal', async (req, res) => {
     data['recent_post'] = recentPost;
     data['summary_page'] = pageData;
     data['tags'] = tagTop;
+    data['page_watch'] = pageWatch;
     res.json(data);
   } catch (err) {
     console.log(err);

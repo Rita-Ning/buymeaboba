@@ -320,6 +320,11 @@ table tr {
     overflow-y: auto;
     height: calc(100vh - 200px);
 }
+
+.annotation{
+    display:block;
+    text-align: right !important;
+}
 /* a{
     color: #0dcaf0 ;
 } */

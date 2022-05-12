@@ -78,6 +78,7 @@ router.post('/balance', async (req, res, next) => {
         },
       },
     ]);
+    console.log(ttl);
     let ttl_amount = ttl[0].amount;
     let withdraw = await userProfile.findOne(
       { _id: userId },

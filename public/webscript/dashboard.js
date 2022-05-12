@@ -9,8 +9,15 @@ axios({
   header: { 'Content-Type': 'application/json' },
 })
   .then((res) => {
-    let { overview, earning_post, recent_post, summary_page, tags } = res.data;
-    console.log(summary_page);
+    let {
+      overview,
+      earning_post,
+      recent_post,
+      summary_page,
+      tags,
+      page_watch,
+    } = res.data;
+    console.log(page_watch);
     let pageSummary = document.getElementById('page-summary');
     let summary = ``;
     summary = `
@@ -151,6 +158,27 @@ axios({
       <span class="badge bg-warning">${tags[i]}</span>`;
     }
     topTag.innerHTML = tag;
+
+    let topPage = document.getElementById('top-page');
+    let page = ``;
+    let count = 0;
+    page_watch = page_watch.sort(function (a, b) {
+      return b.earning - a.earning;
+    });
+    for (let i = 0; i < page_watch.length; i++) {
+      count += 1;
+      page += `
+        <tr>
+            <th scope="row">${count}</th>
+            <td><a href='/creator/${page_watch[i].user_page}'>${page_watch[i].user_name}</td>
+            <td>$${page_watch[i].earning}</td>
+            <td>${page_watch[i].supporters}</td>
+            <td>${page_watch[i].followers}</td>
+            <td>${page_watch[i].view}</td>
+            <td>${page_watch[i].engagement}</td>
+        </tr>`;
+    }
+    topPage.innerHTML = page;
   })
   .catch(function (error) {
     console.log(error);
