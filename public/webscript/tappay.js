@@ -67,6 +67,7 @@ let userId = localStorage.getItem('user_info');
 let inputColumn = document.getElementsByClassName('notMember');
 if (userId) {
   document.getElementById('email').removeAttribute('required');
+  document.getElementById('lineemail').removeAttribute('required');
   Array.from(document.getElementsByClassName('notMember')).forEach(function (
     element
   ) {

@@ -107,7 +107,7 @@ router.get('/search/frontpage', async (req, res) => {
   try {
     const camapaignCache = await client.get('campaign');
     if (camapaignCache == null) {
-      console.log('refresh');
+      // console.log('refresh');
       let result = await userProfile
         .find(
           {},
@@ -123,7 +123,7 @@ router.get('/search/frontpage', async (req, res) => {
       await client.set('campaign', JSON.stringify(result));
       res.json(result);
     } else {
-      console.log('redis');
+      // console.log('redis');
       res.json(JSON.parse(camapaignCache));
     }
   } catch (error) {
