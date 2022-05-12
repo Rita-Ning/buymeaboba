@@ -1,6 +1,7 @@
 const express = require('express');
 var mongoose = require('mongoose');
 const { client } = require('../../util/redis');
+var CronJob = require('cron').CronJob;
 
 const router = express.Router();
 const { userProfile, post } = require('../../util/mongoose');
@@ -106,6 +107,7 @@ router.get('/search/frontpage', async (req, res) => {
   try {
     const camapaignCache = await client.get('campaign');
     if (camapaignCache == null) {
+      console.log('refresh');
       let result = await userProfile
         .find(
           {},
@@ -121,11 +123,24 @@ router.get('/search/frontpage', async (req, res) => {
       await client.set('campaign', JSON.stringify(result));
       res.json(result);
     } else {
+      console.log('redis');
       res.json(JSON.parse(camapaignCache));
     }
   } catch (error) {
     next(error);
   }
 });
+
+//雌ㄋㄛ
+new CronJob(
+  '0 */4 * * *',
+  async function () {
+    await client.del('campaign');
+    console.log('hi');
+  },
+  null,
+  true,
+  'Asia/Taipei'
+);
 
 module.exports = router;

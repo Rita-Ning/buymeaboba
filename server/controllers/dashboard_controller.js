@@ -43,6 +43,7 @@ router.post('/dashboard/normal', async (req, res) => {
           post: 1,
           user_name: 1,
           user_page: 1,
+          profile_pic: 1,
         }
       )
       .sort({ supporter: -1 })
@@ -92,6 +93,7 @@ router.post('/dashboard/normal', async (req, res) => {
         user_id: categoryTop[i]._id,
         user_name: categoryTop[i].user_name,
         user_page: categoryTop[i].user_page,
+        profile_pic: categoryTop[i].profile_pic,
         supporters: categoryTop[i].supporter.length,
         followers: categoryTop[i].follower_count,
         earning,
