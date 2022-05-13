@@ -143,7 +143,7 @@ function saveBank() {
     },
   })
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if ((res.data.data = 'success')) {
         let form = document.getElementById('form-content');
         let sucessMsg = ``;
@@ -170,7 +170,7 @@ function saveLine() {
     },
   })
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if ((res.data.data = 'success')) {
         let form = document.getElementById('form-content');
         let sucessMsg = ``;
@@ -213,7 +213,7 @@ axios({
       let d = new Date(ele.time);
       let time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
       let status;
-      console.log(ele.receive_time);
+      // console.log(ele.receive_time);
       if (ele.receive_time < Date.now()) {
         status = 'transaction success';
       } else {

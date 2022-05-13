@@ -81,9 +81,27 @@ router.post('/dashboard/normal', async (req, res) => {
         },
       ]);
 
-      let engagement = categoryTop[i].supporter.length + ttl_post[0].likes;
-      let view =
-        categoryTop[i].view + ttl_post[0].views + ttl_comment[0].comments;
+      //deal with count = 0
+      let likeCount;
+      let viewCount;
+      if (ttl_post[0] !== undefined) {
+        likeCount = ttl_post[0].likes;
+        viewCount = ttl_post[0].view;
+      } else {
+        likeCount = 0;
+        viewCount = 0;
+      }
+
+      let commentCount;
+      if (ttl_comment[0] !== undefined) {
+        commentCount = ttl_comment[0].comments;
+      } else {
+        commentCount = 0;
+      }
+
+      let engagement =
+        categoryTop[i].supporter.length + likeCount + commentCount;
+      let view = categoryTop[i].view + viewCount;
       if (ttl_support[0] !== undefined) {
         earning = ttl_support[0].amount;
       } else {
