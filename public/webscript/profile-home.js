@@ -9,6 +9,14 @@ axios({
 })
   .then((res) => {
     let data = res.data;
+    if (res.data.length == 0) {
+      let reminder = document.getElementById('explore-more');
+      let text = ``;
+      text = `
+      <p>Not following any creator yet? Explore more creators</p><a href='/creator-explore.html'><p>&nbsp HERE<p></a>
+      `;
+      reminder.innerHTML = text;
+    }
     // let { comment, like_count, title, description, user, create_time } = data;
     let newsFeed = document.getElementById('news-feed');
     let feed = ``;
