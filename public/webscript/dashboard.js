@@ -26,7 +26,7 @@ axios({
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <div class="ms-3">
                     <p class="mb-2">Followers</p>
-                    <h6 class="mb-0">${summary_page.follower_count}</h6>
+                    <h6 class="mb-0"><i class="fa-solid fa-users"></i>&nbsp ${summary_page.follower_count}</h6>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@ axios({
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <div class="ms-3">
                     <p class="mb-2">Supporters</p>
-                    <h6 class="mb-0">${summary_page.supporter}</h6>
+                    <h6 class="mb-0"><i class="fa fa-beer-mug-empty"></i>&nbsp ${summary_page.supporter}</h6>
                 </div>
             </div>
         </div>
@@ -48,59 +48,59 @@ axios({
         </div>
     </div>
     <div class="row bg-light ms-3 mt-0">
-        <div class="col-sm-6 col-xl-4 border border-muted border-start-0 border-top-0">
+        <div class="col-sm-6 col-xl-4 border border-muted border-start-0 border-top-0 border-bottom-0">
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <div class="ms-3">
                     <p class="mb-2">Page View</p>
-                    <h6 class="mb-0">${summary_page.view}</h6>
+                    <h6 class="mb-0"><i class="fa-regular fa-eye"></i>&nbsp ${summary_page.view}</h6>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-xl-4 border border-muted border-top-0">
+        <div class="col-sm-6 col-xl-4 border border-muted border-top-0 border-bottom-0">
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <div class="ms-3">
                     <p class="mb-2">Page Engagement</p>
-                    <h6 class="mb-0">${summary_page.engagement}</h6>
+                    <h6 class="mb-0"><i class="fa-regular fa-thumbs-up"></i>&nbsp ${summary_page.engagement}</h6>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-xl-4 border border-muted border-end-0 border-top-0">
+        <div class="col-sm-6 col-xl-4 border border-muted border-end-0 border-top-0 border-bottom-0">
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <div class="ms-3">
                     <p class="mb-2">Page Likes</p>
-                    <h6 class="mb-0">${summary_page.like}</h6>
+                    <h6 class="mb-0"><i class="fa-regular fa-heart"></i>&nbsp ${summary_page.like}</h6>
                 </div>
             </div>
         </div>
     </div>`;
     pageSummary.innerHTML = summary;
-    let overviewBox = document.getElementById('overview-box');
-    let content = `
-    <div class="col-sm-6 col-xl-4 border-end border-muted">
-      <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-          <div class="ms-3 align-item-center">
-              <p class="mb-2">Followers  </p>
-              <h6 class="mb-0"><i class="fa-solid fa-users"></i> &nbsp ${overview.followers}</h6>
-          </div>
-      </div>
-    </div>
-    <div class="col-sm-6 col-xl-4 border-end border-muted">
-        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-            <div class="ms-3">
-                <p class="mb-2">Supporters</p>
-                <h6 class="mb-0"><i class="fa fa-beer-mug-empty"></i> &nbsp ${overview.supporters}</h6>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-xl-4">
-        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-            <div class="ms-3">
-                <p class="mb-2">Earnings</p>
-                <h6 class="mb-0">$ &nbsp ${overview.earnings}</h6>
-            </div>
-        </div>
-    </div>`;
-    overviewBox.innerHTML = content;
+    // let overviewBox = document.getElementById('overview-box');
+    // let content = `
+    // <div class="col-sm-6 col-xl-4 border-end border-muted">
+    //   <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+    //       <div class="ms-3 align-item-center">
+    //           <p class="mb-2">Followers  </p>
+    //           <h6 class="mb-0"><i class="fa-solid fa-users"></i> &nbsp ${overview.followers}</h6>
+    //       </div>
+    //   </div>
+    // </div>
+    // <div class="col-sm-6 col-xl-4 border-end border-muted">
+    //     <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+    //         <div class="ms-3">
+    //             <p class="mb-2">Supporters</p>
+    //             <h6 class="mb-0"><i class="fa fa-beer-mug-empty"></i> &nbsp ${overview.supporters}</h6>
+    //         </div>
+    //     </div>
+    // </div>
+    // <div class="col-sm-6 col-xl-4">
+    //     <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+    //         <div class="ms-3">
+    //             <p class="mb-2">Earnings</p>
+    //             <h6 class="mb-0">$ &nbsp ${overview.earnings}</h6>
+    //         </div>
+    //     </div>
+    // </div>`;
+    // overviewBox.innerHTML = content;
     let earnPost = document.getElementById('earn-column');
     let earn = ``;
     let eCount = 0;

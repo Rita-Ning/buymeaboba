@@ -5424,7 +5424,7 @@ button.bg-dark:focus {
   background-color: transparent !important; }
 
 .border {
-  border: 1px solid #dee2e6 !important; }
+  border: 1px solid #dee2e6 ; }
 
 .border-top {
   border-top: 1px solid #dee2e6 !important; }
@@ -8343,4 +8343,14 @@ body {
 
 .card-text:hover {
   color: #0056b3 !important; 
+}
+
+.img-cover{
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  width: 190px;
+  height: 190px;
+  margin: 0 auto;
+  border: 7px solid var(--warning); 
 }

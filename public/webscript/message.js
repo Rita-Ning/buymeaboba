@@ -19,8 +19,8 @@ axios
     let chatMember = document.getElementById('chat-member');
     let member = ``;
     member = `
-    <img class="rounded-circle flex-shrink-0" src="${memberInfo.profile_pic}" alt="" style="width: 30px; height: 30px;">
-    <p class="mb-0 font-weight-bold text-dark">${memberInfo.user_name}</p>`;
+    <img class="rounded-circle flex-shrink-0 ms-3 p-1 bg-primary" src="${memberInfo.profile_pic}" alt="" style="width: 30px; height: 30px;">
+    <p class="mb-0 font-weight-bold text-dark">&nbsp ${memberInfo.user_name}</p>`;
     chatMember.innerHTML = member;
 
     let data = res.data.chatHistory;

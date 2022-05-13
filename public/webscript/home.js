@@ -23,7 +23,7 @@ axios
         <div class="col-lg-3 col-md-12 mb-4 creator-box p-1">
         <a class="card border-0" href='/creator/${creator.user_page}'>
           <div class="bg-image bg-yellow hover-overlay ripple" data-mdb-ripple-color="light">
-            <img src="${creator.profile_pic}" class="img-fluid bg-warning p-2 rounded-circle" style='width:200px;height:200px'/>
+            <div style="background-image:url(${creator.profile_pic})" class="img-fluid img-cover"></div>
           </div>
           <div class="card-body bg-yellow">
             <h5 class="card-title ellipsis1 font-weight-bold">${creator.user_name}</h5>

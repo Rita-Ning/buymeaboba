@@ -27,6 +27,7 @@ if (!userToken) {
 }
 
 // like Btn change and send back
+// let isClickLike
 async function like() {
   if (!userToken) {
     window.location.href = '/signup.html';
@@ -100,6 +101,11 @@ commentBtn.addEventListener('click', async (e) => {
     return;
   }
   let comment = commentInput.value;
+  if (comment == '') {
+    // alert('comment cannot be blank');
+    Swal.fire('comment cannot be blank');
+    return;
+  }
   try {
     const result = await axios({
       method: 'post',

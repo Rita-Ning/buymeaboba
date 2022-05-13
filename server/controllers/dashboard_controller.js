@@ -86,7 +86,7 @@ router.post('/dashboard/normal', async (req, res) => {
       let viewCount;
       if (ttl_post[0] !== undefined) {
         likeCount = ttl_post[0].likes;
-        viewCount = ttl_post[0].view;
+        viewCount = ttl_post[0].views;
       } else {
         likeCount = 0;
         viewCount = 0;

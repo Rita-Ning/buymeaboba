@@ -10,9 +10,9 @@ axios.get(`/api/1.0/search`).then((res) => {
       let creator = choose.creators[j];
       creatorInfo += `
       <div class="col-lg-3 col-md-12 mb-4 creator-box p-1">
-      <div class="card border-0" >
+      <div class="card border-0 bg-white pt-3 px-1 shadow-sm" >
         <a class="bg-image hover-overlay ripple" data-mdb-ripple-color="light" href='/creator/${creator.user_page}'>
-          <img src="${creator.profile_pic}" class="img-fluid bg-warning p-2 rounded-circle" style='width:200px;height:200px'/>
+          <div style="background-image:url(${creator.profile_pic})" class="img-fluid img-cover shadow-sm"></div>
         </a>
         <div class="card-body">
           <h5 class="card-title ellipsis1">${creator.user_name}</h5>

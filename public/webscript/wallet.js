@@ -5,8 +5,8 @@ function recoverForm() {
   let content = ``;
   content = `
   <div class="d-flex align-items-center justify-content-center mb-5 mt-3 form-group">
-    <h3 class="mb-0 text-warning">$</h3>
-    <input type="text" class="form-control border-0 text-primary" placeholder="amount" style="height:40px ; width:80px" id="withdraw-input" required="required">		
+    <h1 class="mb-0 text-warning pe-2">$</h1>
+    <input type="text" class="form-control text-primary input-lg p-2 border-warning" placeholder="amount" style="height:40px ; width:80px" id="withdraw-input" required="required">		
   </div>
   <div id="card-choose" class=>
     <div class="mb-2 text-warning">Withdraw With</div>	

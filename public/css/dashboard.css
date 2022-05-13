@@ -255,6 +255,11 @@
     transition: 2s;
 }
 
+.dropdown-item:hover{
+    background-color: #191C24;
+    color:white;
+}
+
 
 /*** Testimonial ***/
 .testimonial-carousel .owl-dots {
@@ -326,9 +331,9 @@ table tr {
     text-align: right !important;
 }
 
-.btn-img{
+/* .btn-img{
     width: 100%;
-}
+} */
 
 .copyBtn:hover{
     background-color: darkgray;
