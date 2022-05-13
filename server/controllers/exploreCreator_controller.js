@@ -136,7 +136,7 @@ new CronJob(
   '0 */4 * * *',
   async function () {
     await client.del('campaign');
-    console.log('hi');
+    console.log('redis refresh!');
   },
   null,
   true,

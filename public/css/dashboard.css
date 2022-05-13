@@ -325,6 +325,14 @@ table tr {
     display:block;
     text-align: right !important;
 }
+
+.btn-img{
+    width: 100%;
+}
+
+.copyBtn:hover{
+    background-color: darkgray;
+}
 /* a{
     color: #0dcaf0 ;
 } */
