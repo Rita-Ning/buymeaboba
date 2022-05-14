@@ -27,8 +27,12 @@ if (!userToken) {
 }
 
 // like Btn change and send back
-// let isClickLike
+let clickProcessing = false;
 async function like() {
+  if (clickProcessing) {
+    return;
+  }
+  clickProcessing = true;
   if (!userToken) {
     window.location.href = '/signup.html';
     return;
@@ -44,24 +48,21 @@ async function like() {
         time: Date.now(),
       },
     });
+    //change like count
+    document.getElementById(
+      'likeBtn'
+    ).innerHTML = `<a onclick="unlike()"><i class="fa-solid fa-heart fa-lg heart"></i><a> &nbsp ${result.data.like_count} `;
+    clickProcessing = false;
   } catch (err) {
     console.log(err);
   }
-
-  //get like back
-  axios.get(`/api/1.0${articlePath}`).then((res) => {
-    let { like_count } = res.data;
-    if (!like_count) {
-      like_count = 0;
-    }
-    //like count
-    document.getElementById(
-      'likeBtn'
-    ).innerHTML = `<a onclick="unlike()"><i class="fa-solid fa-heart fa-lg heart"></i><a> &nbsp ${like_count} `;
-  });
 }
 
 async function unlike() {
+  if (clickProcessing) {
+    return;
+  }
+  clickProcessing = true;
   //send unlike back
   try {
     const result = await axios({
@@ -72,21 +73,14 @@ async function unlike() {
         user_id: currentId,
       },
     });
-  } catch (err) {
-    consoole.log(err);
-  }
-
-  //get like back
-  axios.get(`/api/1.0${articlePath}`).then((res) => {
-    let { like_count } = res.data;
-    if (!like_count) {
-      like_count = 0;
-    }
     //like count
     document.getElementById(
       'likeBtn'
-    ).innerHTML = `<a onclick="like()"><i class="fa-regular fa-heart fa-lg"></i><a> &nbsp ${like_count} `;
-  });
+    ).innerHTML = `<a onclick="like()"><i class="fa-regular fa-heart fa-lg"></i><a> &nbsp ${result.data.like_count} `;
+    clickProcessing = false;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 // if comment submit
@@ -102,8 +96,15 @@ commentBtn.addEventListener('click', async (e) => {
   }
   let comment = commentInput.value;
   if (comment == '') {
-    // alert('comment cannot be blank');
-    Swal.fire('comment cannot be blank');
+    await Swal.fire({
+      toast: true,
+      position: 'top',
+      iconColor: 'yellow',
+      showConfirmButton: false,
+      timer: 2000,
+      icon: 'warning',
+      text: 'comment cannot be empty',
+    });
     return;
   }
   try {
@@ -118,6 +119,11 @@ commentBtn.addEventListener('click', async (e) => {
         comment,
       },
     });
+    let count = result.data.comment;
+    document.getElementById(
+      'commentBlock'
+    ).innerHTML = `<i class="fa-regular fa-message fa-lg"></i> &nbsp ${count}`;
+    commentInput.value = '';
   } catch (err) {
     console.log(err);
   }
@@ -135,16 +141,6 @@ commentBtn.addEventListener('click', async (e) => {
     </div>`;
   commentElement.innerHTML = commentNew;
   commentColumn.prepend(commentElement);
-
-  // update comment number immediately
-  axios.get(`/api/1.0/${articlePath}`).then((res) => {
-    let { comment } = res.data;
-    let count = comment.length;
-    document.getElementById(
-      'commentBlock'
-    ).innerHTML = `<i class="fa-regular fa-message fa-lg"></i> &nbsp ${count}`;
-  });
-  commentInput.value = '';
 });
 
 axios.get(`/api/1.0${articlePath}`).then((res) => {

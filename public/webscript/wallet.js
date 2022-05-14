@@ -21,7 +21,15 @@ function recoverForm() {
 function withdrawBank() {
   let withdraw = document.getElementById('withdraw-input').value;
   if (!withdraw || withdraw <= 0 || withdraw > ttlEarning) {
-    alert('Please Enter valid amount!');
+    Swal.fire({
+      toast: true,
+      position: 'top',
+      iconColor: 'yellow',
+      showConfirmButton: false,
+      timer: 2000,
+      icon: 'warning',
+      text: 'Please Enter valid amount!',
+    });
     return;
   }
 
@@ -59,8 +67,9 @@ function createBankForm() {
   let bankAccount = '';
   bankAccount = `
   <h5 class="pt-2 text-warning">Bank Account Info</h5>
+  <p>Let's Create Bank Account First ヽ(✿ﾟ▽ﾟ)ノ !</p>
   <div id="card-form">		
-      <div class="form-group pt-4">
+      <div class="form-group pt-3">
           <input type="text" class="form-control" placeholder="Account holder name" style="height:40px" required="required">		
       </div>
       <div class="form-group pt-2 ">
@@ -82,7 +91,15 @@ function createBankForm() {
 function withdrawLine() {
   let withdraw = document.getElementById('withdraw-input').value;
   if (!withdraw || withdraw <= 0 || withdraw > ttlEarning) {
-    alert('Please Enter valid amount!');
+    Swal.fire({
+      toast: true,
+      position: 'top',
+      iconColor: 'yellow',
+      showConfirmButton: false,
+      timer: 2000,
+      icon: 'warning',
+      text: 'Please Enter valid amount!',
+    });
     return;
   }
 
@@ -120,8 +137,9 @@ function createLineForm() {
   let lineAccount = '';
   lineAccount = `
   <h5 class="pt-2 text-warning">Line Account Info</h5>
+  <p>Let's Create Bank Account First  (๑•̀ㅂ•́)و✧ !</p>
   <div id="card-form">		
-      <div class="form-group pt-4">
+      <div class="form-group pt-3">
           <input type="text" class="form-control" placeholder="Line Account ID" style="height:40px" id="line-acoount" required="required">		
       </div>
       <div class="form-group pt-4 pb-4 d-flex justify-content-center rounded-pill">

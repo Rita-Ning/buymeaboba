@@ -338,6 +338,11 @@ table tr {
 .copyBtn:hover{
     background-color: darkgray;
 }
+
+.swal2-html-container, .swal2-text{
+    color: white !important;
+    font-size: large !important;
+  }
 /* a{
     color: #0dcaf0 ;
 } */

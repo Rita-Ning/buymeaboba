@@ -9,12 +9,24 @@ const messageInput = document.getElementById('message-input');
 let typeBox = document.getElementById('type');
 let typeText = ``;
 typeText = `
-<p class="mb-0 pl-5 font-weight-bold text-dark">${type}</p>`;
+<p class="mb-0 font-weight-bold text-dark">&nbsp &nbsp${type}</p>`;
 typeBox.innerHTML = typeText;
 
 messageForm.addEventListener('submit', (e) => {
   e.preventDefault();
   message = messageInput.value;
+  if (message == '') {
+    Swal.fire({
+      toast: true,
+      position: 'top',
+      iconColor: 'yellow',
+      showConfirmButton: false,
+      timer: 2000,
+      icon: 'warning',
+      text: 'Message cannot be blank!',
+    });
+    return;
+  }
   axios({
     method: 'post',
     url: '/api/1.0/chat/multiple-msg',
@@ -26,7 +38,15 @@ messageForm.addEventListener('submit', (e) => {
   })
     .then((res) => {
       console.log(res.data);
-      alert('Your Message has sent out!');
+      Swal.fire({
+        toast: true,
+        position: 'top',
+        iconColor: 'aqua',
+        showConfirmButton: false,
+        timer: 2000,
+        icon: 'success',
+        text: 'Message has sent out!',
+      });
     })
     .catch(function (error) {
       console.log(error);

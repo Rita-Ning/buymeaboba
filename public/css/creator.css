@@ -9904,4 +9904,8 @@ and left sides of the text */
   font-size: medium;
 }
 
+.swal2-html-container, .swal2-text{
+  color: white !important;
+  font-size: large !important;
+}
 /* sourceMappingURL = main.css.map */

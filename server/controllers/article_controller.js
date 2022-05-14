@@ -94,7 +94,7 @@ router.get('/article/:postid', async (req, res) => {
 //recieve comment and save
 router.post('/comment/add', async (req, res) => {
   let { article_id, user_id, user_name, comment_time, comment } = req.body;
-  let result = await post.updateOne(
+  let result = await post.findOneAndUpdate(
     { _id: mongoose.mongo.ObjectId(article_id) },
     {
       $push: {
@@ -105,15 +105,16 @@ router.post('/comment/add', async (req, res) => {
           comment,
         },
       },
-    }
+    },
+    { upsert: true, new: true }
   );
-  res.send('updated!');
+  res.json({ comment: result.comment.length });
 });
 
 //recieve like and save
 router.post('/like/add', async (req, res) => {
   let { article_id, user_id, time } = req.body;
-  let result = await post.updateOne(
+  let result = await post.findOneAndUpdate(
     { _id: mongoose.mongo.ObjectId(article_id) },
     {
       $push: {
@@ -124,16 +125,15 @@ router.post('/like/add', async (req, res) => {
       },
       $inc: { like_count: 1 },
     },
-    { new: true, upsert: true }
+    { upsert: true, new: true }
   );
-  // console.log(result);
-  res.send('updated!');
+  res.json({ like_count: result.like_count });
 });
 
 //delete like
 router.post('/like/delete', async (req, res) => {
   let { article_id, user_id } = req.body;
-  let result = await post.updateOne(
+  let result = await post.findOneAndUpdate(
     { _id: mongoose.mongo.ObjectId(article_id) },
     {
       $pull: {
@@ -143,10 +143,9 @@ router.post('/like/delete', async (req, res) => {
       },
       $inc: { like_count: -1 },
     },
-    { new: true, upsert: true }
+    { upsert: true, new: true }
   );
-  // console.log(result);
-  res.send('updated!');
+  res.json({ like_count: result.like_count });
 });
 
 module.exports = router;
