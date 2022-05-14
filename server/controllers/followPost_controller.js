@@ -40,7 +40,7 @@ router.post('/newsfeed', async (req, res) => {
     let postSort = postList.sort((a, b) => b.create_time - a.create_time);
     let recentPost;
     if (postSort.length > 12) {
-      recentPost = postSort.slice(11);
+      recentPost = postSort.slice(0, 12);
     } else {
       recentPost = postSort;
     }
@@ -89,4 +89,70 @@ router.post('/newsfeed', async (req, res) => {
   }
 });
 
+router.post('/newsfeed/search', async (req, res) => {
+  try {
+    const { tag } = req.body;
+    let posts = await post
+      .find({
+        post_tag: {
+          $elemMatch: {
+            $regex: tag,
+            $options: 'i',
+          },
+        },
+      })
+      .sort({ like_count: -1 });
+
+    let popPost;
+    if (posts.length > 12) {
+      popPost = posts.slice(0, 12);
+    } else {
+      popPost = posts;
+    }
+    console.log(popPost.length);
+
+    let result = [];
+    for (let j = 0; j < popPost.length; j++) {
+      let post = popPost[j];
+      let userId = mongoose.mongo.ObjectId(post.user_id);
+      let userInfo = await userProfile.findOne(
+        { _id: userId },
+        {
+          user_name: 1,
+          profile_pic: 1,
+          user_page: 1,
+        }
+      );
+      let {
+        _id,
+        title,
+        description,
+        like_count,
+        comment,
+        create_time,
+        user_id,
+        content,
+      } = post;
+
+      if (!description) {
+        description = content.split('.')[0] + '.';
+      }
+      let data = {
+        _id,
+        title,
+        description,
+        like_count,
+        comment: comment.length,
+        create_time,
+        user_id,
+      };
+      data['user'] = userInfo;
+      result.push(data);
+    }
+    // console.log(result);
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+  }
+});
 module.exports = router;
