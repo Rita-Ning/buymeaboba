@@ -27,7 +27,7 @@ axios({
       feed += `
       <div class="bg-white border mt-4 rounded shadow-sm">
         <a class="d-flex align-items-center p-3 border-bottom" href='/creator/${info.user.user_page}'>
-            <img class="rounded-circle p-1" src=${info.user.profile_pic} width="45">
+            <img class="rounded-circle p-1" src=${info.user.profile_pic} style="width:45px; height:45px">
             <span class="font-weight-bold p-1">${info.user.user_name}</span>
         </a>
         <div class="p-2 px-3">
@@ -70,7 +70,7 @@ document.getElementById('post-search').addEventListener('keypress', (e) => {
           let reminder = document.getElementById('explore-more');
           let text = ``;
           text = `
-          <p>No relative post, please search for others :) <p>
+          <p class='text-primary'>No relative post, please search for other keyword  ლ(∘◕‵ƹ′◕ლ)<p>
           `;
           reminder.innerHTML = text;
         }
@@ -85,7 +85,7 @@ document.getElementById('post-search').addEventListener('keypress', (e) => {
           feed += `
           <div class="bg-white border mt-4 rounded shadow-sm">
             <a class="d-flex align-items-center p-3 border-bottom" href='/creator/${info.user.user_page}'>
-                <img class="rounded-circle p-1" src=${info.user.profile_pic} width="45">
+                <img class="rounded-circle p-1" src=${info.user.profile_pic} style="width:45px;height:45px">
                 <span class="font-weight-bold p-1">${info.user.user_name}</span>
             </a>
             <div class="p-2 px-3">
