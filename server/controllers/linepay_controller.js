@@ -4,13 +4,13 @@ var mongoose = require('mongoose');
 const crypto = require('crypto-js');
 const uuid = require('uuid4');
 const axios = require('axios');
+const { sendSupportEmail } = require('../../util/nodeemailer');
 
 const router = express.Router();
 const { userProfile, support, post } = require('../../util/mongoose');
 
 const key = process.env.LINEPAY_KEY;
 const ChannelId = process.env.LINEPAY_ChannelId;
-console.log(key, ChannelId);
 
 router.post('/linepay', async (req, res, next) => {
   try {
@@ -74,12 +74,12 @@ router.post('/linepay/check', async (req, res, next) => {
     if (result.data.returnCode == '0000') {
       // support info
       try {
-        let { amount, user, creator, event } = supportInfo;
+        let { amount, user, creator, event, msg } = supportInfo;
+        console.log(msg);
         let creator_id = await userProfile.findOne(
           { user_page: creator },
           { _id: 1 }
         );
-        console.log(user);
 
         let userName;
         let userEmail;
@@ -124,6 +124,9 @@ router.post('/linepay/check', async (req, res, next) => {
         // add into support db
         let addSupport = await support.create(supportSave);
         console.log(addSupport);
+
+        //send email
+        sendSupportEmail(msg, userName, amount, userEmail);
 
         // if post support add into post doc
         if (event !== 'homepage') {

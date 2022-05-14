@@ -1,6 +1,6 @@
 const express = require('express');
 var mongoose = require('mongoose');
-const { sendVerifyEmail } = require('../../util/nodeemailer');
+const { sendMsgEmail } = require('../../util/nodeemailer');
 
 const router = express.Router();
 const { chatMsg, chatRoom, userProfile } = require('../../util/mongoose');
@@ -117,7 +117,7 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
     });
     // if send email, send email
     if (send_email == 1) {
-      sendVerifyEmail(msg, userInfo.user_name, userInfo.profile_pic, mail);
+      sendMsgEmail(msg, userInfo.user_name, userInfo.profile_pic, mail);
     }
 
     //check type and save to db

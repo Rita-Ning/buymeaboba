@@ -1,7 +1,6 @@
 function logOut() {
   localStorage.clear();
 }
-
 // change view my page href
 let myPage = localStorage.getItem('page_name');
 document.getElementById('my-page').href = `/creator/${myPage}`;
@@ -204,7 +203,11 @@ $('#support-form').on('submit', function (event) {
   } else {
     type = 'homepage';
   }
-
+  let supportMsg = document.querySelector('.support-msg').value;
+  console.log(supportMsg);
+  if (!supportMsg) {
+    supportMsg = '(ง •̀_•́)ง‼';
+  }
   // Get prime
   TPDirect.card.getPrime(function (result) {
     if (result.status !== 0) {
@@ -219,6 +222,7 @@ $('#support-form').on('submit', function (event) {
       user: supporterInfo,
       creator,
       event: type,
+      msg: supportMsg,
     };
 
     localStorage.removeItem('supporter_info');
@@ -238,6 +242,7 @@ $('#support-form').on('submit', function (event) {
       .then((res) => {
         console.log(res);
         thankMsg();
+        document.getElementById('support-msg').value = '';
       })
       .catch(function (err) {
         console.log(err);

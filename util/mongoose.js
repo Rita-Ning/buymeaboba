@@ -276,6 +276,9 @@ const support = mongoose.model('support', {
   method: {
     type: String,
   },
+  msg: {
+    type: String,
+  },
 });
 
 // async function main() {

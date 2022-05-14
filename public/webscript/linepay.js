@@ -51,6 +51,12 @@ async function linePay() {
       headers: { 'Content-Type': 'application/json' },
     });
     let url = result.data.data;
+    // supportMsg = document.getElementById('support-msg').value;
+    supportMsg = document.querySelector('.support-msg').value;
+    if (supportMsg == '') {
+      supportMsg = '(ง •̀_•́)ง‼';
+    }
+    localStorage.setItem('support_msg', supportMsg);
     location.href = url;
   } catch (err) {
     console.log(err);
@@ -87,6 +93,7 @@ if (transactionId) {
     user: supporterInfo,
     creator,
     event: type,
+    msg: localStorage.getItem('support_msg'),
   };
 
   let checkInfo = {
@@ -105,6 +112,7 @@ if (transactionId) {
       localStorage.removeItem('support_amount');
       localStorage.removeItem('supporter_info');
       window.location = window.location.pathname;
+      localStorage.removeItem('support_msg');
     })
     .catch(function (err) {
       console.log(err);

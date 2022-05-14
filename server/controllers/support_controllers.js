@@ -1,6 +1,7 @@
 const express = require('express');
 var mongoose = require('mongoose');
 const axios = require('axios');
+const { sendSupportEmail } = require('../../util/nodeemailer');
 
 const router = express.Router();
 const { userProfile, support, post } = require('../../util/mongoose');
@@ -13,7 +14,7 @@ router.post('/support/checkout', async (req, res, next) => {
       .json({ error: 'Content type need to be application/json' });
   }
 
-  let { prime, amount, user, creator, event } = req.body;
+  let { prime, amount, user, creator, event, msg } = req.body;
 
   let userName;
   let userEmail;
@@ -79,6 +80,7 @@ router.post('/support/checkout', async (req, res, next) => {
         amount,
         event,
         method: 'bank',
+        msg,
       };
     } else {
       supportInfo = {
@@ -88,12 +90,16 @@ router.post('/support/checkout', async (req, res, next) => {
         amount,
         event,
         method: 'bank',
+        msg,
       };
     }
     // console.log(supportInfo);
 
     // add into support db
     let addSupport = await support.create(supportInfo);
+
+    //send email
+    sendSupportEmail(msg, userName, amount, userEmail);
 
     // if post support add into post doc
     if (event !== 'homepage') {
