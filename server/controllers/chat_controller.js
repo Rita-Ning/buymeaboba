@@ -1,5 +1,6 @@
 const express = require('express');
 var mongoose = require('mongoose');
+const { sendVerifyEmail } = require('../../util/nodeemailer');
 
 const router = express.Router();
 const { chatMsg, chatRoom, userProfile } = require('../../util/mongoose');
@@ -77,7 +78,6 @@ router.post('/chat/member', async (req, res, next) => {
       { _id: id },
       { follower: 1, supporter: 1 }
     );
-    // console.log(userInfo);
 
     // save follower
     let follower_count = userInfo.follower.length;
@@ -97,7 +97,7 @@ router.post('/chat/member', async (req, res, next) => {
 // get data and save to db
 router.post('/chat/multiple-msg', async (req, res, next) => {
   try {
-    let { user_id, type, msg } = req.body;
+    let { user_id, type, msg, send_email } = req.body;
 
     let id = mongoose.mongo.ObjectId(user_id);
     const userInfo = await userProfile.findOne(
@@ -105,15 +105,20 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
       { follower: 1, supporter: 1, user_name: 1, profile_pic: 1 }
     );
 
-    // save supporter and check if user is a member if not then not send/ send by email
     //supporter might duplicate
     let supporter_list = [];
+    let mail = [];
     userInfo.supporter.forEach((supporter) => {
+      mail.push(supporter.user_email);
       if (supporter.user_id) {
         if (!supporter_list.includes(supporter.user_id))
           supporter_list.push(supporter.user_id);
       }
     });
+    // if send email, send email
+    if (send_email == 1) {
+      sendVerifyEmail(msg, userInfo.user_name, userInfo.profile_pic, mail);
+    }
 
     //check type and save to db
     let roomId;

@@ -2,8 +2,11 @@ let creatorPath = window.location.pathname;
 let pageName = creatorPath.replace('/creator/', '');
 localStorage.setItem('creator_page', pageName);
 let userToken = localStorage.getItem('token');
-let visitId = localStorage.getItem('user_info');
-if (!visitId) {
+let visitId;
+if (
+  !localStorage.getItem('user_info') &&
+  !localStorage.getItem('visiter_info')
+) {
   axios({
     method: 'post',
     url: '/api/1.0/visitorid',
@@ -12,11 +15,16 @@ if (!visitId) {
   })
     .then((res) => {
       let visitorId = res.data.visitor_id;
-      localStorage.setItem('user_info', visitorId);
+      localStorage.setItem('visiter_info', visitorId);
     })
     .catch(function (err) {
       console.log(err);
     });
+}
+if (localStorage.getItem('user_info')) {
+  visitId = localStorage.getItem('user_info');
+} else {
+  visitId = localStorage.getItem('visiter_info');
 }
 
 //check if login

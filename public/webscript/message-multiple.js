@@ -15,6 +15,14 @@ typeBox.innerHTML = typeText;
 messageForm.addEventListener('submit', (e) => {
   e.preventDefault();
   message = messageInput.value;
+  let emailCheck = document.getElementById('msg-email').checked;
+  let sendEmail;
+  if (emailCheck) {
+    sendEmail = 1;
+  } else {
+    sendEmail = 0;
+  }
+
   if (message == '') {
     Swal.fire({
       toast: true,
@@ -34,6 +42,7 @@ messageForm.addEventListener('submit', (e) => {
       user_id: userId,
       type,
       msg: message,
+      send_email: sendEmail,
     },
   })
     .then((res) => {

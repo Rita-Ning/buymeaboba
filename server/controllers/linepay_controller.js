@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 var mongoose = require('mongoose');
 const crypto = require('crypto-js');
@@ -7,7 +8,9 @@ const axios = require('axios');
 const router = express.Router();
 const { userProfile, support, post } = require('../../util/mongoose');
 
-const key = 'd7a954f48e709d19ab52ec2528b68c73';
+const key = process.env.LINEPAY_KEY;
+const ChannelId = process.env.LINEPAY_ChannelId;
+console.log(key, ChannelId);
 
 router.post('/linepay', async (req, res, next) => {
   try {
@@ -24,7 +27,7 @@ router.post('/linepay', async (req, res, next) => {
     let configs = {
       headers: {
         'Content-Type': 'application/json',
-        'X-LINE-ChannelId': '1657058698',
+        'X-LINE-ChannelId': ChannelId,
         'X-LINE-Authorization-Nonce': nonce,
         'X-LINE-Authorization': hmacBase64,
       },
@@ -56,7 +59,7 @@ router.post('/linepay/check', async (req, res, next) => {
     let configs2 = {
       headers: {
         'Content-Type': 'application/json',
-        'X-LINE-ChannelId': '1657058698',
+        'X-LINE-ChannelId': ChannelId,
         'X-LINE-Authorization-Nonce': nonce,
         'X-LINE-Authorization': hmacBase642,
       },

@@ -65,9 +65,9 @@ function recoverForm() {
 
 let userId = localStorage.getItem('user_info');
 let inputColumn = document.getElementsByClassName('notMember');
+document.getElementById('lineemail').removeAttribute('required');
 if (userId) {
   document.getElementById('email').removeAttribute('required');
-  document.getElementById('lineemail').removeAttribute('required');
   Array.from(document.getElementsByClassName('notMember')).forEach(function (
     element
   ) {
@@ -241,8 +241,6 @@ $('#support-form').on('submit', function (event) {
       })
       .catch(function (err) {
         console.log(err);
-        msg = err.response.data.error;
-        alert(msg);
       });
   });
 });

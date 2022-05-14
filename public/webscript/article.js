@@ -1,10 +1,11 @@
 let articlePath = window.location.pathname;
-let currentId = localStorage.getItem('user_info');
 let currentName = localStorage.getItem('user_name');
 let articleId = articlePath.split('/')[2];
 let userToken = localStorage.getItem('token');
+let currentId = localStorage.getItem('user_info');
+let visitId;
 
-if (!currentId) {
+if (!currentId && !localStorage.getItem('visiter_info')) {
   axios({
     method: 'post',
     url: '/api/1.0/visitorid',
@@ -12,12 +13,17 @@ if (!currentId) {
     headers: { 'Content-Type': 'application/json' },
   })
     .then((res) => {
-      let currentId = res.data.visitor_id;
-      localStorage.setItem('user_info', currentId);
+      let visitorId = res.data.visitor_id;
+      localStorage.setItem('visiter_info', visitorId);
     })
     .catch(function (err) {
       console.log(err);
     });
+}
+if (currentId) {
+  visitId = currentId;
+} else {
+  visitId = localStorage.getItem('visiter_info');
 }
 
 if (!userToken) {
@@ -339,7 +345,7 @@ axios.get(`/api/1.0${articlePath}`).then((res) => {
 axios({
   method: 'post',
   url: '/api/1.0/view/article',
-  data: { user_id: currentId, page: articleId },
+  data: { user_id: visitId, page: articleId },
   headers: { 'Content-Type': 'application/json' },
 })
   .then((res) => {
