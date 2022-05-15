@@ -9310,7 +9310,7 @@ article {
     line-height: 1; }
   article:first-letter {
     float: left;
-    font-size: 5em;
+    font-size: 4em;
     line-height: 1;
     margin: 0 .2em 0 0;
     vertical-align: top; }
