@@ -1,5 +1,5 @@
 let token = localStorage.getItem('token');
-let myPage = localStorage.getItem('creator_page');
+let myPage = localStorage.getItem('page_name');
 
 if (token) {
   let navShow = document.getElementById('nav-show');

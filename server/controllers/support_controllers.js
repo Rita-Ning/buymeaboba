@@ -67,7 +67,7 @@ router.post('/support/checkout', async (req, res, next) => {
   try {
     let creator_id = await userProfile.findOne(
       { user_page: creator },
-      { _id: 1 }
+      { _id: 1, email: 1 }
     );
 
     let supportInfo;
@@ -98,8 +98,10 @@ router.post('/support/checkout', async (req, res, next) => {
     // add into support db
     let addSupport = await support.create(supportInfo);
 
+    console.log(creator_id.email);
+
     //send email
-    sendSupportEmail(msg, userName, amount, userEmail);
+    sendSupportEmail(msg, userName, amount, creator_id.email);
 
     // if post support add into post doc
     if (event !== 'homepage') {

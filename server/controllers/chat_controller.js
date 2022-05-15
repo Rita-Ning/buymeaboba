@@ -104,7 +104,6 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
       { _id: id },
       { follower: 1, supporter: 1, user_name: 1, profile_pic: 1 }
     );
-
     //supporter might duplicate
     let supporter_list = [];
     let mail = [];
@@ -115,6 +114,7 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
           supporter_list.push(supporter.user_id);
       }
     });
+
     // if send email, send email
     if (send_email == 1) {
       sendMsgEmail(msg, userInfo.user_name, userInfo.profile_pic, mail);
@@ -149,6 +149,7 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
         }
       }
     }
+    console.log(5555);
     res.send('sucess');
   } catch (err) {
     next(err);

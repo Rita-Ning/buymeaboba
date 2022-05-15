@@ -302,10 +302,10 @@ let random = Math.floor(Math.random() * 600);
 
 // let ids = await userProfile.find({},{_id;1})
 
-async function main() {
-  let result = await post.updateMany({}, { view: 239 });
-  console.log(result);
-}
+// async function main() {
+//   let result = await post.updateMany({}, { view: 239 });
+//   console.log(result);
+// }
 // main();
 
 //find function test
@@ -316,23 +316,35 @@ async function main() {
 
 //push data to my profile
 // async function main() {
-//   let creatorId = mongoose.mongo.ObjectId('626c1229b7da2f66cadad033');
+//   let creatorId = mongoose.mongo.ObjectId('6280bb056db44a5ec77d226f');
 //   await userProfile.updateOne(
 //     { _id: creatorId },
 //     {
 //       $addToSet: {
-//         supporter: {
+//         follower: {
 //           $each: [
 //             {
-//               user_id: '6266aa2f6dc20b624d2b429c',
-//               user_name: 'Enrique Dans',
-//               user_email: 'enriquedans@user.com',
+//               follower_id: '6266aa2f6dc20b624d2b4297',
 //               time: Date.now(),
 //             },
 //             {
-//               user_id: '6266aa2f6dc20b624d2b42a5',
-//               user_name: 'Will Leitch',
-//               user_email: 'willleitch@user.com',
+//               follower_id: '6266aa2f6dc20b624d2b4298',
+//               time: Date.now(),
+//             },
+//             {
+//               follower_id: '6266aa2f6dc20b624d2b429b',
+//               time: Date.now(),
+//             },
+//             {
+//               follower_id: '6266aa2f6dc20b624d2b429c',
+//               time: Date.now(),
+//             },
+//             {
+//               followerr_id: '6266aa2f6dc20b624d2b4299',
+//               time: Date.now(),
+//             },
+//             {
+//               follower_id: '6266aa2f6dc20b624d2b429a',
 //               time: Date.now(),
 //             },
 //           ],
@@ -342,6 +354,8 @@ async function main() {
 //     { new: true, upsert: true }
 //   );
 // }
+
+// main();
 
 // check if chat member includes
 // async function main() {
@@ -399,18 +413,18 @@ async function main() {
 //   ]);
 //   console.log(result);
 // }
-async function main() {
-  let tag = 'medium';
-  let result = await post.find({
-    post_tag: {
-      $elemMatch: {
-        $regex: tag,
-        $options: 'i',
-      },
-    },
-  });
-  console.log(result);
-}
+// async function main() {
+//   let tag = 'medium';
+//   let result = await post.find({
+//     post_tag: {
+//       $elemMatch: {
+//         $regex: tag,
+//         $options: 'i',
+//       },
+//     },
+//   });
+//   console.log(result);
+// }
 
 // main();
 

@@ -78,7 +78,7 @@ router.post('/linepay/check', async (req, res, next) => {
         console.log(msg);
         let creator_id = await userProfile.findOne(
           { user_page: creator },
-          { _id: 1 }
+          { _id: 1, email: 1 }
         );
 
         let userName;
@@ -126,7 +126,7 @@ router.post('/linepay/check', async (req, res, next) => {
         console.log(addSupport);
 
         //send email
-        sendSupportEmail(msg, userName, amount, userEmail);
+        sendSupportEmail(msg, userName, amount, creator_id.email);
 
         // if post support add into post doc
         if (event !== 'homepage') {
