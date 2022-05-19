@@ -1,4 +1,10 @@
 let userId = window.localStorage.getItem('user_info');
+let token = window.localStorage.getItem('token');
+
+if (!token) {
+  window.alert('please log in first!');
+  window.location.href = '/index.html';
+}
 
 let chatroomPage = document.getElementById('chatroom-box');
 let sendForm = document.getElementById('newMsg-box');

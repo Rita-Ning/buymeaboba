@@ -1,4 +1,10 @@
 let userId = localStorage.getItem('user_info');
+let token = window.localStorage.getItem('token');
+
+if (!token) {
+  window.alert('please log in first!');
+  window.location.href = '/index.html';
+}
 
 axios({
   method: 'post',

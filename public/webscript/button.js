@@ -1,4 +1,10 @@
 let userPage = localStorage.getItem('page_name');
+let token = window.localStorage.getItem('token');
+
+if (!token) {
+  window.alert('please log in first!');
+  window.location.href = '/index.html';
+}
 
 function btnYellow(size) {
   let style;

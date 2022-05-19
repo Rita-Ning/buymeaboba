@@ -3,6 +3,12 @@ let roomId = urlParams.get('roomid');
 let memberId = urlParams.get('member');
 let userId = localStorage.getItem('user_info');
 let type = urlParams.get('type');
+let token = window.localStorage.getItem('token');
+
+if (!token) {
+  window.alert('please log in first!');
+  window.location.href = '/index.html';
+}
 
 const messageContainer = document.getElementById('chat-container');
 const messageForm = document.getElementById('send-container');
