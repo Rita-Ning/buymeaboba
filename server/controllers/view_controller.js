@@ -1,6 +1,7 @@
 const express = require('express');
 const { MongoUnexpectedServerResponseError } = require('mongodb');
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 const router = express.Router();
 const { userProfile, post } = require('../../util/mongoose');
@@ -23,6 +24,10 @@ router.post('/view/page', async (req, res, next) => {
       { user_page: page },
       { view_date: { $elemMatch: { date: date } } }
     );
+
+    if (result == null) {
+      return res.status(404).json({ error: 'wrong creator name' });
+    }
     if (result.view_date.length == 0) {
       await userProfile.updateOne(
         { user_page: page },
@@ -55,6 +60,9 @@ router.post('/view/article', async (req, res, next) => {
     let { user_id, page } = req.body;
     let d = new Date(Date.now());
     let date = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
+    if (!ObjectId.isValid(page)) {
+      return res.status(404).json({ error: 'wrong article id' });
+    }
     let articleId = mongoose.mongo.ObjectId(page);
 
     const result = await post.findOne(

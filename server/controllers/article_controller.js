@@ -1,12 +1,16 @@
 const express = require('express');
 const readingTime = require('reading-time');
 var mongoose = require('mongoose');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 const router = express.Router();
 const { userProfile, post } = require('../../util/mongoose');
 
 router.get('/article/:postid', async (req, res) => {
   const { postid } = req.params;
+  if (!ObjectId.isValid(postid)) {
+    return res.status(404).json({ error: 'wrong article id' });
+  }
   let id = mongoose.mongo.ObjectId(postid);
 
   let postInfo = await post.findOne(
@@ -24,6 +28,9 @@ router.get('/article/:postid', async (req, res) => {
       support_only: 1,
     }
   );
+  if (postInfo.length == 0) {
+    res.status(404);
+  }
 
   let userId = postInfo.user_id;
   let user = await userProfile.findOne(

@@ -149,109 +149,112 @@ commentBtn.addEventListener('click', async (e) => {
   commentColumn.prepend(commentElement);
 });
 
-axios.get(`/api/1.0${articlePath}`).then((res) => {
-  let data = res.data;
-  //follower count need to be fixed for supporter count, now is for fake data
-  let {
-    content,
-    user,
-    popular,
-    comment,
-    liked_by,
-    like_count,
-    user_id,
-    create_time,
-    read_time,
-    support_only,
-    earning_from,
-  } = data;
-  let profileColumn = document.getElementById('self-intro');
-  let profilePic = document.getElementById('profile-pic');
-  let follower_count = user.follower_count;
-  if (!follower_count) {
-    follower_count = 0;
-  }
-  let profile = `
+axios
+  .get(`/api/1.0${articlePath}`)
+  .then((res) => {
+    let data = res.data;
+    //follower count need to be fixed for supporter count, now is for fake data
+    let {
+      content,
+      user,
+      popular,
+      comment,
+      liked_by,
+      like_count,
+      user_id,
+      create_time,
+      read_time,
+      support_only,
+      earning_from,
+    } = data;
+    let profileColumn = document.getElementById('self-intro');
+    let profilePic = document.getElementById('profile-pic');
+    let follower_count = user.follower_count;
+    if (!follower_count) {
+      follower_count = 0;
+    }
+    let profile = `
     <h4 class="secondfont mb-1 font-weight-bold">${user.user_name}</h4>
 		<p class="mb-3 pl-1">${user.about}</p>	
 		<small class="text-muted pl-1">${follower_count} followers</small>
   `;
-  profileColumn.innerHTML = profile;
-  //for supportInfo to get user page name
-  localStorage.setItem('creator_page', user.user_page);
+    profileColumn.innerHTML = profile;
+    //for supportInfo to get user page name
+    localStorage.setItem('creator_page', user.user_page);
 
-  // set user profile
-  let pic = `
+    // set user profile
+    let pic = `
   <a href="/creator/${user.user_page}">
   <img src="${user.profile_pic}" class = "rounded-circle" height="100"  width="100" pt-1/>
   </a>`;
-  profilePic.innerHTML = pic;
+    profilePic.innerHTML = pic;
 
-  // set support form
-  let supportImg = document.getElementById('profile-basic');
-  let supportContent = `
+    // set support form
+    let supportImg = document.getElementById('profile-basic');
+    let supportContent = `
       <img src="${user.profile_pic}" id="profile-pic" alt="Avatar" class = "p-1 rounded-circle mx-auto d-block align-self-center avatar" height="95"  width="95" style="background-size:cover"/>
       <div id="support-line">	
       <h4 class="modal-title">Support <span class='font-weight-bold'>${user.user_name}</span>&nbsp&nbsp:)</h4>
       <button type="button" class="close mr-1 pr-1" data-dismiss="modal" aria-hidden="true" onclick='recoverForm()'>&times;</button>
       </div>`;
-  supportImg.innerHTML = supportContent;
+    supportImg.innerHTML = supportContent;
 
-  // set article content
-  let articleColumn = document.getElementById('article-content');
-  let block = document.getElementById('support-msg');
+    // set article content
+    let articleColumn = document.getElementById('article-content');
+    let block = document.getElementById('support-msg');
 
-  //check if support
-  let checkSupporter;
-  earning_from.forEach((ele) => {
-    if (ele.user_id == currentId) {
-      checkSupporter = true;
+    //check if support
+    let checkSupporter;
+    earning_from.forEach((ele) => {
+      if (ele.user_id == currentId) {
+        checkSupporter = true;
+      } else {
+        checkSupporter = false;
+      }
+    });
+
+    //check if arthur
+    let checkCreator;
+    if (user_id == currentId) {
+      checkCreator = true;
     } else {
-      checkSupporter = false;
+      checkCreator = false;
     }
-  });
-
-  //check if arthur
-  let checkCreator;
-  if (user_id == currentId) {
-    checkCreator = true;
-  } else {
-    checkCreator = false;
-  }
-  if (support_only == 1 && !checkCreator && !checkSupporter) {
-    article = ``;
-    blockMsg = `
+    if (support_only == 1 && !checkCreator && !checkSupporter) {
+      article = ``;
+      blockMsg = `
     <div class='pl-2 mt-5 pt-5 mb-5 row align-items-center justify-content-center'>
-    <div><h2>Read this post with support</h2></div>
+    <div><h2>Read this post with support (member only)</h2></div>
     <div><button href="#myModal" class="btn btn-warning mb-3 support-btn display-6 trigger-btn mt-2" data-toggle="modal" id="supportBtn" style="width:290px">
     Support  &nbsp NT$ <span id="supportAmount">80</span>
     </button></div>
     </div>
     `;
-  } else {
-    article = `
+      localStorage.setItem('support_amount', 80);
+    } else {
+      article = `
     ${content}
     `;
-    blockMsg = ``;
-  }
-  articleColumn.innerHTML = article;
-  block.innerHTML = blockMsg;
+      blockMsg = ``;
+    }
+    articleColumn.innerHTML = article;
+    block.innerHTML = blockMsg;
 
-  //set time and reading time
-  let timeColumn = document.getElementById('create-time');
-  let creatTime = create_time.split('T')[0];
-  time_box = `${creatTime} &middot; ${read_time}`;
-  timeColumn.innerHTML = time_box;
+    //set time and reading time
+    let timeColumn = document.getElementById('create-time');
+    let creatTime = create_time.split('T')[0];
+    time_box = `${creatTime} &middot; ${read_time}`;
+    timeColumn.innerHTML = time_box;
 
-  // popular post at left-side
-  let popColumn = document.getElementById('pop-article');
-  let pop = ``;
+    // popular post at left-side
+    let popColumn = document.getElementById('pop-article');
+    let pop = ``;
 
-  for (let i = 0; i < popular.length; i++) {
-    let popularPost = popular[i];
-    let d = new Date(popularPost.create_time);
-    let time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
-    pop += `
+    for (let i = 0; i < popular.length; i++) {
+      let popularPost = popular[i];
+      let d = new Date(popularPost.create_time);
+      let time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
+      pop += `
     <li>
     <span>
     <h6 class="font-weight-bold">
@@ -262,21 +265,21 @@ axios.get(`/api/1.0${articlePath}`).then((res) => {
     </p>
     </span>
     </li>`;
-  }
-  popColumn.innerHTML = pop;
-
-  //comment section get history
-  let commentColumn = document.getElementById('comment-box');
-  let comments = ``;
-
-  for (let i = 0; i < comment.length; i++) {
-    let oneComment = comment[i];
-    if (oneComment.comment == '') {
-      continue;
     }
-    let d = new Date(oneComment.comment_time);
-    let time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
-    comments += `
+    popColumn.innerHTML = pop;
+
+    //comment section get history
+    let commentColumn = document.getElementById('comment-box');
+    let comments = ``;
+
+    for (let i = 0; i < comment.length; i++) {
+      let oneComment = comment[i];
+      if (oneComment.comment == '') {
+        continue;
+      }
+      let d = new Date(oneComment.comment_time);
+      let time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
+      comments += `
     <div class="pt-3">
       <div class="d-flex justify-content-left align-items-center">
           <p class="mb-0 text-muted">${oneComment.user_name}</p>
@@ -284,62 +287,68 @@ axios.get(`/api/1.0${articlePath}`).then((res) => {
       </div>
       <span class="mt-3">${oneComment.comment}</span>
     </div>`;
-  }
-  commentColumn.innerHTML = comments;
-
-  let following;
-  user.follower.forEach((follow) => {
-    if (follow.follower_id == currentId) {
-      following = true;
-    } else {
-      following = false;
     }
-  });
+    commentColumn.innerHTML = comments;
 
-  //follow,following,edit auth setting
-  if (currentId == user_id) {
-    document.getElementById('edit-page').style.display = 'block';
-    document.getElementById('feat-follow').style.display = 'none';
-    document.getElementById('feat-unfollow').style.display = 'none';
-  } else if (following) {
-    document.getElementById('edit-page').style.display = 'none';
-    document.getElementById('feat-follow').style.display = 'none';
-    document.getElementById('feat-unfollow').style.display = 'block';
-  } else {
-    document.getElementById('edit-page').style.display = 'none';
-    document.getElementById('feat-follow').style.display = 'block';
-    document.getElementById('feat-unfollow').style.display = 'none';
-  }
-
-  //check if user liked
-  if (!like_count) {
-    like_count = 0;
-  }
-
-  if (liked_by.length !== 0) {
-    liked_by.forEach((element) => {
-      let isLike = element.user_id.includes(currentId);
-
-      if (isLike) {
-        document.getElementById(
-          'likeBtn'
-        ).innerHTML = `<a onclick="unlike()"><i class="fa-solid fa-heart fa-lg heart"></i><a> &nbsp ${like_count} `;
+    let following;
+    user.follower.forEach((follow) => {
+      if (follow.follower_id == currentId) {
+        following = true;
       } else {
-        document.getElementById(
-          'likeBtn'
-        ).innerHTML = `<a onclick="like()"><i class="fa-regular fa-heart fa-lg"></i><a> &nbsp ${like_count} `;
+        following = false;
       }
     });
-  } else {
+
+    //follow,following,edit auth setting
+    if (currentId == user_id) {
+      document.getElementById('edit-page').style.display = 'block';
+      document.getElementById('feat-follow').style.display = 'none';
+      document.getElementById('feat-unfollow').style.display = 'none';
+    } else if (following) {
+      document.getElementById('edit-page').style.display = 'none';
+      document.getElementById('feat-follow').style.display = 'none';
+      document.getElementById('feat-unfollow').style.display = 'block';
+    } else {
+      document.getElementById('edit-page').style.display = 'none';
+      document.getElementById('feat-follow').style.display = 'block';
+      document.getElementById('feat-unfollow').style.display = 'none';
+    }
+
+    //check if user liked
+    if (!like_count) {
+      like_count = 0;
+    }
+
+    if (liked_by.length !== 0) {
+      liked_by.forEach((element) => {
+        let isLike = element.user_id.includes(currentId);
+
+        if (isLike) {
+          document.getElementById(
+            'likeBtn'
+          ).innerHTML = `<a onclick="unlike()"><i class="fa-solid fa-heart fa-lg heart"></i><a> &nbsp ${like_count} `;
+        } else {
+          document.getElementById(
+            'likeBtn'
+          ).innerHTML = `<a onclick="like()"><i class="fa-regular fa-heart fa-lg"></i><a> &nbsp ${like_count} `;
+        }
+      });
+    } else {
+      document.getElementById(
+        'likeBtn'
+      ).innerHTML = `<a onclick="like()"><i class="fa-regular fa-heart fa-lg"></i><a> &nbsp ${like_count} `;
+    }
+    // comment count
     document.getElementById(
-      'likeBtn'
-    ).innerHTML = `<a onclick="like()"><i class="fa-regular fa-heart fa-lg"></i><a> &nbsp ${like_count} `;
-  }
-  // comment count
-  document.getElementById(
-    'commentBlock'
-  ).innerHTML = `<i class="fa-regular fa-message fa-lg"></i> &nbsp ${comment.length}`;
-});
+      'commentBlock'
+    ).innerHTML = `<i class="fa-regular fa-message fa-lg"></i> &nbsp ${comment.length}`;
+  })
+  .catch(function (err) {
+    if (err.response.status === 404) {
+      window.location.href = '/404.html';
+    }
+    console.log(err);
+  });
 
 // calculate view
 axios({

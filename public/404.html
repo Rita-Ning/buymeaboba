@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>buymeboba</title>
+  <link rel="icon" type="image/x-icon" class ='rounded' href="/images/favicon.ico">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="/css/404.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light rounded-pill" id="ftco-navbar">
+    <div class="container">
+      <div class="logo">
+        <a href="./index.html">
+          <img src="/images/logo.jpeg" height="50" />
+        </a>
+      </div>
+      <div class="navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav ml-auto mr-md-3" id="nav-show">
+          <li class="nav-item"><a href="./creator-explore.html" class="nav-link">Explore Creator</a></li>
+          <li class="nav-item"><a href="./signup.html" class="nav-link">Sign up</a></li>
+          <li class="nav-item"><a href="./login.html" class="nav-link">Log in</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="error-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="error-text">
+                    <h1 class="error text-warning">404 Error</h1>
+                    <div class="im-sheep">
+                        <div class="top">
+                            <div class="body"></div>
+                            <div class="head">
+                                <div class="im-eye one"></div>
+                                <div class="im-eye two"></div>
+                                <div class="im-ear one"></div>
+                                <div class="im-ear two"></div>
+                            </div>
+                        </div>
+                        <div class="im-legs">
+                            <div class="im-leg"></div>
+                            <div class="im-leg"></div>
+                            <div class="im-leg"></div>
+                            <div class="im-leg"></div>
+                        </div>
+                    </div>
+                    <h4>Oops! This page Could Not Be Found!</h4>
+                    <p>Sorry bit the page you are looking for does not exist, have been removed or name changed.</p>
+                    <a href="./index.html" class="btn btn-primary btn-round">Go to homepage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  let token = localStorage.getItem('token');
+  let myPage = localStorage.getItem('page_name');
+
+  if (token) {
+    let navShow = document.getElementById('nav-show');
+    let nav = `
+    <li class="nav-item"><a href="./creator-explore.html" class="nav-link">Explore Creator</a></li>
+    <li class="nav-item"><a href="/creator/${myPage}" class="nav-link" id="login-btn">My Page</a></li>`;
+    navShow.innerHTML = nav;
+  }
+</script>
+</body>
+</html>

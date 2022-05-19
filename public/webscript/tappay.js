@@ -181,11 +181,6 @@ $('#support-form').on('submit', function (event) {
     return;
   }
 
-  // if (!token) {
-  //   window.location.replace('/profile.html');
-  //   alert('Please sign in first');
-  //   return;
-  // }
   let supporterInfo;
   let supportAmount = JSON.parse(localStorage.getItem('support_amount'));
   let supporter = JSON.parse(localStorage.getItem('supporter_info'));
@@ -228,7 +223,7 @@ $('#support-form').on('submit', function (event) {
     localStorage.removeItem('supporter_info');
     localStorage.removeItem('support_amount');
 
-    // console.log(supportInfo);
+    console.log(supportInfo);
 
     axios({
       method: 'post',

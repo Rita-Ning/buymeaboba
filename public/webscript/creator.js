@@ -287,6 +287,9 @@ axios
     articleColumn.innerHTML = article;
   })
   .catch((error) => {
+    if (error.response.status === 404) {
+      window.location.href = '/404.html';
+    }
     console.log(error);
   });
 

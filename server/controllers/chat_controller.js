@@ -149,7 +149,6 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
         }
       }
     }
-    console.log(5555);
     res.send('sucess');
   } catch (err) {
     next(err);

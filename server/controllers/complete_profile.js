@@ -6,8 +6,6 @@ const { promisify } = require('util'); // util from native nodejs library
 const aws = require('aws-sdk');
 const randomBytes = promisify(crypto.randomBytes);
 
-// const { upload } = require('../../util/multer');
-// const path = require('path');
 const { userProfile } = require('../../util/mongoose');
 
 require('dotenv').config();
@@ -42,7 +40,6 @@ router.get('/s3Url', async (req, res) => {
   const url = await generateUploadURL();
   res.send({ url });
 });
-// const fields = upload.fields([{ name: 'profile_img', maxCount: 1 }]);
 
 router.post('/user/create', async (req, res) => {
   try {
@@ -50,22 +47,6 @@ router.post('/user/create', async (req, res) => {
       return res.status(400).json({ error: 'Please Enter information needed' });
     }
 
-    // if (!req.files.profile_img) {
-    //   picturePath = 'default';
-    // } else {
-    //   picturePath = req.files.profile_img[0].path.replace(
-    //     'public/',
-    //     process.env.DNS
-    //   );
-    // }
-
-    // const profileInfo = {
-    //   user_name: req.body.user_name,
-    //   user_page: req.body.page_name,
-    //   profile_pic: picturePath.replace('public/', ''),
-    //   about: req.body.about,
-    //   page_create: '1',
-    // };
     const profileInfo = {
       user_name: req.body.user_name,
       user_page: req.body.page_name,

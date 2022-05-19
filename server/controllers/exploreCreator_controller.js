@@ -4,7 +4,7 @@ const { client } = require('../../util/redis');
 var CronJob = require('cron').CronJob;
 
 const router = express.Router();
-const { userProfile, post } = require('../../util/mongoose');
+const { userProfile } = require('../../util/mongoose');
 
 router.get('/search', async (req, res) => {
   const { keyword } = req.query;
@@ -90,20 +90,6 @@ router.get('/search', async (req, res) => {
 });
 
 router.get('/search/frontpage', async (req, res) => {
-  // let result = await userProfile
-  //   .find(
-  //     {},
-  //     {
-  //       user_page: 1,
-  //       user_name: 1,
-  //       about: 1,
-  //       profile_pic: 1,
-  //     }
-  //   )
-  //   .sort({ follower_count: -1 })
-  //   .limit(8);
-
-  // return res.status(200).json(result);
   try {
     const camapaignCache = await client.get('campaign');
     if (camapaignCache == null) {
@@ -131,7 +117,7 @@ router.get('/search/frontpage', async (req, res) => {
   }
 });
 
-//雌ㄋㄛ
+// refresh redis
 new CronJob(
   '0 */4 * * *',
   async function () {

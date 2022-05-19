@@ -147,12 +147,6 @@ const userProfile = mongoose.model('user', {
   intro_post: {
     type: String,
   },
-  event: {
-    type: [mongoose.SchemaTypes.ObjectId],
-  },
-  event_attend: {
-    type: Array,
-  },
   billing_info: {
     type: Array,
   },
@@ -298,7 +292,7 @@ const support = mongoose.model('support', {
 //   name: 1,
 //   email:1
 // })
-let random = Math.floor(Math.random() * 600);
+// let random = Math.floor(Math.random() * 600);
 
 // let ids = await userProfile.find({},{_id;1})
 

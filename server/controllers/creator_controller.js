@@ -93,6 +93,9 @@ router.get('/creator/:name', async (req, res) => {
         intro_post: 1,
       }
     );
+    if (user == null) {
+      return res.status(404).json({ error: 'wrong creator name' });
+    }
     let user_id = user['_id'];
 
     let postList = await post
