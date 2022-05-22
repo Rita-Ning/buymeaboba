@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Wallet = require('../models/wallet');
+const Wallet = require('../models/wallet_model');
 
 // deal with withdraw info
 async function withdraw(req, res) {

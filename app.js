@@ -23,15 +23,15 @@ app.use(express.static('./public'));
 app.use('/api/' + API_VERSION, [
   require('./server/routes/article_route'),
   require('./server/routes/creator_route'),
-  require('./server/routes/exploreCreator_route'),
+  require('./server/routes/explore_creator_route'),
   require('./server/routes/dashboard_route'),
   require('./server/routes/support_route'),
-  require('./server/routes/createPost_routes'),
+  require('./server/routes/create_post_routes'),
   require('./server/routes/chat_route'),
   require('./server/routes/user_route'),
   require('./server/routes/view_route'),
   require('./server/routes/wallet_route'),
-  require('./server/routes/followPost_route'),
+  require('./server/routes/follow_post_route'),
 ]);
 
 //user route

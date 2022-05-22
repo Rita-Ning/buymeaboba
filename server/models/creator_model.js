@@ -75,6 +75,25 @@ const getPopularPost = async (user_id) => {
   return result;
 };
 
+const getPostInfo = async (userId) => {
+  let result = await post
+    .find(
+      { user_id: userId },
+      {
+        title: 1,
+        description: 1,
+        content: 1,
+        comment: 1,
+        liked_by: 1,
+        like_count: 1,
+        create_time: 1,
+        support_only: 1,
+      }
+    )
+    .sort({ create_time: -1 });
+  return result;
+};
+
 module.exports = {
   addFollower,
   updateFollowerCount,
@@ -83,4 +102,5 @@ module.exports = {
   deleteFollowerList,
   getCreatorInfo,
   getPopularPost,
+  getPostInfo,
 };

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const SavePost = require('../models/savePost');
+const SavePost = require('../models/save_post_model');
 
 async function createPost(req, res) {
   //check header

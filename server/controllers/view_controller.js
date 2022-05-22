@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const ObjectId = require('mongoose').Types.ObjectId;
-const View = require('../models/view');
+const View = require('../models/view_model');
 const uuid = require('uuid4');
 
 //if visitor give a visitor id

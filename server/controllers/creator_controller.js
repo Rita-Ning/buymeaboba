@@ -1,6 +1,5 @@
-const express = require('express');
 var mongoose = require('mongoose');
-const Creator = require('../models/creator');
+const Creator = require('../models/creator_model');
 
 const { userProfile, post } = require('../../util/mongoose');
 
@@ -16,7 +15,7 @@ async function addFollow(req, res) {
     const { follower_id, following_name } = req.body;
 
     // update creator's follower
-    let result = await Creator.addFollower(follower_id, following_name);
+    await Creator.addFollower(follower_id, following_name);
     // update creator's follower count
     await Creator.updateFollowerCount(following_name, 1);
     // update follower's following
@@ -62,26 +61,12 @@ async function getCreatorPage(req, res) {
     if (user == null) {
       return res.status(404).json({ error: 'wrong creator name' });
     }
-    let user_id = user['_id'];
+    let userId = user['_id'];
 
-    let postList = await post
-      .find(
-        { user_id: user_id },
-        {
-          title: 1,
-          description: 1,
-          content: 1,
-          comment: 1,
-          liked_by: 1,
-          like_count: 1,
-          create_time: 1,
-          support_only: 1,
-        }
-      )
-      .sort({ create_time: -1 });
+    let postList = await Creator.getPostInfo(userId);
 
     //popular post
-    let postPopular = await Creator.getPopularPost(user_id);
+    let postPopular = await Creator.getPopularPost(userId);
 
     let {
       user_page,

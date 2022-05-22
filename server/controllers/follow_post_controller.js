@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-let FollowPost = require('../models/followPost');
+let FollowPost = require('../models/follow_post_model');
 
 async function getNewsfeed(req, res) {
   try {

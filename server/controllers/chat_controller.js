@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 const { sendMsgEmail } = require('../../util/nodeemailer');
-const Chatroom = require('../models/chat');
+const Chatroom = require('../models/chat_model');
 
 // send user chatted back
 async function showChatroom(req, res) {

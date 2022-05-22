@@ -1,6 +1,6 @@
 const { client } = require('../../util/redis');
 var CronJob = require('cron').CronJob;
-const ExploreCreator = require('../models/exploreCreator');
+const ExploreCreator = require('../models/explore_creator_model');
 
 async function search(req, res) {
   const { keyword } = req.query;

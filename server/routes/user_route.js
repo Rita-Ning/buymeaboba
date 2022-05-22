@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { wrapAsync } = require('../../util/util');
 
-const CompleteProfileController = require('../controllers/completeProfile_controller');
+const CompleteProfileController = require('../controllers/complete_profile_controller');
 const userController = require('../controllers/user_controller');
 
 router.post('/user/login', wrapAsync(userController.userLogin));

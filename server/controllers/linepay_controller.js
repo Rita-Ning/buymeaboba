@@ -4,7 +4,7 @@ const crypto = require('crypto-js');
 const uuid = require('uuid4');
 const axios = require('axios');
 const { sendSupportEmail } = require('../../util/nodeemailer');
-const Linepay = require('../models/linepay');
+const Linepay = require('../models/linepay_model');
 
 const key = process.env.LINEPAY_KEY;
 const ChannelId = process.env.LINEPAY_ChannelId;

@@ -1,7 +1,7 @@
 const readingTime = require('reading-time');
 var mongoose = require('mongoose');
 const ObjectId = require('mongoose').Types.ObjectId;
-let Article = require('../models/article');
+let Article = require('../models/article_model');
 
 async function getArticle(req, res) {
   const { postid } = req.params;

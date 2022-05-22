@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { wrapAsync } = require('../../util/util');
 
-const ExploreCreatorController = require('../controllers/exploreCreator_controller');
+const ExploreCreatorController = require('../controllers/explore_creator_controller');
 
 router.get('/search', wrapAsync(ExploreCreatorController.search));
 

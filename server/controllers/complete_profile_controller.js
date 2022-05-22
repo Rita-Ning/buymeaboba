@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const CompleteProfile = require('../models/complete_profile');
+const CompleteProfile = require('../models/complete_profile_model');
 const { generateUploadURL } = require('../../util/s3');
 
 async function getS3url(req, res) {

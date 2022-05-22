@@ -1,7 +1,7 @@
 require('dotenv').config({ path: `${__dirname}/../../.env` });
 const bcrypt = require('bcrypt');
 const jwt = require('../../util/jwt');
-const User = require('../models/user');
+const User = require('../models/user_model');
 
 const saltRounds = parseInt(process.env.BCRYPT_SALT);
 const { SECRET } = process.env;
