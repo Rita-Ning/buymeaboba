@@ -1,39 +1,19 @@
-const express = require('express');
 var mongoose = require('mongoose');
-const { nextTick } = require('process');
+let FollowPost = require('../models/followPost');
 
-const router = express.Router();
-const { userProfile, post } = require('../../util/mongoose');
-
-router.post('/newsfeed', async (req, res) => {
+async function getNewsfeed(req, res) {
   try {
     const { user_id } = req.body;
     let userId = mongoose.mongo.ObjectId(user_id);
-    let following = await userProfile.findOne(
-      { _id: userId },
-      { following: 1 }
-    );
+    let following = await FollowPost.getFollowingList(userId);
+
     let all = following.following;
     let postList = [];
     for (let i = 0; i < all.length; i++) {
       let creator = all[i];
-      let creatorId = await userProfile.findOne(
-        { user_page: creator },
-        { _id: 1 }
-      );
-      let creatorPost = await post.find(
-        { user_id: creatorId._id },
-        {
-          _id: 1,
-          title: 1,
-          description: 1,
-          like_count: 1,
-          comment: 1,
-          create_time: 1,
-          user_id: 1,
-          content: 1,
-        }
-      );
+      let creatorId = await FollowPost.getFollowingInfo(creator);
+      let creatorPost = await FollowPost.getFollowingPost(creatorId._id);
+
       postList = postList.concat(creatorPost);
     }
 
@@ -48,14 +28,7 @@ router.post('/newsfeed', async (req, res) => {
     for (let j = 0; j < recentPost.length; j++) {
       let post = recentPost[j];
       let userId = mongoose.mongo.ObjectId(post.user_id);
-      let userInfo = await userProfile.findOne(
-        { _id: userId },
-        {
-          user_name: 1,
-          profile_pic: 1,
-          user_page: 1,
-        }
-      );
+      let userInfo = await FollowPost.getPostCreator(userId);
       let {
         _id,
         title,
@@ -82,26 +55,17 @@ router.post('/newsfeed', async (req, res) => {
       data['user'] = userInfo;
       result.push(data);
     }
-    // console.log(result);
     res.json(result);
   } catch (err) {
+    console.log(err);
     next(err);
   }
-});
+}
 
-router.post('/newsfeed/search', async (req, res) => {
+async function newsfeedSearch(req, res) {
   try {
     const { tag } = req.body;
-    let posts = await post
-      .find({
-        post_tag: {
-          $elemMatch: {
-            $regex: tag,
-            $options: 'i',
-          },
-        },
-      })
-      .sort({ like_count: -1 });
+    let posts = await FollowPost.searchByPostTag(tag);
 
     let popPost;
     if (posts.length > 12) {
@@ -109,20 +73,12 @@ router.post('/newsfeed/search', async (req, res) => {
     } else {
       popPost = posts;
     }
-    console.log(popPost.length);
 
     let result = [];
     for (let j = 0; j < popPost.length; j++) {
       let post = popPost[j];
       let userId = mongoose.mongo.ObjectId(post.user_id);
-      let userInfo = await userProfile.findOne(
-        { _id: userId },
-        {
-          user_name: 1,
-          profile_pic: 1,
-          user_page: 1,
-        }
-      );
+      let userInfo = await FollowPost.getPostCreator(userId);
       let {
         _id,
         title,
@@ -149,10 +105,9 @@ router.post('/newsfeed/search', async (req, res) => {
       data['user'] = userInfo;
       result.push(data);
     }
-    // console.log(result);
     res.json(result);
   } catch (err) {
     console.log(err);
   }
-});
-module.exports = router;
+}
+module.exports = { getNewsfeed, newsfeedSearch };

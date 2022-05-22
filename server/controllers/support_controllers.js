@@ -1,12 +1,9 @@
-const express = require('express');
 var mongoose = require('mongoose');
 const axios = require('axios');
+const Support = require('../models/support');
 const { sendSupportEmail } = require('../../util/nodeemailer');
 
-const router = express.Router();
-const { userProfile, support, post } = require('../../util/mongoose');
-
-router.post('/support/checkout', async (req, res, next) => {
+async function tappay(req, res) {
   // check header
   if (req.headers['content-type'] !== 'application/json') {
     return res
@@ -25,10 +22,7 @@ router.post('/support/checkout', async (req, res, next) => {
     userEmail = user.user_email;
   } else {
     userId = mongoose.mongo.ObjectId(user);
-    let userFind = await userProfile.findOne(
-      { _id: userId },
-      { user_name: 1, email: 1 }
-    );
+    let userFind = await Support.getUser(userId);
     userName = userFind.user_name;
     userEmail = userFind.email;
     userId = userFind._id;
@@ -65,10 +59,7 @@ router.post('/support/checkout', async (req, res, next) => {
 
   // support info
   try {
-    let creator_id = await userProfile.findOne(
-      { user_page: creator },
-      { _id: 1, email: 1 }
-    );
+    let creator_id = await Support.getCreator(creator);
 
     let supportInfo;
     if (userId) {
@@ -93,14 +84,11 @@ router.post('/support/checkout', async (req, res, next) => {
         msg,
       };
     }
-    // console.log(supportInfo);
 
     // add into support db
-    let addSupport = await support.create(supportInfo);
+    let addSupport = await Support.createSupport(supportInfo);
 
-    console.log(creator_id.email);
-
-    //send email
+    //send email to supporter
     sendSupportEmail(msg, userName, amount, creator_id.email);
 
     // if post support add into post doc
@@ -120,18 +108,10 @@ router.post('/support/checkout', async (req, res, next) => {
         };
       }
       let postID = mongoose.mongo.ObjectId(event);
-      console.log(postSupport);
-      await post.updateOne(
-        { _id: postID },
-        { $push: { earning_from: postSupport } },
-        { new: true, upsert: true }
-      );
 
-      await post.findOneAndUpdate(
-        { _id: postID },
-        { $inc: { earning_amount: amount } },
-        { new: true }
-      );
+      //update post earning data
+      await Support.updatePostEarningInfo(postID, postSupport);
+      await Support.updatePostEarningAmount(postID, postSupport);
     }
 
     let creatorId = creator_id._id;
@@ -155,12 +135,8 @@ router.post('/support/checkout', async (req, res, next) => {
       };
     }
 
-    // console.log(supporterInfo);
-    await userProfile.updateOne(
-      { _id: creatorId },
-      { $push: { supporter: supporterInfo } },
-      { new: true, upsert: true }
-    );
+    //update user support info
+    await Support.updateUserSupport(creatorId, supporterInfo);
 
     let data = { data: addSupport._id };
     res.send(data);
@@ -168,6 +144,6 @@ router.post('/support/checkout', async (req, res, next) => {
     console.log(error);
     res.send(error.message);
   }
-});
+}
 
-module.exports = router;
+module.exports = { tappay };

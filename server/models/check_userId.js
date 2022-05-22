@@ -1,6 +1,5 @@
 require('dotenv').config();
 const jwt = require('../../util/jwt');
-
 const { SECRET } = process.env;
 
 async function checkUserid(req, res, next) {

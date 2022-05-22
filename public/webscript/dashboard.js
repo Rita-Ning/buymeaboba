@@ -80,33 +80,6 @@ axios({
         </div>
     </div>`;
     pageSummary.innerHTML = summary;
-    // let overviewBox = document.getElementById('overview-box');
-    // let content = `
-    // <div class="col-sm-6 col-xl-4 border-end border-muted">
-    //   <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-    //       <div class="ms-3 align-item-center">
-    //           <p class="mb-2">Followers  </p>
-    //           <h6 class="mb-0"><i class="fa-solid fa-users"></i> &nbsp ${overview.followers}</h6>
-    //       </div>
-    //   </div>
-    // </div>
-    // <div class="col-sm-6 col-xl-4 border-end border-muted">
-    //     <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-    //         <div class="ms-3">
-    //             <p class="mb-2">Supporters</p>
-    //             <h6 class="mb-0"><i class="fa fa-beer-mug-empty"></i> &nbsp ${overview.supporters}</h6>
-    //         </div>
-    //     </div>
-    // </div>
-    // <div class="col-sm-6 col-xl-4">
-    //     <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-    //         <div class="ms-3">
-    //             <p class="mb-2">Earnings</p>
-    //             <h6 class="mb-0">$ &nbsp ${overview.earnings}</h6>
-    //         </div>
-    //     </div>
-    // </div>`;
-    // overviewBox.innerHTML = content;
     let earnPost = document.getElementById('earn-column');
     let earn = ``;
     let eCount = 0;

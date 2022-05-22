@@ -1,16 +1,23 @@
-const chat_rooom = require('../controllers/chat_controller');
+//user route
 const user = require('../controllers/user_controller');
 const completeProfile = require('../controllers/complete_profile');
+
+//page route
 const creatorPage = require('../controllers/creator_controller');
 const articlePage = require('../controllers/article_controller');
-const postSave = require('../controllers/savePost_controller');
-const supportRecord = require('../controllers/support_controllers');
 const exploreCreator = require('../controllers/exploreCreator_controller');
-let followPost = require('../controllers/followPost_controller');
-let dashboard = require('../controllers/dashboard_controller');
-let wallet = require('../controllers/wallet_controller');
-let linepay = require('../controllers/linepay_controller');
 let view = require('../controllers/view_controller');
+
+//profile route
+let wallet = require('../controllers/wallet_controller');
+let dashboard = require('../controllers/dashboard_controller');
+let followPost = require('../controllers/followPost_controller');
+const chat_rooom = require('../controllers/chat_controller');
+const postSave = require('../controllers/savePost_controller');
+
+//support route
+const supportRecord = require('../controllers/support_controllers');
+let linepay = require('../controllers/linepay_controller');
 
 const path = require('path');
 

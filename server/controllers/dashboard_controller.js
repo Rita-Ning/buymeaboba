@@ -1,23 +1,14 @@
-const express = require('express');
 var mongoose = require('mongoose');
+const Dashboard = require('../models/dashboard');
 
-const router = express.Router();
-const { userProfile, post, support } = require('../../util/mongoose');
-
-router.post('/dashboard/normal', async (req, res) => {
+async function createDashboard(req, res) {
   try {
     let data = {};
     const { user_id } = req.body;
     let userId = mongoose.mongo.ObjectId(user_id);
-    let memberCount = await userProfile.findOne(
-      { _id: userId },
-      { follower_count: 1, supporter: 1, category: 1 }
-    );
+    let memberCount = await Dashboard.getCreatorOverview(userId);
+    let supportAmount = await Dashboard.getCreatorSupportAmount(userId);
 
-    let supportAmount = await support.find(
-      { creator_id: userId },
-      { amount: 1 }
-    );
     let ttlAmount = 0;
     supportAmount.forEach((pay) => {
       ttlAmount += pay.amount;
@@ -30,58 +21,15 @@ router.post('/dashboard/normal', async (req, res) => {
     };
 
     //find top category by earning
-    let categoryTop = await userProfile
-      .find(
-        {
-          category: memberCount.category,
-        },
-        {
-          _id: 1,
-          supporter: 1,
-          follower_count: 1,
-          view: 1,
-          post: 1,
-          user_name: 1,
-          user_page: 1,
-          profile_pic: 1,
-        }
-      )
-      .sort({ supporter: -1 })
-      .limit(4);
+    let categoryTop = await Dashboard.getCategoryTop(memberCount.category);
 
     let pageWatch = [];
     for (let i = 0; i < categoryTop.length; i++) {
-      let ttl_support = await support.aggregate([
-        { $match: { creator_id: categoryTop[i]._id } },
-        {
-          $group: {
-            _id: null,
-            amount: { $sum: '$amount' }, // for your case use local.user_totaldocs
-          },
-        },
-      ]);
+      let ttl_support = await Dashboard.supportSum(categoryTop[i]._id);
+      let ttl_post = await Dashboard.postInfoSum(userId);
+      let ttl_comment = await Dashboard.commentSum(userId);
 
-      let ttl_post = await post.aggregate([
-        { $match: { user_id: userId } },
-        {
-          $group: {
-            _id: null,
-            likes: { $sum: '$like_count' },
-            views: { $sum: '$view' },
-          },
-        },
-      ]);
-      let ttl_comment = await post.aggregate([
-        { $match: { user_id: userId } },
-        {
-          $group: {
-            _id: null,
-            comments: { $sum: { $size: '$comment' } },
-          },
-        },
-      ]);
-
-      //deal with count = 0
+      //deal with if count = 0
       let likeCount;
       let viewCount;
       if (ttl_post[0] !== undefined) {
@@ -122,70 +70,23 @@ router.post('/dashboard/normal', async (req, res) => {
     }
 
     //top earning post
-    let earningPost = await post
-      .find(
-        { user_id: userId },
-        {
-          _id: 1,
-          title: 1,
-          create_time: 1,
-          earning_amount: 1,
-          earning_from: 1,
-          like_count: 1,
-          comment: 1,
-          view: 1,
-        }
-      )
-      .sort({ earning_amount: -1 })
-      .limit(3);
-    // console.log(earningPost);
+    let earningPost = await Dashboard.getEarningPost(userId);
+
     earningPost.forEach((data) => {
       data.comment = data.comment.length;
       data.earning_from = data.earning_from.length;
     });
 
     //recent post
-    let recentPost = await post
-      .find(
-        { user_id: userId },
-        {
-          _id: 1,
-          title: 1,
-          create_time: 1,
-          earning_amount: 1,
-          earning_from: 1,
-          like_count: 1,
-          comment: 1,
-          view: 1,
-        }
-      )
-      .sort({ create_time: -1 })
-      .limit(3);
+    let recentPost = await Dashboard.getRecentPost(userId);
 
     recentPost.forEach((data) => {
       data.comment = data.comment.length;
       data.earning_from = data.earning_from.length;
     });
-    // console.log(recentPost);
-    let pageInfo = await userProfile.findOne(
-      { _id: userId },
-      {
-        follower_count: 1,
-        supporter: 1,
-        view: 1,
-      }
-    );
-    let pageSupport = await support.find({ creator_id: userId }, { amount: 1 });
+    let pageInfo = await Dashboard.getPageInfo(userId);
 
-    let allPost = await post.find(
-      { user_id: userId },
-      {
-        earning_from: 1,
-        like_count: 1,
-        comment: 1,
-      }
-    );
-    // console.log(earningPost);
+    let allPost = await Dashboard.getAllPost(userId);
     let engagement = pageInfo.supporter.length;
     allPost.forEach((data) => {
       data.comment = data.comment.length;
@@ -207,16 +108,10 @@ router.post('/dashboard/normal', async (req, res) => {
       engagement,
       like: alllLikes,
     };
-    // console.log(pageInfo);
 
-    //tags
-    let postTags = await post.find(
-      { user_id: userId },
-      {
-        post_tag: 1,
-        like_count: 1,
-      }
-    );
+    //get top tags
+    let postTags = await Dashboard.getPostTags(userId);
+
     let tagList = [];
     postTags.forEach((data) => {
       for (let i = 0; i < data.post_tag.length; i++) {
@@ -227,6 +122,7 @@ router.post('/dashboard/normal', async (req, res) => {
         tagList.push(tagValue);
       }
     });
+
     let tagTop = [];
     if (tagList.length !== 0) {
       let result = [];
@@ -262,6 +158,6 @@ router.post('/dashboard/normal', async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-});
+}
 
-module.exports = router;
+module.exports = { createDashboard };

@@ -1,41 +1,13 @@
-const express = require('express');
-var mongoose = require('mongoose');
 const { client } = require('../../util/redis');
 var CronJob = require('cron').CronJob;
+const ExploreCreator = require('../models/exploreCreator');
 
-const router = express.Router();
-const { userProfile } = require('../../util/mongoose');
-
-router.get('/search', async (req, res) => {
+async function search(req, res) {
   const { keyword } = req.query;
-  // console.log(keyword);
   if (keyword) {
     let data = [];
-    let resultName = await userProfile
-      .find(
-        { user_name: { $regex: keyword, $options: 'i' } },
-        {
-          user_page: 1,
-          user_name: 1,
-          about: 1,
-          profile_pic: 1,
-        }
-      )
-      .sort({ follower_count: -1 })
-      .limit(4);
-
-    let resultAbout = await userProfile
-      .find(
-        { about: { $regex: keyword } },
-        {
-          user_page: 1,
-          user_name: 1,
-          about: 1,
-          profile_pic: 1,
-        }
-      )
-      .sort({ follower_count: -1 })
-      .limit(4);
+    let resultName = await ExploreCreator.searchCreator(keyword);
+    let resultAbout = await ExploreCreator.searchCreatorAbout(keyword);
 
     if (resultName.length == 0 && resultAbout.length == 0) {
       return res.status(400).json({ error: 'This keyword does not exist' });
@@ -62,22 +34,15 @@ router.get('/search', async (req, res) => {
     let data = [];
     for (let i = 0; i < categories.length; i++) {
       let oneCategory = categories[i];
-      let user = await userProfile.find(
-        { category: oneCategory },
-        {
-          user_page: 1,
-          user_name: 1,
-          about: 1,
-          profile_pic: 1,
-        }
-      );
+      let user = await ExploreCreator.getCategoryCreator(oneCategory);
+
       // Shuffle array
       const shuffled = user.sort(() => 0.5 - Math.random());
-
       // Get sub-array of first n elements after shuffled
       let selected = shuffled.slice(0, 4);
 
       if (oneCategory == 'Video Creator') {
+        //let category be one wording
         oneCategory = 'Video';
       }
       let categoryInfo = { category: oneCategory, creators: selected };
@@ -87,35 +52,22 @@ router.get('/search', async (req, res) => {
 
     return res.status(200).json(data);
   }
-});
+}
 
-router.get('/search/frontpage', async (req, res) => {
+async function recommendHome(req, res) {
   try {
     const camapaignCache = await client.get('campaign');
     if (camapaignCache == null) {
-      // console.log('refresh');
-      let result = await userProfile
-        .find(
-          {},
-          {
-            user_page: 1,
-            user_name: 1,
-            about: 1,
-            profile_pic: 1,
-          }
-        )
-        .sort({ follower_count: -1 })
-        .limit(8);
+      let result = await ExploreCreator.getPopularCreator();
       await client.set('campaign', JSON.stringify(result));
       res.json(result);
     } else {
-      // console.log('redis');
       res.json(JSON.parse(camapaignCache));
     }
   } catch (error) {
     next(error);
   }
-});
+}
 
 // refresh redis
 new CronJob(
@@ -129,4 +81,4 @@ new CronJob(
   'Asia/Taipei'
 );
 
-module.exports = router;
+module.exports = { search, recommendHome };

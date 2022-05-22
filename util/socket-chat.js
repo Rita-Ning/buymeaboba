@@ -44,18 +44,6 @@ async function storeMsg(data) {
   return sendInfo;
 }
 
-// async function historyMsg(roomId) {
-//   var room_id = mongoose.mongo.ObjectId(roomId);
-//   let msgs = await chatMsg.find({ room_id: room_id }).sort({ date: -1 }); //有時間再設time
-//   let msgList = [];
-//   msgs.forEach((msg) => {
-//     let chatMsg = {};
-//     chatMsg['sender'] = msg['sender'];
-//     chatMsg['msg'] = msg['msg'];
-//   });
-//   return msgList;
-// }
-
 module.exports = {
   campaign,
 };

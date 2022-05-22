@@ -1,12 +1,8 @@
-const express = require('express');
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const SavePost = require('../models/savePost');
 
-const router = express.Router();
-const path = require('path');
-const { userProfile, post } = require('../../util/mongoose');
-
-router.post('/post/create', async (req, res) => {
-  // check header
+async function createPost(req, res) {
+  //check header
   // if (req.headers['content-type'] !== 'application/json') {
   //   return res
   //     .status(400)
@@ -30,23 +26,17 @@ router.post('/post/create', async (req, res) => {
     create_time: Date.now(),
   };
 
-  // console.log(postInfo)
-
   try {
     let userId = mongoose.mongo.ObjectId(user_id);
-    const addPost = await post.create(postInfo);
+    const addPost = await SavePost.createPost(postInfo);
+
     let postId = addPost._id;
-    const result = await userProfile.findOneAndUpdate(
-      { _id: userId },
-      { $push: { post: postId } }
-    );
+    const result = await SavePost.updateCreatorPostList(userId, postId);
+
     let user_page = result.user_page;
 
     if (pin == true) {
-      await userProfile.updateOne(
-        { _id: mongoose.mongo.ObjectId(user_id) },
-        { intro_post: postId }
-      );
+      await SavePost.updatePinnedPost(userId);
     }
 
     return res.status(200).json({ user_page: user_page });
@@ -54,6 +44,6 @@ router.post('/post/create', async (req, res) => {
     res.send(error.message);
     next(error);
   }
-});
+}
 
-module.exports = router;
+module.exports = { createPost };

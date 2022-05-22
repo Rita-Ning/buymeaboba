@@ -1,110 +1,70 @@
-const express = require('express');
-var mongoose = require('mongoose');
-
-const router = express.Router();
-const { userProfile, support } = require('../../util/mongoose');
+const mongoose = require('mongoose');
+const Wallet = require('../models/wallet');
 
 // deal with withdraw info
-router.post('/withdraw', async (req, res, next) => {
+async function withdraw(req, res) {
   let { user_id, amount, method } = req.body;
   let userId = mongoose.mongo.ObjectId(user_id);
-  let checkInfo = await userProfile.findOne(
-    { _id: userId },
-    { billing_info: { $elemMatch: { method: method } } }
-  );
+  let checkInfo = await Wallet.checkBillingInfo(userId, method);
 
   if (!checkInfo.billing_info[0]) {
     return res.json({ data: 'not-create' });
   } else {
     var d = new Date();
     let recieve_time = d.setDate(d.getDate() + 3);
-    let account = await userProfile.findOne(
-      { _id: userId },
-      { billing_info: { $elemMatch: { method: method } } }
-    );
-    let account_num = account.billing_info[0].account_num;
-    let saveInfo = await userProfile.updateOne(
-      { _id: userId },
-      {
-        $push: {
-          withdraw: {
-            amount: amount,
-            method: method,
-            account_num: account_num,
-            time: Date.now(),
-            receive_time: recieve_time,
-          },
-        },
-      }
+    let account_num = checkInfo.billing_info[0].account_num;
+    // save withdarw data
+    await Wallet.saveWithdraw(
+      userId,
+      method,
+      account_num,
+      amount,
+      recieve_time
     );
     res.json({ data: 'success' });
   }
-});
+}
 
 // save billing info
-router.post('/billing', async (req, res, next) => {
+async function billingMethod(req, res) {
   try {
     let { user_id, method, account_num } = req.body;
     let userId = mongoose.mongo.ObjectId(user_id);
-    let billingInfo = await userProfile.updateOne(
-      { _id: userId },
-      {
-        $push: {
-          billing_info: {
-            account_num: account_num,
-            method: method,
-          },
-        },
-      }
-    );
+    await Wallet.saveBillingInfo(userId, method, account_num); // save billing info to DB
     res.json({ data: 'sucess' });
   } catch (error) {
     res.send(error.message);
   }
-});
+}
 
 // wallet page info
-router.post('/balance', async (req, res, next) => {
+async function getBalance(req, res) {
   try {
     let { user_id } = req.body;
     let userId = mongoose.mongo.ObjectId(user_id);
 
-    let ttl = await support.aggregate([
-      { $match: { creator_id: userId } },
-      {
-        $group: {
-          _id: null,
-          amount: { $sum: '$amount' }, // for your case use local.user_totaldocs
-        },
-      },
-    ]);
-    // console.log(ttl);
-    let ttl_amount;
+    let ttl = await Wallet.getWalletTotal(userId);
+    let ttlAmount;
     if (ttl[0] !== undefined) {
-      ttl_amount = ttl[0].amount;
+      ttlAmount = ttl[0].amount;
     } else {
-      ttl_amount = 0;
+      ttlAmount = 0;
     }
 
-    let withdraw = await userProfile.findOne(
-      { _id: userId },
-      {
-        withdraw: 1,
-      }
-    );
-    let ttl_withdraw = 0;
+    let withdraw = await Wallet.getWalletWithdraw(userId);
+    let ttlWithdraw = 0;
     withdraw.withdraw.forEach((ele) => {
-      ttl_withdraw += ele.amount;
-      ele.account_num = ele.account_num.substr(ele.account_num.length - 4);
+      ttlWithdraw += ele.amount;
+      ele['account_num'] = ele.account_num.substr(ele.account_num.length - 4);
     });
     let data = {};
-    data['total'] = ttl_amount;
-    data['withdraw'] = ttl_withdraw;
+    data['total'] = ttlAmount;
+    data['withdraw'] = ttlWithdraw;
     data['transaction'] = withdraw.withdraw;
     res.json(data);
   } catch (error) {
     res.send(error.message);
   }
-});
+}
 
-module.exports = router;
+module.exports = { getBalance, billingMethod, withdraw };

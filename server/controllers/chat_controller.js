@@ -1,15 +1,12 @@
-const express = require('express');
 var mongoose = require('mongoose');
 const { sendMsgEmail } = require('../../util/nodeemailer');
-
-const router = express.Router();
-const { chatMsg, chatRoom, userProfile } = require('../../util/mongoose');
+const Chatroom = require('../models/chat');
 
 // send user chatted back
-router.post('/chat/chatroom', async (req, res, next) => {
+async function showChatroom(req, res) {
   try {
     let userId = req.body['user_id'];
-    const rooms = await chatRoom.find({ members: userId });
+    const rooms = await Chatroom.findChatroom(userId);
     let chatUsers = [];
     for (let i = 0; i < rooms.length; i++) {
       let chatShow = {};
@@ -19,16 +16,12 @@ router.post('/chat/chatroom', async (req, res, next) => {
           member.splice(j, 1);
         }
       }
-      memberId = mongoose.mongo.ObjectId(member[0]);
-      let memberInfo = await userProfile.findOne(
-        { _id: memberId },
-        { user_name: 1, profile_pic: 1 }
-      );
+      let memberId = mongoose.mongo.ObjectId(member[0]);
+      let memberInfo = await Chatroom.findChatMember(memberId);
       chatShow['chatWith'] = memberInfo.user_name;
       chatShow['memberId'] = memberInfo._id;
-      // console.log(chatShow['chatWith']);
       room_id = rooms[i]['_id'];
-      let lastMsg = await chatMsg.find({ room_id: room_id }).sort({ date: -1 });
+      let lastMsg = await Chatroom.sortChatList(room_id);
       lastMsg = lastMsg[0];
       chatShow['lastMsg'] = lastMsg['msg'];
       chatShow['time'] = lastMsg['date'];
@@ -38,27 +31,19 @@ router.post('/chat/chatroom', async (req, res, next) => {
     }
     res.json(chatUsers);
   } catch (error) {
+    console.log(error);
     next(error);
   }
-});
+}
 
 // send history information back
-router.get(`/chat/msg`, async (req, res, next) => {
+async function getChatmsg(req, res) {
   try {
     const { roomid, member } = req.query;
-    memberId = mongoose.mongo.ObjectId(member);
-    let memberInfo = await userProfile.findOne(
-      { _id: memberId },
-      { profile_pic: 1, user_name: 1 }
-    );
-    roomId = mongoose.mongo.ObjectId(roomid);
-    // console.log(roomId);
-    let doc = await chatMsg
-      .find(
-        { room_id: roomId },
-        { sender: 1, msg: 1, date: 1, sender_pic: 1, sender_name: 1 }
-      )
-      .sort({ date: 1 });
+    let memberId = mongoose.mongo.ObjectId(member);
+    let memberInfo = await Chatroom.findChatMember(memberId);
+    let roomId = mongoose.mongo.ObjectId(roomid);
+    let doc = await Chatroom.getChatroomHistory(roomId);
 
     let data = {};
     data['chatHistory'] = doc;
@@ -67,17 +52,14 @@ router.get(`/chat/msg`, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+}
 
 // sending back data for sending to memberships
-router.post('/chat/member', async (req, res, next) => {
+async function getChatmember(req, res) {
   try {
     let userId = req.body['user_id'];
     let id = mongoose.mongo.ObjectId(userId);
-    const userInfo = await userProfile.findOne(
-      { _id: id },
-      { follower: 1, supporter: 1 }
-    );
+    const userInfo = await Chatroom.getMembership(id);
 
     // save follower
     let follower_count = userInfo.follower.length;
@@ -92,18 +74,15 @@ router.post('/chat/member', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+}
 
 // get data and save to db
-router.post('/chat/multiple-msg', async (req, res, next) => {
+async function getChatMultiplemsg(req, res) {
   try {
     let { user_id, type, msg, send_email } = req.body;
 
     let id = mongoose.mongo.ObjectId(user_id);
-    const userInfo = await userProfile.findOne(
-      { _id: id },
-      { follower: 1, supporter: 1, user_name: 1, profile_pic: 1 }
-    );
+    const userInfo = await Chatroom.getUserInfo(id);
     //supporter might duplicate
     let supporter_list = [];
     let mail = [];
@@ -115,12 +94,12 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
       }
     });
 
-    // if send email, send email
+    // if choose to send email, send email
     if (send_email == 1) {
       sendMsgEmail(msg, userInfo.user_name, userInfo.profile_pic, mail);
     }
 
-    //check type and save to db
+    //check membership type and save to db
     let roomId;
     let creator_name = userInfo.user_name;
     let creator_pic = userInfo.profile_pic;
@@ -155,31 +134,34 @@ router.post('/chat/multiple-msg', async (req, res, next) => {
   }
 
   async function createRoom(user_id, member) {
-    let newRoom = await chatRoom.create({ members: [user_id, member] });
+    let newRoom = await Chatroom.createChatroom(user_id, member);
     return newRoom._id;
   }
 
   async function createMsg(roomId, sender, msg, creator_name, creator_pic) {
-    let result = await chatMsg.create({
-      room_id: roomId,
-      sender: sender,
-      sender_name: creator_name,
-      sender_pic: creator_pic,
-      msg: msg,
-    });
+    let result = await Chatroom.createMsg(
+      roomId,
+      sender,
+      msg,
+      creator_name,
+      creator_pic
+    );
     return result;
   }
 
   async function ifRoom(user_id, member) {
-    let checkroom = await chatRoom.findOne({
-      members: { $all: [user_id, member] },
-    });
+    let checkroom = await Chatroom.checkRoomExist(user_id, member);
     if (checkroom) {
       return checkroom._id;
     } else {
       return false;
     }
   }
-});
+}
 
-module.exports = router;
+module.exports = {
+  getChatMultiplemsg,
+  getChatmember,
+  getChatmsg,
+  showChatroom,
+};

@@ -24,13 +24,13 @@ axios.get(`/api/1.0/search`).then((res) => {
       <div class="card border-0 bg-white pt-3 px-1 shadow-sm" >
         <a class="bg-image hover-overlay ripple" data-mdb-ripple-color="light" href='/creator/${creator.user_page}'>
           <div style="background-image:url(${creator.profile_pic})" class="img-fluid img-cover shadow-sm"></div>
+          <div class="card-body">
+            <h5 class="card-title ellipsis1">${creator.user_name}</h5>
+            <p class="card-text ellipsis2">
+              ${creator.about}
+            </p>
+          </div>
         </a>
-        <div class="card-body">
-          <h5 class="card-title ellipsis1">${creator.user_name}</h5>
-          <p class="card-text ellipsis2">
-            ${creator.about}
-          </p>
-        </div>
       </div>
       </div>
       `;

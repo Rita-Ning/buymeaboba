@@ -1,18 +1,15 @@
 require('dotenv').config();
-const express = require('express');
 var mongoose = require('mongoose');
 const crypto = require('crypto-js');
 const uuid = require('uuid4');
 const axios = require('axios');
 const { sendSupportEmail } = require('../../util/nodeemailer');
-
-const router = express.Router();
-const { userProfile, support, post } = require('../../util/mongoose');
+const Linepay = require('../models/linepay');
 
 const key = process.env.LINEPAY_KEY;
 const ChannelId = process.env.LINEPAY_ChannelId;
 
-router.post('/linepay', async (req, res, next) => {
+async function linepay(req, res) {
   try {
     let order = req.body;
     let nonce = uuid();
@@ -42,9 +39,9 @@ router.post('/linepay', async (req, res, next) => {
   } catch (error) {
     console.log(error);
   }
-});
+}
 
-router.post('/linepay/check', async (req, res, next) => {
+async function linepayCheck(req, res) {
   try {
     let { content, transactionId, supportInfo } = req.body;
     let nonce = uuid();
@@ -75,11 +72,7 @@ router.post('/linepay/check', async (req, res, next) => {
       // support info
       try {
         let { amount, user, creator, event, msg } = supportInfo;
-        console.log(msg);
-        let creator_id = await userProfile.findOne(
-          { user_page: creator },
-          { _id: 1, email: 1 }
-        );
+        let creator_id = await Linepay.getCreator(creator);
 
         let userName;
         let userEmail;
@@ -90,10 +83,8 @@ router.post('/linepay/check', async (req, res, next) => {
           userEmail = user.user_email;
         } else {
           userId = mongoose.mongo.ObjectId(user);
-          let userFind = await userProfile.findOne(
-            { _id: userId },
-            { user_name: 1, email: 1 }
-          );
+          let userFind = await Linepay.getUser(userId);
+
           userName = userFind.user_name;
           userEmail = userFind.email;
           userId = userFind._id;
@@ -121,14 +112,13 @@ router.post('/linepay/check', async (req, res, next) => {
           };
         }
 
-        // add into support db
-        let addSupport = await support.create(supportSave);
-        console.log(addSupport);
+        // add support info into support db
+        await Linepay.createSupportInfo(supportSave);
 
         //send email
         sendSupportEmail(msg, userName, amount, creator_id.email);
 
-        // if post support add into post doc
+        // if event is post, support info add into db post doc
         if (event !== 'homepage') {
           let postSupport;
           if (userId) {
@@ -145,46 +135,31 @@ router.post('/linepay/check', async (req, res, next) => {
             };
           }
           let postID = mongoose.mongo.ObjectId(event);
-          await post.updateOne(
-            { _id: postID },
-            { $push: { earning_from: postSupport } },
-            { new: true, upsert: true }
-          );
+          await Linepay.updatePostEarningInfo(postID, postSupport);
+          await Linepay.updatePostEarningAmount(postID, amount);
 
-          await post.findOneAndUpdate(
-            { _id: postID },
-            { $inc: { earning_amount: amount } },
-            { new: true }
-          );
+          let creatorId = creator_id._id;
+
+          let supporterInfo;
+          //update creator support list
+          if (userId) {
+            supporterInfo = {
+              event,
+              user_id: userId,
+              user_name: userName,
+              user_email: userEmail,
+              time: Date.now(),
+            };
+          } else {
+            supporterInfo = {
+              event,
+              user_name: userName,
+              user_email: userEmail,
+              time: Date.now(),
+            };
+          }
+          await Linepay.updateCreatorEarning(creatorId, supporterInfo);
         }
-
-        let creatorId = creator_id._id;
-
-        let supporterInfo;
-        //update creator support list
-        if (userId) {
-          supporterInfo = {
-            event,
-            user_id: userId,
-            user_name: userName,
-            user_email: userEmail,
-            time: Date.now(),
-          };
-        } else {
-          supporterInfo = {
-            event,
-            user_name: userName,
-            user_email: userEmail,
-            time: Date.now(),
-          };
-        }
-
-        // console.log(supporterInfo);
-        await userProfile.updateOne(
-          { _id: creatorId },
-          { $push: { supporter: supporterInfo } },
-          { new: true, upsert: true }
-        );
       } catch (error) {
         console.log(error);
         res.send(error.message);
@@ -194,5 +169,5 @@ router.post('/linepay/check', async (req, res, next) => {
   } catch (error) {
     console.log(error);
   }
-});
-module.exports = router;
+}
+module.exports = { linepay, linepayCheck };
