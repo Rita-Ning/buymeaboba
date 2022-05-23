@@ -55,17 +55,13 @@ async function search(req, res) {
 }
 
 async function recommendHome(req, res) {
-  try {
-    const camapaignCache = await client.get('campaign');
-    if (camapaignCache == null) {
-      let result = await ExploreCreator.getPopularCreator();
-      await client.set('campaign', JSON.stringify(result));
-      res.json(result);
-    } else {
-      res.json(JSON.parse(camapaignCache));
-    }
-  } catch (error) {
-    next(error);
+  const camapaignCache = await client.get('campaign');
+  if (camapaignCache == null) {
+    let result = await ExploreCreator.getPopularCreator();
+    await client.set('campaign', JSON.stringify(result));
+    res.json(result);
+  } else {
+    res.json(JSON.parse(camapaignCache));
   }
 }
 

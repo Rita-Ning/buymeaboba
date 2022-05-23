@@ -5,7 +5,6 @@ const pageCheckDateExist = async (page, date) => {
     { user_page: page },
     { view_date: { $elemMatch: { date: date } } }
   );
-
   return result;
 };
 

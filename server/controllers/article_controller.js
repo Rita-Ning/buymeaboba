@@ -19,7 +19,6 @@ async function getArticle(req, res) {
 
   let userId = postInfo.user_id;
   let user = await Article.getCreatorInfo(userId);
-
   let postPopular = await Article.getPopularPost(userId);
 
   let {

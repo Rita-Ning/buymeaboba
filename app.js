@@ -47,10 +47,10 @@ app.use(function (req, res, next) {
   res.status(404).sendFile(__dirname + '/public/404.html');
 });
 
-app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  res.json(error.message);
-  console.log(error);
+// Error handling
+app.use(function (err, req, res, next) {
+  console.log(err);
+  res.status(500).json({ msg: err });
 });
 
 server.listen(port, () =>

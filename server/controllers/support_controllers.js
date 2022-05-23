@@ -58,92 +58,87 @@ async function tappay(req, res) {
   }
 
   // support info
-  try {
-    let creator_id = await Support.getCreator(creator);
+  let creator_id = await Support.getCreator(creator);
 
-    let supportInfo;
-    if (userId) {
-      supportInfo = {
-        user_id: userId,
-        user_name: userName,
-        user_email: userEmail,
-        creator_id: creator_id._id,
-        amount,
-        event,
-        method: 'bank',
-        msg,
-      };
-    } else {
-      supportInfo = {
-        user_name: userName,
-        user_email: userEmail,
-        creator_id: creator_id._id,
-        amount,
-        event,
-        method: 'bank',
-        msg,
-      };
-    }
-
-    // add into support db
-    let addSupport = await Support.createSupport(supportInfo);
-
-    //send email to supporter
-    sendSupportEmail(msg, userName, amount, creator_id.email);
-
-    // if post support add into post doc
-    if (event !== 'homepage') {
-      let postSupport;
-      if (userId) {
-        postSupport = {
-          user_id: userId,
-          amount,
-          time: Date.now(),
-        };
-      } else {
-        postSupport = {
-          user_id: userEmail,
-          amount,
-          time: Date.now(),
-        };
-      }
-      let postID = mongoose.mongo.ObjectId(event);
-
-      //update post earning data
-      await Support.updatePostEarningInfo(postID, postSupport);
-      await Support.updatePostEarningAmount(postID, postSupport);
-    }
-
-    let creatorId = creator_id._id;
-
-    let supporterInfo;
-    //update creator support list
-    if (userId) {
-      supporterInfo = {
-        event,
-        user_id: userId,
-        user_name: userName,
-        user_email: userEmail,
-        time: Date.now(),
-      };
-    } else {
-      supporterInfo = {
-        event,
-        user_name: userName,
-        user_email: userEmail,
-        time: Date.now(),
-      };
-    }
-
-    //update user support info
-    await Support.updateUserSupport(creatorId, supporterInfo);
-
-    let data = { data: addSupport._id };
-    res.send(data);
-  } catch (error) {
-    console.log(error);
-    res.send(error.message);
+  let supportInfo;
+  if (userId) {
+    supportInfo = {
+      user_id: userId,
+      user_name: userName,
+      user_email: userEmail,
+      creator_id: creator_id._id,
+      amount,
+      event,
+      method: 'bank',
+      msg,
+    };
+  } else {
+    supportInfo = {
+      user_name: userName,
+      user_email: userEmail,
+      creator_id: creator_id._id,
+      amount,
+      event,
+      method: 'bank',
+      msg,
+    };
   }
+
+  // add into support db
+  let addSupport = await Support.createSupport(supportInfo);
+
+  //send email to supporter
+  sendSupportEmail(msg, userName, amount, creator_id.email);
+
+  // if post support add into post doc
+  if (event !== 'homepage') {
+    let postSupport;
+    if (userId) {
+      postSupport = {
+        user_id: userId,
+        amount,
+        time: Date.now(),
+      };
+    } else {
+      postSupport = {
+        user_id: userEmail,
+        amount,
+        time: Date.now(),
+      };
+    }
+    let postID = mongoose.mongo.ObjectId(event);
+
+    //update post earning data
+    await Support.updatePostEarningInfo(postID, postSupport);
+    await Support.updatePostEarningAmount(postID, postSupport);
+  }
+
+  let creatorId = creator_id._id;
+
+  let supporterInfo;
+  //update creator support list
+  if (userId) {
+    supporterInfo = {
+      event,
+      user_id: userId,
+      user_name: userName,
+      user_email: userEmail,
+      time: Date.now(),
+    };
+  } else {
+    supporterInfo = {
+      event,
+      user_name: userName,
+      user_email: userEmail,
+      time: Date.now(),
+    };
+  }
+
+  //update user support info
+  await Support.updateUserSupport(creatorId, supporterInfo);
+
+  let data = { data: addSupport._id };
+  res.send(data);
 }
 
 module.exports = { tappay };

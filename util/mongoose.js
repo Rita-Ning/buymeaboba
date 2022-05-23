@@ -1,6 +1,5 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const { stringify } = require('nodemon/lib/utils');
 const validator = require('validator');
 
 mongoose.connect(process.env.MONGO_URL, {
@@ -19,20 +18,6 @@ const chatRoom = mongoose.model('chatRoom', {
     default: Date.now,
   },
 });
-
-// const room = chatRoom.create({
-//   members: ['626c1229b7da2f66cadad033', '6266aa2f6dc20b624d2b42a3'],
-// });
-// console.log(room);
-
-// room
-//   .save()
-//   .then(() => {
-//     console.log(room);
-//   })
-//   .catch((error) => {
-//     console.log('error', error);
-//   });
 
 // chat message
 const chatMsg = mongoose.model('chatMsg', {
@@ -58,24 +43,6 @@ const chatMsg = mongoose.model('chatMsg', {
     default: Date.now,
   },
 });
-
-// let roomId = mongoose.mongo.ObjectId('626d4fe273078862cd855710');
-
-// chatMsg.create({
-//   room_id: roomId,
-//   sender: '626c1229b7da2f66cadad033',
-//   msg: 'Welcome!!',
-// });
-
-//find功能
-// chatRoom.find({ members: 'a' }, function (err, docs) {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log('First function call:', docs[0]['_id']);
-//     console.log(typeof docs[0]['_id']);
-//   }
-// });
 
 // user profile
 const userProfile = mongoose.model('user', {
@@ -227,17 +194,6 @@ const post = mongoose.model('post', {
   },
 });
 
-// create post comment fake data test
-// let postMy = mongoose.mongo.ObjectId('626e42a0bf8d9fc02be88029');
-// async function main() {
-//   let re = await post.updateOne(
-//     { _id: postMy },
-//     { $push: { comment: { comment: 'Test form Rita haha' } } }
-//   );
-//   console.log(re);
-// }
-// main();
-
 const support = mongoose.model('support', {
   event: {
     type: String,
@@ -274,153 +230,6 @@ const support = mongoose.model('support', {
     type: String,
   },
 });
-
-// async function main() {
-//   let result = await userProfile
-//     .findOne({ email: 'test100@test.com' })
-//     .select('_id user_name is_admin is_creator profile_pic email');
-//   if (!result) {
-//     console.log('no result');
-//   }
-//   console.log(result);
-// }
-
-// await userProfile.create();
-
-// await userProfile.findOne({_id: 1}, {
-//   _id:1 ,
-//   name: 1,
-//   email:1
-// })
-// let random = Math.floor(Math.random() * 600);
-
-// let ids = await userProfile.find({},{_id;1})
-
-// async function main() {
-//   let result = await post.updateMany({}, { view: 239 });
-//   console.log(result);
-// }
-// main();
-
-//find function test
-// async function main() {
-//   let result = await userProfile.find({ user_name: /da/ });
-//   console.log(result);
-// }
-
-//push data to my profile
-// async function main() {
-//   let creatorId = mongoose.mongo.ObjectId('6280bb056db44a5ec77d226f');
-//   await userProfile.updateOne(
-//     { _id: creatorId },
-//     {
-//       $addToSet: {
-//         follower: {
-//           $each: [
-//             {
-//               follower_id: '6266aa2f6dc20b624d2b4297',
-//               time: Date.now(),
-//             },
-//             {
-//               follower_id: '6266aa2f6dc20b624d2b4298',
-//               time: Date.now(),
-//             },
-//             {
-//               follower_id: '6266aa2f6dc20b624d2b429b',
-//               time: Date.now(),
-//             },
-//             {
-//               follower_id: '6266aa2f6dc20b624d2b429c',
-//               time: Date.now(),
-//             },
-//             {
-//               followerr_id: '6266aa2f6dc20b624d2b4299',
-//               time: Date.now(),
-//             },
-//             {
-//               follower_id: '6266aa2f6dc20b624d2b429a',
-//               time: Date.now(),
-//             },
-//           ],
-//         },
-//       },
-//     },
-//     { new: true, upsert: true }
-//   );
-// }
-
-// main();
-
-// check if chat member includes
-// async function main() {
-//   let checkroom = await chatRoom.findOne({
-//     members: { $all: ['626c1229b7da2f66cadad033', '6266aa2f6dc20b624d2b42c3'] },
-//   });
-//   console.log(checkroom);
-// }
-
-// async function main() {
-//   let result = await post.updateMany(
-//     { 'comment.comment': '' },
-//     // { 'comment.comment': 'Test form Rita Tang' }
-//     { $pull: { comment: { comment: '' } } }
-//   );
-//   console.log(result);
-// }
-
-// async function main() {
-//   let result = await support.updateMany({}, { method: 'bank' });
-// }
-// async function main() {
-//   let result = await userProfile.updateOne(
-//     { user_page: 'adayacup', view_date: { $elemMatch: { date: '2022/5/11' } } },
-//     { $push: { 'view_date.$.view': 'test' } },
-//     { upsert: true, new: true }
-//   );
-//   console.log(result);
-// }
-// async function main() {
-//   let userId = mongoose.mongo.ObjectId('626c1229b7da2f66cadad033');
-//   let ttl_post = await post.aggregate([
-//     { $match: { user_id: userId } },
-//     {
-//       $group: {
-//         _id: null,
-//         likes: { $sum: '$like_count' },
-//         views: { $sum: '$view' },
-//       },
-//     },
-//   ]);
-//   console.log(ttl_post);
-// }
-
-// async function main() {
-//   let userId = mongoose.mongo.ObjectId('626c1229b7da2f66cadad033');
-//   let result = await post.aggregate([
-//     { $match: { user_id: userId } },
-//     {
-//       $group: {
-//         _id: null,
-//         comments: { $sum: { $size: '$comment' } },
-//       },
-//     },
-//   ]);
-//   console.log(result);
-// }
-// async function main() {
-//   let tag = 'medium';
-//   let result = await post.find({
-//     post_tag: {
-//       $elemMatch: {
-//         $regex: tag,
-//         $options: 'i',
-//       },
-//     },
-//   });
-//   console.log(result);
-// }
-
-// main();
 
 module.exports = {
   support,

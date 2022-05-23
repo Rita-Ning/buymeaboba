@@ -32,8 +32,9 @@ async function billingMethod(req, res) {
     let userId = mongoose.mongo.ObjectId(user_id);
     await Wallet.saveBillingInfo(userId, method, account_num); // save billing info to DB
     res.json({ data: 'sucess' });
-  } catch (error) {
-    res.send(error.message);
+  } catch (err) {
+    res.send(err.message);
+    next(err);
   }
 }
 
@@ -62,8 +63,9 @@ async function getBalance(req, res) {
     data['withdraw'] = ttlWithdraw;
     data['transaction'] = withdraw.withdraw;
     res.json(data);
-  } catch (error) {
-    res.send(error.message);
+  } catch (err) {
+    res.send(err.message);
+    next(err);
   }
 }
 

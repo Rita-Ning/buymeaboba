@@ -60,7 +60,9 @@ const createChatroom = async (user_id, member) => {
 };
 
 const checkRoomExist = async (user_id, member) => {
-  let result = await chatRoom.findOne({ members: { $all: [user_id, member] } });
+  let result = await chatRoom.findOne({
+    members: { $all: [user_id, member] },
+  });
   return result;
 };
 

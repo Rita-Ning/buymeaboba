@@ -38,7 +38,7 @@ async function storeMsg(data) {
     time: Date.now(),
   };
 
-  const msg = await chatMsg.create(sendInfo).catch((error) => {
+  await chatMsg.create(sendInfo).catch((error) => {
     console.log('error', error);
   });
   return sendInfo;

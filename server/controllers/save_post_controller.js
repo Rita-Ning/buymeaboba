@@ -2,12 +2,6 @@ const mongoose = require('mongoose');
 const SavePost = require('../models/save_post_model');
 
 async function createPost(req, res) {
-  //check header
-  // if (req.headers['content-type'] !== 'application/json') {
-  //   return res
-  //     .status(400)
-  //     .json({ error: 'Content type need to be application/json' });
-  // }
   let { title, user_id, description, content, pin, tags, support_only } =
     req.body;
   // console.log(req.body);
