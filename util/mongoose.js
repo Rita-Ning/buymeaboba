@@ -54,6 +54,7 @@ const userProfile = mongoose.model('user', {
     type: String,
     trim: true,
     lowercase: true,
+    unique: true,
   },
   provider: {
     type: String,
@@ -68,6 +69,7 @@ const userProfile = mongoose.model('user', {
         throw new Error('Invalid Email');
       }
     },
+    unique: true,
   },
   password: {
     type: String,

@@ -17,8 +17,6 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('./public'));
 
-// require('./server/routes')(app);
-
 // API routes
 app.use('/api/' + API_VERSION, [
   require('./server/routes/article_route'),
