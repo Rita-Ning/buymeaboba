@@ -89,10 +89,6 @@ const userProfile = mongoose.model('user', {
   category: {
     type: String,
   },
-  is_creator: {
-    type: String,
-    default: '0',
-  },
   is_admin: {
     type: String,
     default: '0',
@@ -122,11 +118,9 @@ const userProfile = mongoose.model('user', {
   withdraw: {
     type: Array,
   },
-  wallet: {
-    type: Number,
-  },
   total: {
     type: Number,
+    default: 0,
   },
   view: {
     type: Number,
@@ -168,17 +162,9 @@ const post = mongoose.model('post', {
   liked_by: {
     type: Array,
   },
-  views: {
-    type: Number,
-  },
-  read_rate: {
-    type: [String],
-  },
-  content_length: {
-    type: Number,
-  },
   earning_amount: {
     type: Number,
+    default: 0,
   },
   earning_from: {
     type: Array,
