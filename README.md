@@ -67,6 +67,10 @@ Main featurs to expect from buymeboba:
 * Provide the latest creator posts you have followed and explore more interested posts by post tag seraching
 ![newsfeed](https://buymeboba.s3.ap-southeast-1.amazonaws.com/asset/demo/newsfeed.gif)
 
+### button gererate
+* Provide you the button template that enable you to put it on your own website!
+![claimbutton](https://buymeboba.s3.ap-southeast-1.amazonaws.com/asset/demo/claimbutton.gif)
+
 ## Demo Account
 * Login: test@test.com
 * Password: test333
