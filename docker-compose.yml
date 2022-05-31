@@ -1,0 +1,35 @@
+version: "2"
+services:
+  nginx:
+    depends_on:
+      - buymeboba
+    image:
+      nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /home/ec2-user/nginx_docker/nginx.conf:/etc/nginx/nginx.conf
+      - /home/ec2-user/nginx_docker/ssl:/etc/ssl
+    restart: always
+    networks:
+      - my-network
+  buymeboba:
+    depends_on:
+      - redis
+    image: buymeboba
+    container_name: buymeboba
+    env_file:
+      .dockerenv
+    restart: always
+    networks:
+      - my-network
+  redis:
+    image: redis
+    container_name: redis
+    restart: always
+    networks:
+      - my-network
+networks:
+  my-network:
