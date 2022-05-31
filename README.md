@@ -8,6 +8,13 @@
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>View Demo »</strong></a>
     <br />
+    <br />
+    Demo Account
+    <br />
+     Login: test@test.com
+    <br />
+     Password: test333
+    <br />
   </p>
 </div>
 
@@ -70,10 +77,6 @@ Main featurs to expect from buymeboba:
 ### button gererate
 * Provide you the button template that enable you to put it on your own website!
 ![claimbutton](https://buymeboba.s3.ap-southeast-1.amazonaws.com/asset/demo/claimbutton.gif)
-
-## Demo Account
-* Login: test@test.com
-* Password: test333
 
 ## Contact
 * Email Address: rita.ningtang@gmail.com
