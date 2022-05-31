@@ -6,7 +6,7 @@
   <p align="center">
     A meaningful platform built to help creators to be seen and be supported in a friendly way!
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>View Demo »</strong></a>
+    <a href="https://buymeboba.today/"><strong>View Demo »</strong></a>
     <br />
   </p>
 </div>
