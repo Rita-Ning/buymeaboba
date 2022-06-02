@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const Dashboard = require('../models/dashboard_model');
 
 async function createDashboard(req, res) {

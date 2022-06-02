@@ -1,13 +1,13 @@
 const router = require('express').Router();
 const { wrapAsync } = require('../../util/util');
 
-const creatorController = require('../controllers/creator_controller');
+const CreatorController = require('../controllers/creator_controller');
 
-router.post('/follow/add', wrapAsync(creatorController.addFollow));
+router.post('/follow/add', wrapAsync(CreatorController.addFollow));
 
-router.post('/follow/delete', wrapAsync(creatorController.deleteFollow));
+router.post('/follow/delete', wrapAsync(CreatorController.deleteFollow));
 
-router.get('/creator/:name', wrapAsync(creatorController.getCreatorPage));
+router.get('/creator/:name', wrapAsync(CreatorController.getCreatorPage));
 
 // router.get('/creator', wrapAsync(creatorController.getCreator));
 
