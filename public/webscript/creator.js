@@ -55,9 +55,9 @@ function follow() {
     data: JSON.stringify(followInfo),
     headers: { 'Content-Type': 'application/json' },
   })
-    // .then((res) => {
-    //   console.log(res.data);
-    // })
+    .then((res) => {
+      console.log(res.data);
+    })
     .catch(function (err) {
       msg = err.data;
       alert(msg);
@@ -115,6 +115,7 @@ axios
         following = false;
       }
     });
+    // console.log(following);
 
     if (user == _id) {
       document.getElementById('edit-page').style.display = 'block';
@@ -151,6 +152,9 @@ axios
 		<small class="text-muted pl-1">${follower_count} followers</small>
   `;
     profileColumn.innerHTML = profile;
+    // let aboutColumn = document.getElementById('about');
+    // let aboutMe = `<p class="card-text pr-5 pl-3">${intro_post}</p>`;
+    // aboutColumn.innerHTML = aboutMe;
 
     let pic = `
   <a href="${creatorPath}">
@@ -296,9 +300,9 @@ axios({
   data: { user_id: visitId, page: pageName },
   headers: { 'Content-Type': 'application/json' },
 })
-  // .then((res) => {
-  //   console.log(res.data);
-  // })
+  .then((res) => {
+    console.log(res.data);
+  })
   .catch(function (err) {
     console.log(err);
   });

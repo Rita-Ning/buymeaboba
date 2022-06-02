@@ -52,7 +52,7 @@ messageForm.addEventListener('submit', (e) => {
     },
   })
     .then((res) => {
-      // console.log(res.data);
+      console.log(res.data);
       Swal.fire({
         toast: true,
         position: 'top',

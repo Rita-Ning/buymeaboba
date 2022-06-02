@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Creator = require('../models/creator_model');
 
+const { userProfile, post } = require('../../util/mongoose');
+
 async function addFollow(req, res) {
   // check header
   if (req.headers['content-type'] !== 'application/json') {
