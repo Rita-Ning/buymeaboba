@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const Creator = require('../models/creator_model');
 
 const { userProfile, post } = require('../../util/mongoose');

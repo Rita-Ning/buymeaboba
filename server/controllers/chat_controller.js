@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const { sendMsgEmail } = require('../../util/nodeemailer');
 const Chatroom = require('../models/chat_model');
 
