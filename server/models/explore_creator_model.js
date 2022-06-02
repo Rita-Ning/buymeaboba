@@ -1,7 +1,7 @@
 const { userProfile } = require('../../util/mongoose');
 
 const searchCreator = async (keyword) => {
-  const result = await userProfile
+  let result = await userProfile
     .find(
       { user_name: { $regex: keyword, $options: 'i' } },
       {
@@ -17,7 +17,7 @@ const searchCreator = async (keyword) => {
 };
 
 const searchCreatorAbout = async (keyword) => {
-  const result = await userProfile
+  let result = await userProfile
     .find(
       { about: { $regex: keyword } },
       {

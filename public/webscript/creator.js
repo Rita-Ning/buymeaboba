@@ -158,7 +158,7 @@ axios
 
     let pic = `
   <a href="${creatorPath}">
-   <img src="${profile_pic}" class = "rounded-circle" height="100"  width="100" pt-1/>
+   <div style="background-image:url(${profile_pic})" class="img-fluid img-cover shadow-sm"></div>
   </a>`;
     profilePic.innerHTML = pic;
 
