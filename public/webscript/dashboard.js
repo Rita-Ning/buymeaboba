@@ -1,6 +1,5 @@
 let userId = localStorage.getItem('user_info');
 let token = window.localStorage.getItem('token');
-
 if (!token) {
   window.alert('please log in first!');
   window.location.href = '/index.html';
@@ -154,7 +153,7 @@ axios({
                 <img src=${page_watch[i].profile_pic} style='width:30px; height:30px' class='rounded-circle bg-primary p-1'>
                 ${page_watch[i].user_name}</a>
             </td>
-            <td>$${page_watch[i].earning}</td>
+            <td>$${page_watch[i].earning}+</td>
             <td>${page_watch[i].supporters}</td>
             <td>${page_watch[i].followers}</td>
             <td>${page_watch[i].view}</td>
