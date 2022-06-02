@@ -9908,4 +9908,13 @@ and left sides of the text */
   color: white !important;
   font-size: large !important;
 }
+
+.img-cover{
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto;
+}
 /* sourceMappingURL = main.css.map */

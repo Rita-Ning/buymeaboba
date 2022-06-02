@@ -172,8 +172,7 @@ $('#support-form').on('submit', function (event) {
   event.preventDefault();
 
   const tappayStatus = TPDirect.card.getTappayFieldsStatus();
-  console.log(tappayStatus);
-  let token = localStorage.getItem('token');
+  // console.log(tappayStatus);
 
   // Check TPDirect.card.getTappayFieldsStatus().canGetPrime before TPDirect.card.getPrime
   if (tappayStatus.canGetPrime === false) {
@@ -199,7 +198,7 @@ $('#support-form').on('submit', function (event) {
     type = 'homepage';
   }
   let supportMsg = document.querySelector('.support-msg').value;
-  console.log(supportMsg);
+  // console.log(supportMsg);
   if (!supportMsg) {
     supportMsg = '(ง •̀_•́)ง‼';
   }
@@ -223,7 +222,7 @@ $('#support-form').on('submit', function (event) {
     localStorage.removeItem('supporter_info');
     localStorage.removeItem('support_amount');
 
-    console.log(supportInfo);
+    // console.log(supportInfo);
 
     axios({
       method: 'post',
@@ -231,11 +230,10 @@ $('#support-form').on('submit', function (event) {
       data: JSON.stringify(supportInfo),
       headers: {
         'Content-Type': 'application/json',
-        // Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         thankMsg();
         document.getElementById('support-msg').value = '';
       })

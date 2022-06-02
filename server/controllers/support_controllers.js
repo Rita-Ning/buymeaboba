@@ -16,13 +16,14 @@ async function tappay(req, res) {
   let userName;
   let userEmail;
   let userId;
+  let userFind;
 
   if (user.user_name) {
     userName = user.user_name;
     userEmail = user.user_email;
   } else {
     userId = mongoose.mongo.ObjectId(user);
-    let userFind = await Support.getUser(userId);
+    userFind = await Support.getUser(userId);
     userName = userFind.user_name;
     userEmail = userFind.email;
     userId = userFind._id;
@@ -58,7 +59,8 @@ async function tappay(req, res) {
   }
 
   // support info
-  let creator_id = await Support.getCreator(creator);
+  let creatorInfo = await Support.getCreator(creator);
+  console.log(creatorInfo);
 
   let supportInfo;
   if (userId) {
@@ -66,7 +68,7 @@ async function tappay(req, res) {
       user_id: userId,
       user_name: userName,
       user_email: userEmail,
-      creator_id: creator_id._id,
+      creator_id: creatorInfo._id,
       amount,
       event,
       method: 'bank',
@@ -76,7 +78,7 @@ async function tappay(req, res) {
     supportInfo = {
       user_name: userName,
       user_email: userEmail,
-      creator_id: creator_id._id,
+      creator_id: creatorInfo._id,
       amount,
       event,
       method: 'bank',
@@ -88,7 +90,7 @@ async function tappay(req, res) {
   let addSupport = await Support.createSupport(supportInfo);
 
   //send email to supporter
-  sendSupportEmail(msg, userName, amount, creator_id.email);
+  sendSupportEmail(msg, userName, amount, creatorInfo.email);
 
   // if post support add into post doc
   if (event !== 'homepage') {
@@ -113,7 +115,7 @@ async function tappay(req, res) {
     await Support.updatePostEarningAmount(postID, postSupport);
   }
 
-  let creatorId = creator_id._id;
+  let creatorId = creatorInfo._id;
 
   let supporterInfo;
   //update creator support list

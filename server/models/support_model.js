@@ -1,15 +1,24 @@
 const { userProfile, support, post } = require('../../util/mongoose');
 
 let getUser = async (userId) => {
-  await userProfile.findOne({ _id: userId }, { user_name: 1, email: 1 });
+  let result = await userProfile.findOne(
+    { _id: userId },
+    { user_name: 1, email: 1 }
+  );
+  return result;
 };
 
 let getCreator = async (creatorPage) => {
-  await userProfile.findOne({ user_page: creatorPage }, { _id: 1, email: 1 });
+  let result = await userProfile.findOne(
+    { user_page: creatorPage },
+    { _id: 1, email: 1 }
+  );
+  return result;
 };
 
 let createSupport = async (supportInfo) => {
-  await support.create(supportInfo);
+  let result = await support.create(supportInfo);
+  return result;
 };
 
 let updatePostEarningInfo = async (postID, postSupportInfo) => {
