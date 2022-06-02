@@ -55,9 +55,9 @@ function follow() {
     data: JSON.stringify(followInfo),
     headers: { 'Content-Type': 'application/json' },
   })
-    .then((res) => {
-      console.log(res.data);
-    })
+    // .then((res) => {
+    //   console.log(res.data);
+    // })
     .catch(function (err) {
       msg = err.data;
       alert(msg);
@@ -79,9 +79,9 @@ function unfollow() {
     data: JSON.stringify(unfollowInfo),
     headers: { 'Content-Type': 'application/json' },
   })
-    .then((res) => {
-      console.log(res.data);
-    })
+    // .then((res) => {
+    //   console.log(res.data);
+    // })
     .catch(function (err) {
       msg = err.data;
       alert(msg);
@@ -300,9 +300,9 @@ axios({
   data: { user_id: visitId, page: pageName },
   headers: { 'Content-Type': 'application/json' },
 })
-  .then((res) => {
-    console.log(res.data);
-  })
+  // .then((res) => {
+  //   console.log(res.data);
+  // })
   .catch(function (err) {
     console.log(err);
   });
