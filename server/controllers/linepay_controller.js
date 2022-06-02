@@ -1,5 +1,5 @@
 require('dotenv').config();
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const crypto = require('crypto-js');
 const uuid = require('uuid4');
 const axios = require('axios');

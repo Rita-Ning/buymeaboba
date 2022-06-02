@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const axios = require('axios');
 const Support = require('../models/support_model');
 const { sendSupportEmail } = require('../../util/nodeemailer');
