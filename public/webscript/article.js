@@ -185,7 +185,7 @@ axios
     // set user profile
     let pic = `
   <a href="/creator/${user.user_page}">
-  <img src="${user.profile_pic}" class = "rounded-circle" height="100"  width="100" pt-1/>
+  <div style="background-image:url(${user.profile_pic})" class="img-fluid img-cover shadow-sm"></div>
   </a>`;
     profilePic.innerHTML = pic;
 

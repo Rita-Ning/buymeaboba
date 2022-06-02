@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Dashboard = require('../models/dashboard_model');
+const { millify } = require('millify');
 
 async function createDashboard(req, res) {
   let data = {};
@@ -53,6 +54,7 @@ async function createDashboard(req, res) {
     } else {
       earning = 0;
     }
+    let earning_show = millify(earning, { precision: 0 });
     let data = {
       user_id: categoryTop[i]._id,
       user_name: categoryTop[i].user_name,
@@ -60,7 +62,7 @@ async function createDashboard(req, res) {
       profile_pic: categoryTop[i].profile_pic,
       supporters: categoryTop[i].supporter.length,
       followers: categoryTop[i].follower_count,
-      earning,
+      earning: earning_show,
       engagement,
       view,
     };

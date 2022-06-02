@@ -55,9 +55,9 @@ function follow() {
     data: JSON.stringify(followInfo),
     headers: { 'Content-Type': 'application/json' },
   })
-    .then((res) => {
-      console.log(res.data);
-    })
+    // .then((res) => {
+    //   console.log(res.data);
+    // })
     .catch(function (err) {
       msg = err.data;
       alert(msg);
@@ -79,9 +79,9 @@ function unfollow() {
     data: JSON.stringify(unfollowInfo),
     headers: { 'Content-Type': 'application/json' },
   })
-    .then((res) => {
-      console.log(res.data);
-    })
+    // .then((res) => {
+    //   console.log(res.data);
+    // })
     .catch(function (err) {
       msg = err.data;
       alert(msg);
@@ -158,7 +158,7 @@ axios
 
     let pic = `
   <a href="${creatorPath}">
-   <img src="${profile_pic}" class = "rounded-circle" height="100"  width="100" pt-1/>
+   <div style="background-image:url(${profile_pic})" class="img-fluid img-cover shadow-sm"></div>
   </a>`;
     profilePic.innerHTML = pic;
 
@@ -300,9 +300,9 @@ axios({
   data: { user_id: visitId, page: pageName },
   headers: { 'Content-Type': 'application/json' },
 })
-  .then((res) => {
-    console.log(res.data);
-  })
+  // .then((res) => {
+  //   console.log(res.data);
+  // })
   .catch(function (err) {
     console.log(err);
   });
