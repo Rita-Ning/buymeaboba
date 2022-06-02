@@ -23,7 +23,7 @@ axios({
       tags,
       page_watch,
     } = res.data;
-    console.log(page_watch);
+    // console.log(page_watch);
     let pageSummary = document.getElementById('page-summary');
     let summary = ``;
     summary = `

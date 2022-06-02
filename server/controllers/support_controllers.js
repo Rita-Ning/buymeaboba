@@ -1,7 +1,10 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 const axios = require('axios');
 const Support = require('../models/support_model');
 const { sendSupportEmail } = require('../../util/nodeemailer');
+const jwt = require('../../util/jwt');
+const { SECRET } = process.env;
 
 async function tappay(req, res) {
   // check header
