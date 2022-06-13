@@ -8,10 +8,10 @@ if (!token) {
             <form class='login_form' id = 'signin_form'>
             <h2> Welcome Back </h2>
             <div class='form_input'>
-                <input type='text' id='sigin_email' placeholder=' email account'>
+                <input type='text' id='sigin_email' placeholder=' email account' value='test@test.com'>
             </div>
             <div class='form_input'>
-                <input type='password' id='signin_psw' placeholder=' password' autocomplete='on'>
+                <input type='password' id='signin_psw' placeholder=' password' autocomplete='on' value='test333'>
             </div>
             <button class ='btn' id='signin_btn' type='button' onclick='log_in()'>Login</button>
             <br>
