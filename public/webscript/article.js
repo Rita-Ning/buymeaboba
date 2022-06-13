@@ -47,7 +47,7 @@ async function like() {
   try {
     const result = await axios({
       method: 'post',
-      url: '/api/1.0/like/add',
+      url: '/api/1.0/like',
       data: {
         article_id: articleId,
         user_id: currentId,
@@ -72,8 +72,8 @@ async function unlike() {
   //send unlike back
   try {
     const result = await axios({
-      method: 'post',
-      url: '/api/1.0/like/delete',
+      method: 'delete',
+      url: '/api/1.0/like',
       data: {
         article_id: articleId,
         user_id: currentId,
@@ -116,7 +116,7 @@ commentBtn.addEventListener('click', async (e) => {
   try {
     const result = await axios({
       method: 'post',
-      url: '/api/1.0/comment/add',
+      url: '/api/1.0/comment',
       data: {
         article_id: articleId,
         user_id: currentId,

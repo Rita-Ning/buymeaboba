@@ -51,7 +51,7 @@ function follow() {
   document.getElementById('feat-unfollow').style.display = 'block';
   axios({
     method: 'post',
-    url: '/api/1.0/follow/add',
+    url: '/api/1.0/follow',
     data: JSON.stringify(followInfo),
     headers: { 'Content-Type': 'application/json' },
   })
@@ -74,8 +74,8 @@ function unfollow() {
   document.getElementById('feat-follow').style.display = 'block';
   document.getElementById('feat-unfollow').style.display = 'none';
   axios({
-    method: 'post',
-    url: '/api/1.0/follow/delete',
+    method: 'delete',
+    url: '/api/1.0/follow',
     data: JSON.stringify(unfollowInfo),
     headers: { 'Content-Type': 'application/json' },
   })
